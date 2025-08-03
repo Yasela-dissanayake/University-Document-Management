@@ -1,0 +1,12 @@
+{% extends "layout.html" %} {% block content %}
+<h2>AI Q&A (Coming Soon)</h2>
+<form method="post">
+  <label>Ask a question: <input name="query" style="width: 300px" /></label>
+  <button type="submit">Ask</button>
+</form>
+{% if answer %}
+<div>
+  <strong>AI says:</strong>
+  <pre>{{ answer }}</pre>
+</div>
+{% endif %} {% endblock %}

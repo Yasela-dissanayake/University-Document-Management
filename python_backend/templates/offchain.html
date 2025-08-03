@@ -1,0 +1,5 @@
+{% extends "layout.html" %} {% block content %}
+<h2>Off-Chain Decrypted Document</h2>
+<pre>{{ data|tojson(indent=2) }}</pre>
+<a href="{{ url_for('view') }}">Go Back</a>
+{% endblock %}

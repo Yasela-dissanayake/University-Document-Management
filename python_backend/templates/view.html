@@ -1,0 +1,15 @@
+{% extends "layout.html" %} {% block content %}
+<h2>View Student Record</h2>
+<form method="post">
+  <label>Student ID: <input name="student_id" /></label>
+  <button type="submit">View</button>
+</form>
+{% if student %}
+<h3>On-Chain Data:</h3>
+<pre>{{ student|tojson(indent=2) }}</pre>
+{% if ipfs_hash %}
+<form action="{{ url_for('offchain') }}" method="post">
+  <input type="hidden" name="ipfs_hash" value="{{ ipfs_hash }}" />
+  <button type="submit">View Off-Chain Data</button>
+</form>
+{% endif %} {% endif %} {% endblock %}
