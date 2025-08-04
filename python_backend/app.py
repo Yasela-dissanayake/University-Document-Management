@@ -59,13 +59,14 @@ def offchain():
         return f"Could not retrieve/decrypt: {e}"
 
 # FORWARD-COMPATIBILITY: AI endpoint placeholder
-@app.route('/ai', methods=['GET', 'POST'])
-def ai():
-    answer = ''
-    if request.method == 'POST':
-        query = request.form['query']
-        answer = "AI features coming soon!"  # Plug your AI agent later
-    return render_template("ai.html", answer=answer)
+@app.route('/api/ai_query', methods=['POST'])
+def ai_query():
+    question = request.json.get('question', '')
+    if not question:
+        return jsonify({"error": "No question provided."}), 400
+    answer = answer_question(question)
+    return jsonify({"answer": answer})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
