@@ -10,7 +10,9 @@ class UniversityIPFSClient:
     def __init__(self, ipfs_api_url: str = '/ip4/127.0.0.1/tcp/5001'):
         """Initialize IPFS client for university document storage"""
         try:
-            self.client = ipfshttpclient.connect(ipfs_api_url)
+            # self.client = ipfshttpclient.connect(ipfs_api_url)
+            self.client = ipfshttpclient.Client(addr=ipfs_api_url, base="api/v0")
+
 
             # ---- Persistent Fernet Key Storage ----
             key_path = "fernet.key"
