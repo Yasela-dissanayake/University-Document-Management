@@ -1,5 +1,7 @@
 from python_backend.blockchain_client import UniversityBlockchainClient
 from python_backend.ipfs_client import UniversityIPFSClient
+from python_backend.decrypt_from_ipfs import decrypt_ipfs_document
+
 
 # Instantiate clients at module-level, or inject via constructor for testability
 blockchain_client = UniversityBlockchainClient()
@@ -53,26 +55,49 @@ def get_onchain_student(state):
 
 def get_offchain_semester(state):
     """Get semester records from IPFS via blockchain hashes"""
+
+    print(f"🔄 Starting get_offchain_semester with state keys: {list(state.keys())}")
+    
+
+
+
+
+
     # Get student_id from previous step
     student_id = state.get("student_id")
     if not student_id:
+        print("❌ No student_id found in state")
         return {"offchain": {"error": "No student_id available from previous step."}}
     
     question = state["question"]
     
+    import re
+    ipfs_hash_pattern = r"Qm[1-9A-Za-z]{44}"  # Matches typical IPFS hashes
+
+    if re.search(ipfs_hash_pattern, question):
+        ipfs_hash = re.search(ipfs_hash_pattern, question).group(0)
+        doc = decrypt_ipfs_document(ipfs_hash)
+        return {"offchain": doc}
+
+
+
+
     # Parse semester number if given, else default to last (-1 index)
     import re
     match = re.search(r"semester\s*(\d+)", question, re.IGNORECASE)
     semester_idx = int(match.group(1)) - 1 if match else -1
     
-    print(f"🔍 Getting semester records for student: {student_id}")
+    print(f"🔍 Getting semester records for student: {student_id} (semester index: {semester_idx})")
     
     try:
         all_hashes = blockchain_client.get_all_semester_hashes(student_id)
+        print(f"📋 Raw semester hashes result: {all_hashes}")
+        
         if not all_hashes:
+            print("❌ No semester hashes returned from blockchain")
             return {"offchain": {"error": "No semester records found."}}
         
-        print(f"📋 Found {len(all_hashes)} semester records")
+        print(f"📋 Found {len(all_hashes)} semester records: {all_hashes}")
         
         # Handle negative indexing and bounds checking
         if semester_idx < 0:
@@ -86,6 +111,7 @@ def get_offchain_semester(state):
         
         try:
             doc = ipfs_client.retrieve_academic_document(ipfs_hash)
+            print(f"✅ Retrieved document: {doc}")
             return {"offchain": doc}
         except Exception as e:
             print(f"❌ IPFS retrieval error: {e}")
