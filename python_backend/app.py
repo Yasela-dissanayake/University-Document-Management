@@ -1,242 +1,265 @@
-from datetime import datetime
+# python_backend/app.py
+from __future__ import annotations
+
 import json
-from flask import Flask, request, render_template, redirect, url_for, flash, jsonify
-
-from blockchain_client import UniversityBlockchainClient
-from ipfs_client import UniversityIPFSClient
-
-# Attempt to locate and load the AI agent dynamically from a relative path.
-# When running this module as a script (e.g. `python python_backend/app_updated.py`),
-# Python does not treat `python_backend` as an importable package.  Instead of
-# relying on package imports, we construct a module spec from the `ai/agent.py`
-# file adjacent to this script.  If the file or the expected symbol is not
-# found, `answer_question` will remain `None` and the API will fall back to a
-# placeholder response.
-import importlib.util
 import os
+import sys
+from datetime import datetime
+from typing import Any, Dict, Optional
 
-_agent_path = os.path.join(os.path.dirname(__file__), 'ai', 'agent.py')
-answer_question = None  # type: ignore  
-if os.path.exists(_agent_path):
+from flask import (
+    Flask,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    url_for,
+    flash,
+)
+
+# --- Make sure package imports work whether run as a module or a script -----
+BASE_DIR = os.path.dirname(__file__)                  # .../python_backend
+REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
+if REPO_ROOT not in sys.path:
+    sys.path.insert(0, REPO_ROOT)
+
+# --- Backend clients --------------------------------------------------------
+# These are your existing classes. They read RPC / addresses from .env.
+from python_backend.blockchain_client import UniversityBlockchainClient  # type: ignore
+from python_backend.ipfs_client import UniversityIPFSClient  # type: ignore
+
+# --- Try to load the AI agent in a robust way --------------------------------
+# We support both package import and file-based dynamic import, then
+# expose a stable callable `ask_agent(question: str) -> str`.
+_AGENT_FUNC = None
+
+def _load_agent_function() -> Optional[Any]:
+    """
+    Attempt to load `answer_question` from python_backend.ai.agent.
+    Works in both 'module' and 'script' invocations.
+    """
+    # 1) Try normal package import first
     try:
-        _spec = importlib.util.spec_from_file_location('agent_module', _agent_path)
-        if _spec and _spec.loader:
-            _module = importlib.util.module_from_spec(_spec)
-            _spec.loader.exec_module(_module)  # type: ignore
-            answer_question = getattr(_module, 'answer_question', None)
-    except Exception:
-        answer_question = None
+        from python_backend.ai.agent import answer_question  # type: ignore
+        print("[AI] Loaded agent via package import.")
+        return answer_question
+    except Exception as e:
+        print(f"[AI] Package import failed: {e}")
 
+    # 2) Try dynamic import by file path (when run as a script)
+    import importlib.util
+    agent_path = os.path.join(BASE_DIR, "ai", "agent.py")
+    if os.path.exists(agent_path):
+        try:
+            spec = importlib.util.spec_from_file_location("udoc_agent", agent_path)
+            if not spec or not spec.loader:
+                print("[AI] Dynamic import spec not created.")
+                return None
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)  # type: ignore
+            fn = getattr(mod, "answer_question", None)
+            print(f"[AI] Loaded agent via dynamic import: {type(fn)}")
+            return fn
+        except Exception as e:
+            print(f"[AI] Dynamic import failed: {e}")
+            return None
+    else:
+        print("[AI] agent.py not found at", agent_path)
+        return None
 
+_AGENT_FUNC = _load_agent_function()
+
+def ask_agent(question: str) -> str:
+    """
+    Stable callable wrapper. If the real agent function exists, call it.
+    Otherwise return a friendly fallback string.
+    """
+    if callable(_AGENT_FUNC):
+        out = _AGENT_FUNC(question)
+        # Some implementations return dicts like {"answer": "..."}
+        if isinstance(out, dict) and "answer" in out:
+            return str(out["answer"])
+        return str(out)
+    return "AI functionality not yet implemented."
+
+# --- Flask app --------------------------------------------------------------
 app = Flask(__name__)
-app.secret_key = 'supersecret'  # For flash messages
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-secret")
 
-# Inject current year into all templates to avoid using unavailable Jinja filters.
+# Inject current year everywhere (avoid relying on unavailable Jinja filters)
 @app.context_processor
 def inject_current_year():
-    """Provide the current UTC year to templates as `current_year`.
+    return {"current_year": datetime.utcnow().year}
 
-    Using a context processor avoids reliance on unavailable Jinja filters such
-    as `date`, which may not be registered by default.  Templates can now
-    display the year with `{{ current_year }}` safely.
+# Create singletons for backends
+bc = UniversityBlockchainClient()
+ipfs = UniversityIPFSClient()
+
+# --- Helpers ----------------------------------------------------------------
+def _parse_document_json(raw: str) -> Dict[str, Any]:
     """
-    return {'current_year': datetime.utcnow().year}
+    Normalize a JSON string from a textarea into a dict and ensure it has a timestamp.
+    """
+    data = json.loads(raw)
+    if "timestamp" not in data:
+        data["timestamp"] = int(datetime.utcnow().timestamp())
+    return data
 
-# Initialise clients once at startup.  In a real application you may want
-# to handle reconnection logic or lazy loading but for this demo it's
-# sufficient to create singletons here.
-blockchain_client = UniversityBlockchainClient()
-ipfs_client = UniversityIPFSClient()
-
-
-@app.route('/')
+# --- Routes -----------------------------------------------------------------
+@app.route("/")
 def index():
-    """Simple landing page showing navigation."""
-    return render_template("layout.html")
+    return redirect(url_for("register"))
 
-
-@app.route('/register', methods=['GET', 'POST'])
+# Register student (optional first-sem JSON)
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    """Register a new student with an initial semester document.
+    if request.method == "POST":
+        student_id = request.form.get("student_id", "").strip()
+        name = request.form.get("name", "").strip()
+        program = request.form.get("program", "").strip()
+        year = request.form.get("year", "").strip()
+        doc_raw = request.form.get("document", "").strip()
 
-    The form accepts student_id, name, program, year and an optional
-    JSON document for the first semester.  If no JSON document is
-    provided, a minimal dummy transcript is generated automatically.
-    """
-    if request.method == 'POST':
-        s_id = request.form.get('student_id', '').strip()
-        name = request.form.get('name', '').strip()
-        program = request.form.get('program', '').strip()
-        year = request.form.get('year', '').strip()
-        doc_json = request.form.get('document', '').strip()
+        if not (student_id and name and program and year):
+            flash("Please fill Student ID, Name, Program, and Year.", "error")
+            return redirect(url_for("register"))
 
-        # Basic validation
-        if not (s_id and name and program and year):
-            flash("All fields are required.")
-            return render_template("register.html")
         try:
             year_int = int(year)
         except ValueError:
-            flash("Year must be a number.")
-            return render_template("register.html")
+            flash("Year must be an integer.", "error")
+            return redirect(url_for("register"))
 
-        # Parse provided JSON or create default document
-        if doc_json:
-            try:
-                doc = json.loads(doc_json)
-            except json.JSONDecodeError as e:
-                flash(f"Invalid document JSON: {e}")
-                return render_template("register.html")
-        else:
-            doc = {
-                "student_id": s_id,
-                "document_type": "transcript",
-                "timestamp": datetime.utcnow().isoformat() + 'Z',
-                "courses": [
-                    {"code": "CS101", "name": "Intro to CS", "grade": "A"}
-                ],
-                "gpa": 4.0,
-            }
-
-        # Ensure the student ID matches the document
-        doc['student_id'] = s_id
-
-        # Prepare student metadata
-        student_data = {
-            "student_id": s_id,
-            "name": name,
-            "program": program,
-            "year": year_int,
-        }
+        # Optionally store initial semester doc
+        ipfs_hash = None
+        content_hash = None
+        timestamp = int(datetime.utcnow().timestamp())
 
         try:
-            # Store document on IPFS
-            offchain = ipfs_client.store_academic_document(doc)
-            # Register student on the blockchain
-            blockchain_client.register_student_record(
-                student_data, offchain['ipfs_hash'], offchain['content_hash']
+            if doc_raw:
+                doc = _parse_document_json(doc_raw)
+                # Optionally enforce matching ID in document
+                if doc.get("student_id") and doc["student_id"] != student_id:
+                    flash("Document student_id does not match form student_id.", "error")
+                    return redirect(url_for("register"))
+
+                ipfs_hash, content_hash = ipfs.store_academic_document(doc)  # existing method in your repo
+                timestamp = int(doc.get("timestamp", timestamp))
+
+            tx = bc.register_student_record(
+                student_id=student_id,
+                name=name,
+                program=program,
+                year=year_int,
+                documents_ipfs_hash=ipfs_hash or "",
+                content_hash=content_hash or "",
+                timestamp=timestamp,
             )
-            flash(f"Registered student {s_id}. IPFS: {offchain['ipfs_hash']}")
-            return redirect(url_for('register'))
+            flash(f"Registered {student_id}. Tx: {tx}", "success")
+            return redirect(url_for("view"))
         except Exception as e:
-            flash(f"Error: {e}")
+            flash(f"Registration failed: {e}", "error")
+            return redirect(url_for("register"))
+
     return render_template("register.html")
 
-
-@app.route('/update', methods=['GET', 'POST'])
+# Append a new semester (version)
+@app.route("/update", methods=["GET", "POST"])
 def update():
-    """Append a new semester record to an existing student.
+    if request.method == "POST":
+        student_id = request.form.get("student_id", "").strip()
+        doc_raw = request.form.get("document", "").strip()
 
-    This form accepts a student ID and a JSON document representing the
-    transcript.  The document must be valid JSON.  The student must
-    already be registered on chain.
-    """
-    if request.method == 'POST':
-        s_id = request.form.get('student_id', '').strip()
-        doc_json = request.form.get('document', '').strip()
+        if not student_id:
+            flash("Student ID is required.", "error")
+            return redirect(url_for("update"))
+        if not doc_raw:
+            flash("Please paste a semester JSON document.", "error")
+            return redirect(url_for("update"))
 
-        if not s_id:
-            flash("Student ID is required.")
-            return render_template("update.html")
-        if not doc_json:
-            flash("Document JSON is required.")
-            return render_template("update.html")
         try:
-            doc = json.loads(doc_json)
-        except json.JSONDecodeError as e:
-            flash(f"Invalid document JSON: {e}")
-            return render_template("update.html")
-        # Ensure the document uses the correct student ID
-        doc['student_id'] = s_id
-        try:
-            offchain = ipfs_client.store_academic_document(doc)
-            blockchain_client.add_semester_record(
-                s_id, offchain['ipfs_hash'], offchain['content_hash']
+            doc = _parse_document_json(doc_raw)
+            if doc.get("student_id") and doc["student_id"] != student_id:
+                flash("Document student_id does not match form student_id.", "error")
+                return redirect(url_for("update"))
+
+            ipfs_hash, content_hash = ipfs.store_academic_document(doc)
+            timestamp = int(doc.get("timestamp", int(datetime.utcnow().timestamp())))
+
+            tx = bc.add_semester_record(
+                student_id=student_id,
+                documents_ipfs_hash=ipfs_hash,
+                content_hash=content_hash,
+                timestamp=timestamp,
             )
-            flash(f"Appended semester for {s_id}. IPFS: {offchain['ipfs_hash']}")
-            return redirect(url_for('update'))
+            flash(f"Added semester for {student_id}. Tx: {tx}", "success")
+            return redirect(url_for("view", student_id=student_id))
         except Exception as e:
-            flash(f"Error: {e}")
+            flash(f"Update failed: {e}", "error")
+            return redirect(url_for("update"))
+
     return render_template("update.html")
 
-
-@app.route('/view', methods=['GET', 'POST'])
+# Inspect a student's on-chain record & list all semesters
+@app.route("/view", methods=["GET", "POST"])
 def view():
-    """View a student's on‑chain details and list all semester documents.
-
-    Submitting the form with a student ID fetches both the core student
-    metadata (latest document pointer, name, program, etc.) and the full
-    list of semester IPFS hashes.  These hashes are displayed with
-    buttons to decrypt and view each corresponding document.
-    """
     student = None
-    latest_ipfs = None
-    semesters = None
-    if request.method == 'POST':
-        s_id = request.form.get('student_id', '').strip()
-        if s_id:
-            student = blockchain_client.get_student_details(s_id)
-            if student:
-                latest_ipfs = student['documents_ipfs_hash']
-                semesters = blockchain_client.get_all_semester_hashes(s_id)
-    return render_template(
-        "view.html", student=student, ipfs_hash=latest_ipfs, semesters=semesters
-    )
+    semesters = []
+    student_id = ""
 
-
-@app.route('/offchain', methods=['POST'])
-def offchain():
-    """Decrypt and display a document given its IPFS hash."""
-    ipfs_hash = request.form.get('ipfs_hash', '').strip()
-    if not ipfs_hash:
-        return "Missing IPFS hash.", 400
-    try:
-        decrypted = ipfs_client.retrieve_academic_document(ipfs_hash)
-        return render_template("offchain.html", data=decrypted)
-    except Exception as e:
-        return f"Could not retrieve/decrypt: {e}", 500
-
-
-@app.route('/api/ai_query', methods=['POST'])
-def ai_query():
-    """API endpoint for AI query.
-
-    Expects JSON with a "question" field.  If the optional LangGraph
-    agent is available, this function will pass the question to
-    `answer_question` and return the AI's response.  Otherwise it
-    returns a placeholder answer.  On any exception, the error is
-    returned to the client for debugging.
-    """
-    data = request.get_json(silent=True) or {}
-    question = data.get('question', '').strip()
-    if not question:
-        return jsonify({"error": "No question provided."}), 400
-    # Use the AI agent if available
-    if callable(answer_question):
-        try:
-            result = answer_question(question)
-            # Flatten result if it's a dict with "answer" key
-            if isinstance(result, dict) and 'answer' in result:
-                answer = result['answer']
-            else:
-                answer = result
-            return jsonify({"answer": answer})
-        except Exception as e:
-            return jsonify({"error": f"AI error: {e}"}), 500
+    if request.method == "POST":
+        student_id = request.form.get("student_id", "").strip()
     else:
-        return jsonify({"answer": "AI functionality not yet implemented."})
+        # allow /view?student_id=S12345
+        student_id = request.args.get("student_id", "").strip()
 
-# Display a page to ask questions to the AI agent
-@app.route('/ai')
+    if student_id:
+        try:
+            student = bc.get_student_details(student_id)
+            semesters = bc.get_all_semester_hashes(student_id) or []
+            if not isinstance(semesters, list):
+                semesters = []
+        except Exception as e:
+            flash(f"Fetch failed: {e}", "error")
+
+    return render_template("view.html", student=student, semesters=semesters)
+
+# Decrypt & show a single off-chain document by IPFS hash
+@app.route("/offchain", methods=["POST"])
+def offchain():
+    ipfs_hash = request.form.get("ipfs_hash", "").strip()
+    if not ipfs_hash:
+        flash("Missing IPFS hash.", "error")
+        return redirect(url_for("view"))
+
+    try:
+        data = ipfs.retrieve_academic_document(ipfs_hash)
+        # Ensure it's serializable
+        if not isinstance(data, dict):
+            data = {"raw": data}
+        return render_template("offchain.html", data=data)
+    except Exception as e:
+        flash(f"Decrypt failed: {e}", "error")
+        return redirect(url_for("view"))
+
+# AI: page & API
+@app.route("/ai")
 def ai_page():
-    """Render the AI query page.
+    return render_template("ai.html")
 
-    The template contains a simple form and a script that POSTs the question
-    to the `/api/ai_query` endpoint and displays the returned answer.  This
-    separates the UI from the API logic.
-    """
-    return render_template('ai.html')
+@app.route("/api/ai_query", methods=["POST"])
+def ai_query():
+    payload = request.get_json(silent=True) or {}
+    question = str(payload.get("question", "")).strip()
+    if not question:
+        return jsonify({"error": "Missing 'question'"}), 400
+    try:
+        answer = ask_agent(question)
+        return jsonify({"answer": answer})
+    except Exception as e:
+        return jsonify({"error": f"Agent failed: {e}"}), 500
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
+# Entry point
+if __name__ == "__main__":
+    # Running as a script is fine thanks to the sys.path fix above
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5000")), debug=True)
