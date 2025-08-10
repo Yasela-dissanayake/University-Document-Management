@@ -6,7 +6,7 @@ ipfs_client = UniversityIPFSClient()
 # ipfs_client.cipher_suite = Fernet(b'your_saved_key_here')
 
 # IPFS hash from your test
-ipfs_hash = "QmTJrhkq9LyXwDnngu9nFfyibvni61d6YQfx7YZ69P9B5Q"
+ipfs_hash = "QmWZwobn5sLEtrkjhCf7K1DDFqfYY8TqyGsL6Tnb5AF5rj"
 # ipfs_hash = "QmQ4GHTkoYkSgfjnRWPepG7HkYrzJHHk786umRr6SPrRBL"
 
 # Retrieve encrypted content from IPFS

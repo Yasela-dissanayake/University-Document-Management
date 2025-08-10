@@ -12,17 +12,18 @@ def add_semester(student_id, document):
 if __name__ == "__main__":
     # EXAMPLE: Second semester
     document = {
-        "student_id": "S20841",
+        "student_id": "S19357",
         "document_type": "academic_transcript",
         "timestamp": "2026-02-01T12:00:00Z",
         "courses": [
-            {"code": "CSC1023", "name": "Object-oriented Programming", "grade": "A"},
-  {"code": "CSC1051", "name": "Programming Laboratory II", "grade": "A"},
-  {"code": "MAT1023", "name": "Real Analysis I", "grade": "A"},
-  {"code": "MAT1083", "name": "Mathematical Programming", "grade": "A-"},
-  {"code": "STA1023", "name": "Introduction to Probability Theory", "grade": "A"},
-  {"code": "STA1041", "name": "Statistics Applications II", "grade": "A"}
+  {"code": "CSC2012", "name": "Data Structures", "grade": "A"},
+  {"code": "CSC2021", "name": "Programming Using Data Structures", "grade": "A"},
+  {"code": "CSC2052", "name": "Computer Architecture", "grade": "A"},
+  {"code": "CSC2102", "name": "Web Programming I", "grade": "A"},
+  {"code": "ENG2002", "name": "English for Professional Purposes", "grade": "P"},
+  {"code": "MAT2023", "name": "Real Analysis II", "grade": "B"},
+  {"code": "MAT2092", "name": "Graph Theory", "grade": "A"},
         ],
-        "gpa": 4.0
+        "gpa": 3.6
     }
-    add_semester("S20841", document)
+    add_semester("S19357", document)

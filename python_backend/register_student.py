@@ -25,27 +25,29 @@ def register_student(student_id, name, program, year, document):
 
 if __name__ == "__main__":
     # Example student, you may edit these values as needed
-    student_id = "S20841"
-    name = "Asini Susanya"
-    program = "Statistics and Operational Research"
+    student_id = "S19357"
+    name = "Yasela Dissanayake"
+    program = "Computer Science"
     year = 1
     first_semester = {
         "student_id": student_id,
         "document_type": "academic_transcript",
         "timestamp": "2025-08-01T12:00:00Z",
         "courses": [
-             {"code": "BIO1002", "name": "Basic Life Sciences (Foundation Course)", "grade": "A+"},
+             {"code": "BIO1002", "name": "Basic Life Sciences (Foundation Course)", "grade": "A-"},
   {"code": "CSC1002", "name": "Computer Applications", "grade": "A"},
   {"code": "CSC1013", "name": "Introduction to Computer Science and Programming", "grade": "A"},
   {"code": "CSC1041", "name": "Programming Laboratory I", "grade": "A"},
   {"code": "ENG1002", "name": "English for Academic Purposes", "grade": "A"},
-  {"code": "MAT1073", "name": "Mathematics for Operations Research", "grade": "A"},
-  {"code": "MAT1092", "name": "Introduction to Mathematical Computing", "grade": "A"},
-  {"code": "SCI1041", "name": "Essential Skills for Career Development", "grade": "0"},
-  {"code": "STA1013", "name": "Introduction to Statistics", "grade": "A+"},
-  {"code": "STA1031", "name": "Statistical Applications I", "grade": "A+"},
+  {"code": "MAT1013", "name": "Abstract Algebra I", "grade": "A+"},
+  {"code": "MAT1032", "name": "Differential Equations", "grade": "A"},
+  {"code": "MAT1042", "name": "Vector Methods", "grade": "B+"},
+  {"code": "STA1013", "name": "Introduction to Statistics", "grade": "A"},
+  {"code": "STA1031", "name": "Statistical Applications I", "grade": "A"},
+  {"code": "CSC1023", "name": "Object-oriented Programming", "grade": "C+"},
+  {"code": "CSC1051", "name": "Programming Laboratory II", "grade": "A"},
         ],
-        "gpa": 4.0,
+        "gpa": 3.8,
         "remarks": "Excellent first semester."
     }
     register_student(student_id, name, program, year, first_semester)

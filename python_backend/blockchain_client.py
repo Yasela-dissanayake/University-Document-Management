@@ -53,9 +53,12 @@ class UniversityBlockchainClient:
                 Web3.keccak(text=content_hash),  # or bytes32, as your contract expects
                 student_wallet["address"]
             )
+
+            gas_estimate = function_call.estimate_gas({'from': self.account.address})
+
             transaction = function_call.build_transaction({
                 'chainId': self.w3.eth.chain_id,
-                'gas': 500_000,
+                'gas': int(gas_estimate * 1.5),  # add some buffer
                 'gasPrice': self.w3.eth.gas_price,
                 'nonce': self.w3.eth.get_transaction_count(self.account.address)
             })
