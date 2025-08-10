@@ -1,106 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>University Document Management</title>
     <!-- Simple CSS reset and basic styling -->
     <style>
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-      }
-      nav {
-        background-color: #004080;
-        color: white;
-        padding: 1rem;
-      }
-      nav a {
-        color: white;
-        margin-right: 1rem;
-        text-decoration: none;
-        font-weight: bold;
-      }
-      nav a:hover {
-        text-decoration: underline;
-      }
-      main {
-        max-width: 800px;
-        margin: 2rem auto;
-        background-color: white;
-        padding: 2rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      footer {
-        text-align: center;
-        margin-top: 3rem;
-        padding: 1rem;
-        color: #777;
-        font-size: 0.8rem;
-      }
-      .flash {
-        background-color: #ffdddd;
-        border: 1px solid #ff5c5c;
-        padding: 0.5rem 1rem;
-        margin-bottom: 1rem;
-        border-radius: 4px;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1rem;
-      }
-      th,
-      td {
-        padding: 0.5rem;
-        border: 1px solid #ddd;
-      }
-      th {
-        background-color: #f0f0f0;
-      }
-      textarea {
-        width: 100%;
-        height: 150px;
-      }
-      input[type="text"],
-      input[type="number"] {
-        width: 100%;
-        padding: 0.5rem;
-        margin-bottom: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-      button {
-        background-color: #004080;
-        color: white;
-        border: none;
-        padding: 0.6rem 1.2rem;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #003366;
-      }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        nav {
+            background-color: #004080;
+            color: white;
+            padding: 1rem;
+        }
+        nav a {
+            color: white;
+            margin-right: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem;
+            color: #777;
+            font-size: 0.8rem;
+        }
+        .flash {
+            background-color: #ffdddd;
+            border: 1px solid #ff5c5c;
+            padding: 0.5rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #004080;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #003366;
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <nav>
-      <a href="{{ url_for('index') }}">Home</a>
-      <a href="{{ url_for('register') }}">Register Student</a>
-      <a href="{{ url_for('update') }}">Update Semester</a>
-      <a href="{{ url_for('view') }}">Inspect Semesters</a>
-      <a href="{{ url_for('ai_page') }}">AI Query</a>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('register') }}">Register Student</a>
+        <a href="{{ url_for('update') }}">Update Semester</a>
+        <a href="{{ url_for('view') }}">Inspect Semesters</a>
+        <a href="{{ url_for('ai_page') }}">AI Query</a>
     </nav>
     <main>
-      {% with messages = get_flashed_messages() %} {% if messages %} {% for
-      message in messages %}
-      <div class="flash">{{ message }}</div>
-      {% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flash">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block content %}
+        {% endblock %}
     </main>
     <footer>
-      &copy; {{ current_year }} University Document Management System
+        &copy; {{ current_year }} University Document Management System
     </footer>
-  </body>
+</body>
 </html>

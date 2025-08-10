@@ -5,6 +5,28 @@ from flask import Flask, request, render_template, redirect, url_for, flash, jso
 from blockchain_client import UniversityBlockchainClient
 from ipfs_client import UniversityIPFSClient
 
+# Attempt to locate and load the AI agent dynamically from a relative path.
+# When running this module as a script (e.g. `python python_backend/app_updated.py`),
+# Python does not treat `python_backend` as an importable package.  Instead of
+# relying on package imports, we construct a module spec from the `ai/agent.py`
+# file adjacent to this script.  If the file or the expected symbol is not
+# found, `answer_question` will remain `None` and the API will fall back to a
+# placeholder response.
+import importlib.util
+import os
+
+_agent_path = os.path.join(os.path.dirname(__file__), 'ai', 'agent.py')
+answer_question = None  # type: ignore  
+if os.path.exists(_agent_path):
+    try:
+        _spec = importlib.util.spec_from_file_location('agent_module', _agent_path)
+        if _spec and _spec.loader:
+            _module = importlib.util.module_from_spec(_spec)
+            _spec.loader.exec_module(_module)  # type: ignore
+            answer_question = getattr(_module, 'answer_question', None)
+    except Exception:
+        answer_question = None
+
 
 app = Flask(__name__)
 app.secret_key = 'supersecret'  # For flash messages
@@ -177,12 +199,32 @@ def offchain():
 
 @app.route('/api/ai_query', methods=['POST'])
 def ai_query():
-    """API endpoint for AI query (placeholder)."""
-    question = request.json.get('question', '')
+    """API endpoint for AI query.
+
+    Expects JSON with a "question" field.  If the optional LangGraph
+    agent is available, this function will pass the question to
+    `answer_question` and return the AI's response.  Otherwise it
+    returns a placeholder answer.  On any exception, the error is
+    returned to the client for debugging.
+    """
+    data = request.get_json(silent=True) or {}
+    question = data.get('question', '').strip()
     if not question:
         return jsonify({"error": "No question provided."}), 400
-    # Placeholder: integrate with LangGraph agent here
-    return jsonify({"answer": "AI functionality not yet implemented."})
+    # Use the AI agent if available
+    if callable(answer_question):
+        try:
+            result = answer_question(question)
+            # Flatten result if it's a dict with "answer" key
+            if isinstance(result, dict) and 'answer' in result:
+                answer = result['answer']
+            else:
+                answer = result
+            return jsonify({"answer": answer})
+        except Exception as e:
+            return jsonify({"error": f"AI error: {e}"}), 500
+    else:
+        return jsonify({"answer": "AI functionality not yet implemented."})
 
 # Display a page to ask questions to the AI agent
 @app.route('/ai')
