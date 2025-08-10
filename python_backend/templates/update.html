@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Update Semester</h2>
+<p>Append a new semester record for an existing student. Paste the semester transcript as JSON.</p>
+<form method="post">
+    <label for="student_id">Student ID</label>
+    <input type="text" id="student_id" name="student_id" required>
+
+    <label for="document">Document JSON</label>
+    <textarea id="document" name="document" placeholder='{"student_id": "S12345", "document_type": "transcript", "timestamp": "2026-01-15T00:00:00Z", "courses": [{"code": "CS201", "name": "Data Structures", "grade": "B+"}], "gpa": 3.6}' required></textarea>
+
+    <button type="submit">Append Semester</button>
+</form>
+{% endblock %}

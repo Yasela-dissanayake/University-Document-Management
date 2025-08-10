@@ -1,15 +1,77 @@
 {% extends "layout.html" %} {% block content %}
-<h2>View Student Record</h2>
+<h2>Inspect Student Semesters</h2>
 <form method="post">
-  <label>Student ID: <input name="student_id" /></label>
-  <button type="submit">View</button>
+  <label for="student_id">Student ID</label>
+  <input
+    type="text"
+    id="student_id"
+    name="student_id"
+    placeholder="Enter a student ID"
+    required
+  />
+  <button type="submit">Fetch Details</button>
 </form>
+
 {% if student %}
-<h3>On-Chain Data:</h3>
-<pre>{{ student|tojson(indent=2) }}</pre>
-{% if ipfs_hash %}
-<form action="{{ url_for('offchain') }}" method="post">
-  <input type="hidden" name="ipfs_hash" value="{{ ipfs_hash }}" />
-  <button type="submit">View Off-Chain Data</button>
-</form>
-{% endif %} {% endif %} {% endblock %}
+<h3>On‑Chain Student Data</h3>
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>Student ID</td>
+    <td>{{ student.student_id }}</td>
+  </tr>
+  <tr>
+    <td>Name</td>
+    <td>{{ student.name }}</td>
+  </tr>
+  <tr>
+    <td>Program</td>
+    <td>{{ student.program }}</td>
+  </tr>
+  <tr>
+    <td>Year</td>
+    <td>{{ student.year }}</td>
+  </tr>
+  <tr>
+    <td>Latest IPFS Hash</td>
+    <td>{{ ipfs_hash }}</td>
+  </tr>
+  <tr>
+    <td>Is Active</td>
+    <td>{{ student.is_active }}</td>
+  </tr>
+  <tr>
+    <td>Timestamp</td>
+    <td>{{ student.timestamp }}</td>
+  </tr>
+</table>
+
+{% if semesters %}
+<h3>Semester Documents</h3>
+<table>
+  <tr>
+    <th>#</th>
+    <th>IPFS Hash</th>
+    <th>Action</th>
+  </tr>
+  {% for h in semesters %}
+  <tr>
+    <td>{{ loop.index }}</td>
+    <td>{{ h }}</td>
+    <td>
+      <form action="{{ url_for('offchain') }}" method="post" style="margin: 0">
+        <input type="hidden" name="ipfs_hash" value="{{ h }}" />
+        <button type="submit">View Document</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No semesters found for this student.</p>
+{% endif %} {% elif request.method == 'POST' %}
+<p><em>Student not found.</em></p>
+{% endif %} {% endblock %}

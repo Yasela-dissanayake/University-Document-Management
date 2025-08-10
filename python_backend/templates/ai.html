@@ -1,12 +1,32 @@
-{% extends "layout.html" %} {% block content %}
-<h2>AI Q&A (Coming Soon)</h2>
-<form method="post">
-  <label>Ask a question: <input name="query" style="width: 300px" /></label>
-  <button type="submit">Ask</button>
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Ask the AI</h2>
+<p>Enter your question about a student (e.g., "Show all grades for S12345").</p>
+<form id="ai-form">
+    <input type="text" id="question" placeholder="Your question" style="width:80%; padding:0.5rem;">
+    <button type="submit">Ask</button>
 </form>
-{% if answer %}
-<div>
-  <strong>AI says:</strong>
-  <pre>{{ answer }}</pre>
-</div>
-{% endif %} {% endblock %}
+<pre id="ai-response" style="margin-top:1rem; white-space:pre-wrap;"></pre>
+
+<script>
+document.getElementById('ai-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const q = document.getElementById('question').value.trim();
+    if (!q) return;
+    const resEl = document.getElementById('ai-response');
+    resEl.textContent = 'Sending...';
+    try {
+        const resp = await fetch('{{ url_for('ai_query') }}', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question: q })
+        });
+        const data = await resp.json();
+        resEl.textContent = data.answer || data.error || JSON.stringify(data);
+    } catch (err) {
+        resEl.textContent = 'Error querying AI: ' + err;
+    }
+});
+</script>
+{% endblock %}
