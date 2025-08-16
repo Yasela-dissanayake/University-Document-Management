@@ -14,30 +14,29 @@ from flask import (
     url_for, flash, session
 )
 
-# --- .env early load (so wallet_manager & clients see env values) ---
+# --- .env early load ---
 try:
     from dotenv import load_dotenv  # type: ignore
 except Exception:
-    def load_dotenv(*args, **kwargs):  # no-op fallback
+    def load_dotenv(*args, **kwargs):
         return None
 
 BASE_DIR = os.path.dirname(__file__)
 REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
 load_dotenv(os.path.join(REPO_ROOT, ".env"))
 
-# Ensure 'python_backend' is importable both as module and as script
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
-# --- Backend clients & RBAC ---
+# --- Clients & RBAC & ACL ---
 from python_backend.blockchain_client import UniversityBlockchainClient  # type: ignore
 from python_backend.ipfs_client import UniversityIPFSClient  # type: ignore
 from python_backend.wallet_manager import get_or_create_wallet  # type: ignore
 from python_backend import rbac  # type: ignore
+from python_backend import acl   # <--- NEW
 
-# --- Optional AI agent loader (unchanged logic; safe wrapper) ---
+# --- Optional AI agent loader ---
 import importlib.util
-
 def _load_agent_function() -> Optional[Any]:
     try:
         from python_backend.ai.agent import answer_question  # type: ignore
@@ -45,7 +44,6 @@ def _load_agent_function() -> Optional[Any]:
         return answer_question
     except Exception as e:
         print(f"[AI] Package import failed: {e}")
-
     agent_path = os.path.join(BASE_DIR, "ai", "agent.py")
     if os.path.exists(agent_path):
         try:
@@ -67,7 +65,6 @@ def ask_agent(question: str) -> str:
         return str(out)
     return "AI functionality not yet implemented."
 
-# --- Flask app ---
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-secret")
 
@@ -75,11 +72,9 @@ app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-secret")
 def inject_current_year():
     return {"current_year": datetime.utcnow().year}
 
-# --- Singletons ---
 bc = UniversityBlockchainClient()
 ipfs = UniversityIPFSClient()
 
-# --- Helpers ---
 def _parse_timestamp(value, default_to_now=True) -> int:
     if value is None or value == "":
         return int(time.time()) if default_to_now else 0
@@ -124,7 +119,7 @@ def _normalize_store_result(res, doc: dict) -> tuple[str, str]:
 def _canon_sid(s: str) -> str:
     return (s or "").strip().upper()
 
-# --- Auth views (simple session-based) ---
+# --- Auth views ---
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -175,7 +170,6 @@ def register():
             flash("Year must be an integer.", "error")
             return redirect(url_for("register"))
 
-        # Create/fetch custodial wallet for the student
         try:
             student_wallet, _created = get_or_create_wallet(student_id)
         except Exception as e:
@@ -189,12 +183,13 @@ def register():
         try:
             if doc_raw:
                 doc = json.loads(doc_raw)
-                # normalize & enforce student_id and timestamp
                 doc["student_id"] = student_id
                 timestamp = _parse_timestamp(doc.get("timestamp"))
                 doc["timestamp"] = timestamp
-                res = ipfs.store_academic_document(doc)
-                ipfs_hash, content_hash = _normalize_store_result(res, doc)
+
+                # --- NEW: encrypt and store with default ACL principals ---
+                principals = acl.default_principals(student_id)
+                ipfs_hash, content_hash = acl.encrypt_and_store(doc, principals, ipfs)
 
             tx_hash = bc.register_student_record(
                 student_id=student_id,
@@ -229,13 +224,13 @@ def update():
 
         try:
             doc = json.loads(doc_raw)
-            # enforce canonical student_id
             doc["student_id"] = student_id
             timestamp = _parse_timestamp(doc.get("timestamp"))
             doc["timestamp"] = timestamp
 
-            res = ipfs.store_academic_document(doc)
-            ipfs_hash, content_hash = _normalize_store_result(res, doc)
+            # --- NEW: encrypt & store with default ACL principals ---
+            principals = acl.default_principals(student_id)
+            ipfs_hash, content_hash = acl.encrypt_and_store(doc, principals, ipfs)
 
             tx = bc.add_semester_record(
                 student_id=student_id,
@@ -277,8 +272,9 @@ def view():
 @app.route("/offchain", methods=["POST"])
 def offchain():
     """
-    RBAC gate: require login, then allow if role in ALLOWED_OFFCHAIN_ROLES
-    OR user is the student whose document is being viewed.
+    RBAC + ACL gate:
+      - must be logged in & allowed by RBAC
+      - document is encrypted on IPFS; decrypt only if user is on its ACL
     """
     ipfs_hash = (request.form.get("ipfs_hash") or "").strip()
     target_student_id = _canon_sid(request.form.get("student_id") or "")
@@ -288,7 +284,6 @@ def offchain():
 
     user = _current_user()
     if not user:
-        # redirect to login, then bounce back here
         return redirect(url_for("login", next=url_for("view", student_id=target_student_id)))
 
     if not rbac.can_view_offchain(user, target_student_id):
@@ -296,10 +291,16 @@ def offchain():
         return redirect(url_for("view", student_id=target_student_id))
 
     try:
-        data = ipfs.retrieve_academic_document(ipfs_hash)
-        if not isinstance(data, dict):
-            data = {"raw": data}
+        payload = ipfs.retrieve_academic_document(ipfs_hash)
+        # If this is an encrypted payload, unwrap using ACL; otherwise show raw
+        if isinstance(payload, dict) and payload.get("enc") == "fernet-v1":
+            data = acl.decrypt_for_user(user, target_student_id, ipfs_hash, payload)
+        else:
+            data = payload if isinstance(payload, dict) else {"raw": payload}
         return render_template("offchain.html", data=data)
+    except PermissionError as e:
+        flash(str(e), "error")
+        return redirect(url_for("view", student_id=target_student_id))
     except Exception as e:
         flash(f"Decrypt failed: {e}", "error")
         return redirect(url_for("view", student_id=target_student_id))
