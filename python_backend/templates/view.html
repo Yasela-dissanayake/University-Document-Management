@@ -1,4 +1,6 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "layout.html" %}
+
+{% block content %}
 <h2>Inspect Student Semesters</h2>
 <form method="post">
   <label for="student_id">Student ID</label>
@@ -15,61 +17,31 @@
 {% if student %}
 <h3>On-Chain Student Data</h3>
 <table>
-  <tr>
-    <th>Field</th>
-    <th>Value</th>
-  </tr>
-  <tr>
-    <td>Student ID</td>
-    <td>{{ student.student_id }}</td>
-  </tr>
-  <tr>
-    <td>Name</td>
-    <td>{{ student.name }}</td>
-  </tr>
-  <tr>
-    <td>Program</td>
-    <td>{{ student.program }}</td>
-  </tr>
-  <tr>
-    <td>Year</td>
-    <td>{{ student.year }}</td>
-  </tr>
-  <tr>
-    <td>Latest IPFS Hash</td>
-    <td>{{ ipfs_hash }}</td>
-  </tr>
-  <tr>
-    <td>Is Active</td>
-    <td>{{ 'Yes' if student.is_active else 'No' }}</td>
-  </tr>
+  <tr><th>Field</th><th>Value</th></tr>
+  <tr><td>Student ID</td><td>{{ student.student_id }}</td></tr>
+  <tr><td>Name</td><td>{{ student.name }}</td></tr>
+  <tr><td>Program</td><td>{{ student.program }}</td></tr>
+  <tr><td>Year</td><td>{{ student.year }}</td></tr>
+  <tr><td>Latest IPFS Hash</td><td>{{ ipfs_hash }}</td></tr>
+  <tr><td>Is Active</td><td>{{ 'Yes' if student.is_active else 'No' }}</td></tr>
   <tr>
     <td>Timestamp</td>
-    <td>
-      <span
-        class="epoch"
-        data-epoch="{{ student.timestamp }}"
-        title="{{ student.timestamp }}"
-      ></span>
-    </td>
+    <td><span class="epoch" data-epoch="{{ student.timestamp }}" title="{{ student.timestamp }}"></span></td>
   </tr>
 </table>
 
 {% if semesters %}
 <h3>Semester Documents</h3>
 <table>
-  <tr>
-    <th>#</th>
-    <th>IPFS Hash</th>
-    <th>Action</th>
-  </tr>
+  <tr><th>#</th><th>IPFS Hash</th><th>Action</th></tr>
   {% for h in semesters %}
   <tr>
     <td>{{ loop.index }}</td>
     <td>{{ h }}</td>
     <td>
-      <form action="{{ url_for('offchain') }}" method="post" style="margin: 0">
-        <input type="hidden" name="ipfs_hash" value="{{ h }}" />
+      <form action="{{ url_for('offchain') }}" method="post" style="margin:0">
+        <input type="hidden" name="ipfs_hash" value="{{ h }}">
+        <input type="hidden" name="student_id" value="{{ student.student_id }}">
         <button type="submit">View Document</button>
       </form>
     </td>
@@ -78,7 +50,8 @@
 </table>
 {% else %}
 <p>No semesters found for this student.</p>
-{% endif %} {% elif request.method == 'POST' %}
+{% endif %}
+{% elif request.method == 'POST' %}
 <p><em>Student not found.</em></p>
 {% endif %}
 
@@ -92,23 +65,13 @@
       try {
         return d.toLocaleString(undefined, {
           timeZone: "Asia/Colombo",
-          year: "numeric",
-          month: "short",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: false,
+          year: "numeric", month: "short", day: "2-digit",
+          hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
         });
-      } catch (_) {
-        // Fallback if timezone not supported
-        return d.toLocaleString();
-      }
+      } catch (_) { return d.toLocaleString(); }
     }
-
-    document.querySelectorAll(".epoch").forEach(function (el) {
-      const sec = el.getAttribute("data-epoch");
-      el.textContent = fmtEpoch(sec);
+    document.querySelectorAll(".epoch").forEach(el => {
+      el.textContent = fmtEpoch(el.getAttribute("data-epoch"));
     });
   })();
 </script>
