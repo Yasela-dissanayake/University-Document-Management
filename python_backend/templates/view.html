@@ -13,7 +13,7 @@
 </form>
 
 {% if student %}
-<h3>On‑Chain Student Data</h3>
+<h3>On-Chain Student Data</h3>
 <table>
   <tr>
     <th>Field</th>
@@ -41,11 +41,17 @@
   </tr>
   <tr>
     <td>Is Active</td>
-    <td>{{ student.is_active }}</td>
+    <td>{{ 'Yes' if student.is_active else 'No' }}</td>
   </tr>
   <tr>
     <td>Timestamp</td>
-    <td>{{ student.timestamp }}</td>
+    <td>
+      <span
+        class="epoch"
+        data-epoch="{{ student.timestamp }}"
+        title="{{ student.timestamp }}"
+      ></span>
+    </td>
   </tr>
 </table>
 
@@ -74,4 +80,36 @@
 <p>No semesters found for this student.</p>
 {% endif %} {% elif request.method == 'POST' %}
 <p><em>Student not found.</em></p>
-{% endif %} {% endblock %}
+{% endif %}
+
+<script>
+  (function () {
+    function fmtEpoch(sec) {
+      if (sec === undefined || sec === null || sec === "") return "—";
+      const num = Number(sec);
+      if (!isFinite(num)) return String(sec);
+      const d = new Date(num * 1000);
+      try {
+        return d.toLocaleString(undefined, {
+          timeZone: "Asia/Colombo",
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        });
+      } catch (_) {
+        // Fallback if timezone not supported
+        return d.toLocaleString();
+      }
+    }
+
+    document.querySelectorAll(".epoch").forEach(function (el) {
+      const sec = el.getAttribute("data-epoch");
+      el.textContent = fmtEpoch(sec);
+    });
+  })();
+</script>
+{% endblock %}
