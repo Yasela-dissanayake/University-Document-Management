@@ -2,14 +2,217 @@
 
 {% block content %}
 <h2>Update Semester</h2>
-<p>Append a new semester record for an existing student. Paste the semester transcript as JSON.</p>
-<form method="post">
-    <label for="student_id">Student ID</label>
-    <input type="text" id="student_id" name="student_id" required>
+<p>Paste or type your <strong>courses array</strong>. The page will auto-create the full document JSON with
+<code>student_id</code>, <code>document_type</code>, <code>timestamp</code>, and <code>gpa</code>.</p>
 
-    <label for="document">Document JSON</label>
-    <textarea id="document" name="document" placeholder='{"student_id": "S12345", "document_type": "transcript", "timestamp": "2026-01-15T00:00:00Z", "courses": [{"code": "CS201", "name": "Data Structures", "grade": "B+"}], "gpa": 3.6}' required></textarea>
+<form method="post" id="update-form" onsubmit="return validateBeforeSubmit();">
+  <label for="student_id">Student ID</label>
+  <input type="text" id="student_id" name="student_id" required placeholder="e.g., S20841">
 
-    <button type="submit">Append Semester</button>
+  <label for="courses_input">Courses Array (JSON)</label>
+  <textarea id="courses_input" placeholder='[
+  {"code":"BIO1002","name":"Basic Life Sciences (Foundation Course)","grade":"A+"},
+  {"code":"CSC1002","name":"Computer Applications","grade":"A"},
+  {"code":"CSC1023","name":"Object-oriented Programming","grade":"A"}
+]' oninput="refreshPreview()" rows="9"></textarea>
+
+  <div class="hint">
+    <p>
+      Notes:
+      <ul>
+        <li><strong>Credits</strong>: If a course object does not include <code>"credits"</code>, it will be inferred
+            from the <strong>last digit of the course code</strong> (e.g., <code>BIO1002</code> → <code>2</code> credits).
+            If no trailing digit exists, the course counts as <code>1</code> credit.</li>
+        <li>Accepted letter grades map to a 4.0 scale (A+…F). If a course has <code>"grade": 0</code> (or <code>"0"</code>),
+            it will be <strong>ignored</strong> for GPA calculation.</li>
+        <li>You may still specify <code>"credits"</code> explicitly; explicit values take precedence over inference.</li>
+      </ul>
+    </p>
+  </div>
+
+  <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
+    <button type="button" class="secondary" onclick="buildDocument()">Generate Document JSON</button>
+    <span id="gpa_badge" style="background:#eef; padding:0.35rem 0.6rem; border-radius:8px; font-weight:600;">
+      GPA: <span id="gpa_value">—</span>
+    </span>
+    <span id="status_msg" style="color:#666;"></span>
+  </div>
+
+  <label for="document">Document JSON (auto-generated; you can still edit if needed)</label>
+  <textarea id="document" name="document" rows="12" readonly></textarea>
+
+  <button type="submit">Submit Update</button>
 </form>
+
+<script>
+  // --- Grade → points map (4.0 scale). Adjust if your institution differs. ---
+  const GRADE_POINTS = {
+    "A+": 4.0, "A": 4.0, "A-": 3.7,
+    "B+": 3.3, "B": 3.0, "B-": 2.7,
+    "C+": 2.3, "C": 2.0, "C-": 1.7,
+    "D+": 1.3, "D": 1.0, "D-": 0.7,
+    "E": 0.0, "F": 0.0
+  };
+
+  function canonSID(s) {
+    return (s || "").trim().toUpperCase();
+  }
+
+  function nowEpoch() {
+    return Math.floor(Date.now() / 1000);
+  }
+
+  function inferCreditsFromCode(code) {
+    const m = String(code || "").trim().match(/(\d)$/);
+    return m ? Number(m[1]) : 1;
+  }
+
+  function isZeroGrade(gradeVal) {
+    // Treat numeric 0 or string "0" (any casing/spacing) as zero → exclude from GPA
+    if (typeof gradeVal === "number") return Number(gradeVal) === 0;
+    const s = String(gradeVal).trim();
+    return s === "0";
+  }
+
+  function parseCourses() {
+    const el = document.getElementById("courses_input");
+    const raw = el.value.trim();
+    if (!raw) return [];
+
+    try {
+      const arr = JSON.parse(raw);
+      if (!Array.isArray(arr)) throw new Error("Courses must be a JSON array.");
+      // normalize minimal fields; allow extra fields like 'credits'
+      return arr.map((c, idx) => {
+        if (typeof c !== "object" || c === null) {
+          throw new Error(`Course at index ${idx} must be an object.`);
+        }
+        const code = String(c.code || "").trim();
+        const name = String(c.name || "").trim();
+        const gradeRaw = (c.grade !== undefined && c.grade !== null) ? c.grade : "";
+        const grade = (typeof gradeRaw === "string") ? gradeRaw.trim().toUpperCase() : gradeRaw;
+
+        let credits;
+        if ("credits" in c && !isNaN(Number(c.credits))) {
+          credits = Number(c.credits);            // explicit credits wins
+        } else {
+          credits = inferCreditsFromCode(code);   // fallback: last digit of code
+        }
+
+        if (!code || !name || (gradeRaw === "")) {
+          throw new Error(`Course at index ${idx} must include code, name and grade.`);
+        }
+        return { code, name, grade, credits };
+      });
+    } catch (e) {
+      throw new Error("Invalid courses JSON: " + e.message);
+    }
+  }
+
+  function calcGPA(courses) {
+    if (!courses.length) return null;
+    let totalPoints = 0;
+    let totalCredits = 0;
+
+    for (const c of courses) {
+      // Skip GPA contribution if grade is explicitly zero (0 or "0")
+      if (isZeroGrade(c.grade)) continue;
+
+      const gp = (typeof c.grade === "string")
+        ? GRADE_POINTS[(c.grade || "").toUpperCase()]
+        : undefined;
+
+      const cr = (!isNaN(Number(c.credits))) ? Number(c.credits) : 1;
+
+      // If letter grade missing or unrecognized, treat as 0.0 but STILL count credits
+      const points = (gp !== undefined ? gp : 0.0) * cr;
+
+      totalPoints += points;
+      totalCredits += cr;
+    }
+
+    if (totalCredits <= 0) return null;
+    // Round to 2 decimals
+    return Math.round((totalPoints / totalCredits) * 100) / 100;
+  }
+
+  function buildDocument() {
+    const sid = canonSID(document.getElementById("student_id").value);
+    const status = document.getElementById("status_msg");
+    const gpaSpan = document.getElementById("gpa_value");
+    status.textContent = "";
+
+    if (!sid) {
+      status.textContent = "Please enter Student ID.";
+      return;
+    }
+
+    let courses = [];
+    try {
+      courses = parseCourses();
+    } catch (e) {
+      status.textContent = e.message;
+      return;
+    }
+
+    const gpa = calcGPA(courses);
+    if (gpa !== null) {
+      gpaSpan.textContent = gpa.toFixed(2);
+    } else {
+      gpaSpan.textContent = "—";
+    }
+
+    const doc = {
+      student_id: sid,
+      document_type: "transcript",
+      timestamp: nowEpoch(),
+      gpa: (gpa !== null ? gpa : undefined),
+      courses: courses.map(({ code, name, grade, credits }) => ({ code, name, grade, credits }))
+    };
+
+    if (doc.gpa === undefined) delete doc.gpa;
+
+    const out = JSON.stringify(doc, null, 2);
+    const docEl = document.getElementById("document");
+    docEl.value = out;
+  }
+
+  function refreshPreview() {
+    // lightweight refresh when editing the courses textarea
+    try {
+      const courses = parseCourses();
+      const gpa = calcGPA(courses);
+      document.getElementById("gpa_value").textContent = (gpa !== null ? gpa.toFixed(2) : "—");
+      document.getElementById("status_msg").textContent = "";
+    } catch (e) {
+      document.getElementById("gpa_value").textContent = "—";
+      document.getElementById("status_msg").textContent = e.message;
+    }
+  }
+
+  function validateBeforeSubmit() {
+    // Ensure the Document JSON exists (or generate it)
+    const docEl = document.getElementById("document");
+    if (!docEl.value.trim()) {
+      buildDocument();
+    }
+    // Re-check after building
+    if (!docEl.value.trim()) {
+      alert("Please generate Document JSON before submitting.");
+      return false;
+    }
+    // Also ensure student_id exists
+    const sid = canonSID(document.getElementById("student_id").value);
+    if (!sid) {
+      alert("Please enter Student ID.");
+      return false;
+    }
+    return true;
+  }
+
+  // Optional: attempt to build once on load if student_id prefilled (query param)
+  window.addEventListener("DOMContentLoaded", () => {
+    refreshPreview();
+  });
+</script>
 {% endblock %}

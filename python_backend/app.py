@@ -1,9 +1,14 @@
-# python_backend/app.py
+
 from __future__ import annotations
 
 import json
 import os
 import sys
+import hashlib
+
+
+from dotenv import load_dotenv
+
 from datetime import datetime
 from typing import Any, Dict, Optional
 
@@ -17,14 +22,25 @@ from flask import (
     flash,
 )
 
+import time
+from datetime import datetime, timezone
+
+try:
+    from dateutil import parser as dtparser  # optional, nicer ISO parsing if installed
+except Exception:
+    dtparser = None
+
 # --- Make sure package imports work whether run as a module or a script -----
 BASE_DIR = os.path.dirname(__file__)                  # .../python_backend
 REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
+
+load_dotenv(os.path.join(REPO_ROOT, ".env"))
 # --- Backend clients --------------------------------------------------------
 # These are your existing classes. They read RPC / addresses from .env.
+from python_backend.wallet_manager import get_or_create_wallet, get_address
 from python_backend.blockchain_client import UniversityBlockchainClient  # type: ignore
 from python_backend.ipfs_client import UniversityIPFSClient  # type: ignore
 
@@ -105,63 +121,135 @@ def _parse_document_json(raw: str) -> Dict[str, Any]:
         data["timestamp"] = int(datetime.utcnow().timestamp())
     return data
 
+def _normalize_store_result(res, doc: dict) -> tuple[str, str]:
+    """
+    Normalize whatever ipfs.store_academic_document returns into (ipfs_hash, content_hash).
+
+    Accepts:
+      - dict: uses common keys (ipfs_hash/cid/Hash/path, content_hash/sha256)
+      - tuple/list: takes first two items (CID, hash)
+      - str: treated as CID
+
+    If content_hash is missing, compute SHA-256 over the canonicalized JSON doc.
+    """
+    ipfs_hash = ""
+    content_hash = ""
+
+    if isinstance(res, dict):
+        ipfs_hash = (
+            res.get("ipfs_hash")
+            or res.get("cid")
+            or res.get("Hash")
+            or res.get("path")
+            or ""
+        )
+        content_hash = res.get("content_hash") or res.get("sha256") or ""
+    elif isinstance(res, (list, tuple)):
+        if len(res) >= 1:
+            ipfs_hash = str(res[0])
+        if len(res) >= 2:
+            content_hash = str(res[1])
+    else:
+        ipfs_hash = str(res)
+
+    if not content_hash:
+        canonical = json.dumps(doc, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        content_hash = hashlib.sha256(canonical).hexdigest()
+
+    return ipfs_hash, content_hash
+
+
 # --- Routes -----------------------------------------------------------------
 @app.route("/")
 def index():
     return redirect(url_for("register"))
 
-# Register student (optional first-sem JSON)
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         student_id = request.form.get("student_id", "").strip()
-        name = request.form.get("name", "").strip()
-        program = request.form.get("program", "").strip()
-        year = request.form.get("year", "").strip()
-        doc_raw = request.form.get("document", "").strip()
+        name       = request.form.get("name", "").strip()
+        program    = request.form.get("program", "").strip()
+        year_raw   = request.form.get("year", "").strip()
+        doc_raw    = request.form.get("document", "").strip()
 
-        if not (student_id and name and program and year):
+        if not (student_id and name and program and year_raw):
             flash("Please fill Student ID, Name, Program, and Year.", "error")
             return redirect(url_for("register"))
 
         try:
-            year_int = int(year)
+            year = int(year_raw)
         except ValueError:
             flash("Year must be an integer.", "error")
             return redirect(url_for("register"))
 
-        # Optionally store initial semester doc
-        ipfs_hash = None
-        content_hash = None
-        timestamp = int(datetime.utcnow().timestamp())
-
+        # 1) Create/fetch a custodial wallet behind the scenes
         try:
-            if doc_raw:
-                doc = _parse_document_json(doc_raw)
-                # Optionally enforce matching ID in document
-                if doc.get("student_id") and doc["student_id"] != student_id:
-                    flash("Document student_id does not match form student_id.", "error")
-                    return redirect(url_for("register"))
-
-                ipfs_hash, content_hash = ipfs.store_academic_document(doc)  # existing method in your repo
-                timestamp = int(doc.get("timestamp", timestamp))
-
-            tx = bc.register_student_record(
-                student_id=student_id,
-                name=name,
-                program=program,
-                year=year_int,
-                documents_ipfs_hash=ipfs_hash or "",
-                content_hash=content_hash or "",
-                timestamp=timestamp,
-            )
-            flash(f"Registered {student_id}. Tx: {tx}", "success")
-            return redirect(url_for("view"))
+            student_wallet, created = get_or_create_wallet(student_id)
         except Exception as e:
-            flash(f"Registration failed: {e}", "error")
+            flash(f"Wallet creation failed: {e}", "error")
             return redirect(url_for("register"))
 
+        # 2) Optionally store the first-semester transcript on IPFS
+        ipfs_hash = ""
+        content_hash = ""
+        timestamp = int(datetime.utcnow().timestamp())
+        try:
+            if doc_raw:
+                doc = json.loads(doc_raw)
+                # keep UX simple but prevent mismatched IDs if present in JSON
+                if doc.get("student_id") and doc["student_id"] != student_id:
+                    flash("Document student_id does not match the form student_id.", "error")
+                    return redirect(url_for("register"))
+
+                if "timestamp" not in doc:
+                    doc["timestamp"] = timestamp
+                # ipfs_hash, content_hash = ipfs.store_academic_document(doc)  # returns (cid, hex_hash)
+                res = ipfs.store_academic_document(doc)
+                ipfs_hash, content_hash = _normalize_store_result(res, doc)
+                timestamp = int(doc["timestamp"])
+        except Exception as e:
+            flash(f"Failed to store document on IPFS: {e}", "error")
+            return redirect(url_for("register"))
+
+        # 3) Call the contract (service wallet pays gas). Try with student_wallet first,
+        #    fall back to older client signature if your blockchain_client lacks the param.
+        try:
+            tx_hash = None
+            try:
+                # Newer client signature that includes student_wallet
+                tx_hash = bc.register_student_record(
+                    student_id=student_id,
+                    name=name,
+                    program=program,
+                    year=year,
+                    documents_ipfs_hash=ipfs_hash,
+                    content_hash=content_hash,
+                    timestamp=timestamp,
+                    student_wallet=student_wallet,
+                )
+            except TypeError:
+                # Backward-compat: older client without student_wallet param
+                tx_hash = bc.register_student_record(
+                    student_id=student_id,
+                    name=name,
+                    program=program,
+                    year=year,
+                    documents_ipfs_hash=ipfs_hash,
+                    content_hash=content_hash,
+                    timestamp=timestamp,
+                )
+
+            created_msg = " (new wallet created)" if created else ""
+            flash(f"Registered {student_id} with wallet {student_wallet}{created_msg}. Tx: {tx_hash}", "success")
+            return redirect(url_for("view", student_id=student_id))
+        except Exception as e:
+            flash(f"Blockchain registration failed: {e}", "error")
+            return redirect(url_for("register"))
+
+    # GET → render form
     return render_template("register.html")
+
 
 # Append a new semester (version)
 @app.route("/update", methods=["GET", "POST"])
@@ -183,7 +271,9 @@ def update():
                 flash("Document student_id does not match form student_id.", "error")
                 return redirect(url_for("update"))
 
-            ipfs_hash, content_hash = ipfs.store_academic_document(doc)
+            # ipfs_hash, content_hash = ipfs.store_academic_document(doc)
+            res = ipfs.store_academic_document(doc)
+            ipfs_hash, content_hash = _normalize_store_result(res, doc)
             timestamp = int(doc.get("timestamp", int(datetime.utcnow().timestamp())))
 
             tx = bc.add_semester_record(
@@ -263,3 +353,4 @@ def ai_query():
 if __name__ == "__main__":
     # Running as a script is fine thanks to the sys.path fix above
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5000")), debug=True)
+        
