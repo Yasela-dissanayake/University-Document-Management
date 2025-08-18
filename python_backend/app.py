@@ -57,9 +57,15 @@ def _load_agent_function() -> Optional[Any]:
     return None
 
 _AGENT_FUNC = _load_agent_function()
-def ask_agent(question: str) -> str:
+
+def ask_agent(question: str, user: Optional[Dict[str, Any]] = None) -> str:
     if callable(_AGENT_FUNC):
-        out = _AGENT_FUNC(question)
+        try:
+            # Newer agent signature
+            out = _AGENT_FUNC(question, user_context=user)
+        except TypeError:
+            # Back-compat: old agent without user_context
+            out = _AGENT_FUNC(question)
         if isinstance(out, dict) and "answer" in out:
             return str(out["answer"])
         return str(out)
@@ -316,7 +322,8 @@ def ai_query():
     if not question:
         return jsonify({"error": "Missing 'question'"}), 400
     try:
-        answer = ask_agent(question)
+        user = _current_user()                # <- get session user
+        answer = ask_agent(question, user)    # <- pass user to wrapper
         return jsonify({"answer": answer})
     except Exception as e:
         return jsonify({"error": f"Agent failed: {e}"}), 500

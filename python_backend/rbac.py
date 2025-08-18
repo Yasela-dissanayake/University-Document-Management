@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import re
 import sqlite3
 from typing import Optional, Dict
 
@@ -10,6 +11,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 DB_PATH = os.path.join(os.path.dirname(__file__), "auth.sqlite")
 
 ALLOWED_OFFCHAIN_ROLES = {"ADMIN", "HOD", "DEAN", "AR", "DVC"}
+
+_STUDENT_ID_RE = re.compile(r"^S\d{5}$", re.IGNORECASE)
 
 def _init_db() -> None:
     with sqlite3.connect(DB_PATH) as conn:
@@ -66,20 +69,34 @@ def authenticate(username: str, password: str) -> Optional[Dict]:
         return user
     return None
 
+def _canon(s: str) -> str:
+    return (s or "").strip().upper()
+
 def can_view_offchain(user: Optional[Dict], target_student_id: str) -> bool:
     """
     Off-chain access allowed if:
       - user exists AND
       - user.role in ALLOWED_OFFCHAIN_ROLES, OR
-      - user.role == STUDENT and user.student_id == target_student_id (case-insensitive)
+      - user.role == STUDENT and (user.student_id == target_student_id) [case-insensitive]
+        * Robustness: if user.student_id is empty, but username itself looks like S12345,
+          we treat username as the student's id.
     """
     if not user:
         return False
-    role = (user.get("role") or "").upper()
+
+    role = _canon(user.get("role") or "")
     if role in ALLOWED_OFFCHAIN_ROLES:
         return True
+
     if role == "STUDENT":
-        sid_user = (user.get("student_id") or "").strip().upper()
-        sid_target = (target_student_id or "").strip().upper()
-        return sid_user and (sid_user == sid_target)
+        sid_user = user.get("student_id") or ""
+        sid_user = _canon(sid_user)
+        if not sid_user:
+            # derive from username if it *looks* like a student id
+            uname = _canon(user.get("username") or "")
+            if _STUDENT_ID_RE.match(uname):
+                sid_user = uname
+        sid_target = _canon(target_student_id)
+        return bool(sid_user) and (sid_user == sid_target)
+
     return False
