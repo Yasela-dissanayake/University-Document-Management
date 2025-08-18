@@ -58,18 +58,23 @@ def _load_agent_function() -> Optional[Any]:
 
 _AGENT_FUNC = _load_agent_function()
 
-def ask_agent(question: str, user: Optional[Dict[str, Any]] = None) -> str:
+def ask_agent(question: str, user: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     if callable(_AGENT_FUNC):
         try:
-            # Newer agent signature
             out = _AGENT_FUNC(question, user_context=user)
         except TypeError:
-            # Back-compat: old agent without user_context
             out = _AGENT_FUNC(question)
         if isinstance(out, dict) and "answer" in out:
-            return str(out["answer"])
-        return str(out)
-    return "AI functionality not yet implemented."
+            return out
+        return {
+            "answer": str(out),
+            "trace": {"note": "Agent returned a raw string. No structured trace available."}
+        }
+    return {
+        "answer": "AI functionality not yet implemented.",
+        "trace": {"error": "No agent function available"}
+    }
+
 
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-secret")
@@ -324,6 +329,13 @@ def ai_query():
     try:
         user = _current_user()                # <- get session user
         answer = ask_agent(question, user)    # <- pass user to wrapper
+                
+        if isinstance(answer, dict):
+            print("AI Trace:\n", answer.get("trace"))
+        else:
+            print("AI response was not a dict:", answer)
+
+        
         return jsonify({"answer": answer})
     except Exception as e:
         return jsonify({"error": f"Agent failed: {e}"}), 500

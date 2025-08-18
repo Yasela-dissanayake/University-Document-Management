@@ -29,7 +29,6 @@ def _extract_sid(text: str) -> Optional[str]:
 
 
 def _extract_course_code(text: str) -> Optional[str]:
-    # pick the first plausible token that looks like a course code
     m = _COURSE_RE.search(text or "")
     return m.group(1).upper() if m else None
 
@@ -49,81 +48,102 @@ def _format_ts(ts: Optional[int]) -> str:
         return str(ts)
 
 
-def _llm_answer(prompt: str) -> str:
+def _llm_answer(prompt: str) -> Dict[str, Any]:
     if not _HAS_LLM:
-        return "I can’t answer that without the LLM installed."
+        return {"answer": "I can’t answer that without the LLM installed."}
     model = os.getenv("OLLAMA_MODEL", "llama3")
     llm = OllamaLLM(model=model)
-    return llm.invoke(prompt)
+    answer = llm.invoke(prompt)
+    return {
+        "answer": answer,
+        "trace": {
+            "llm_model": model,
+            "used_prompt": prompt,
+            "note": "No structured data was retrieved for this answer.",
+        },
+    }
 
 
-def answer_question(question: str, user_context: Optional[Dict[str, Any]] = None) -> Any:
-    """
-    Main entrypoint used by Flask. Returns a plain string answer (or a small dict).
-    Enforces RBAC/ACL for off-chain fetches INSIDE the tools.
-    """
+def answer_question(question: str, user_context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     q = (question or "").strip()
     if not q:
-        return "Please provide a question."
+        return {"answer": "Please provide a question."}
 
-    # Simple routing for common tasks:
     sid = _extract_sid(q)
     course = _extract_course_code(q)
 
-    # (A) "grade of <course> of <student>"
+    # (A) Query for course grade
     if sid and course and ("grade" in q.lower() or "result" in q.lower()):
         resp = get_course_grade(sid, course, user_context)
+        trace = resp.get("trace", {})
         if not resp.get("ok"):
-            return f"You’re not authorized to access off-chain records of {sid}."
+            return {"answer": f"You’re not authorized to access off-chain records of {sid}.", "trace": trace}
         if not resp.get("found"):
-            return f"I couldn’t find {course} for {sid} in the available semester documents."
+            return {"answer": f"I couldn’t find {course} for {sid} in the available semester documents.", "trace": trace}
         grade = resp.get("grade")
         when = _format_ts(resp.get("when"))
-        return f"The grade of {course} for {sid} is {grade}." + (f" (as of {when})" if when else "")
+        return {
+            "answer": f"The grade of {course} for {sid} is {grade}." + (f" (as of {when})" if when else ""),
+            "trace": trace,
+        }
 
-    # (B) "show all grades of <student>"
+    # (B) Query for all grades
     if sid and _wants_all_grades(q):
         resp = get_offchain_semesters(sid, user_context)
+        trace = resp.get("trace", {})
         if not resp.get("ok"):
-            return f"You’re not authorized to access off-chain records of {sid}."
+            return {"answer": f"You’re not authorized to access off-chain records of {sid}.", "trace": trace}
         semesters = resp.get("semesters", [])
         if not semesters:
-            return f"No off-chain semester documents found for {sid}."
-        # Prefer latest semester only unless explicitly asked for all semesters
+            return {"answer": f"No off-chain semester documents found for {sid}.", "trace": trace}
         latest = semesters[0]
         courses = latest.get("courses") or []
         if not courses:
-            return f"No course list found in the latest semester document for {sid}."
+            return {"answer": f"No course list found in the latest semester document for {sid}.", "trace": trace}
         lines = [f"Latest semester grades for {sid}:"]
         for c in courses:
             code = c.get("code", "")
             grade = c.get("grade", "")
             name = c.get("name", "")
             lines.append(f"- {code}: {grade} ({name})")
-        return "\n".join(lines)
+        return {
+            "answer": "\n".join(lines),
+            "trace": trace,
+        }
 
-    # (C) If the user asked for “semesters” or “transcript” for a student → list available semesters
+    # (C) Query for transcript or semester list
     if sid and ("semester" in q.lower() or "transcript" in q.lower()):
         resp = get_offchain_semesters(sid, user_context)
+        trace = resp.get("trace", {})
         if not resp.get("ok"):
-            return f"You’re not authorized to access off-chain records of {sid}."
+            return {"answer": f"You’re not authorized to access off-chain records of {sid}.", "trace": trace}
         semesters = resp.get("semesters", [])
         if not semesters:
-            return f"No off-chain semester documents found for {sid}."
+            return {"answer": f"No off-chain semester documents found for {sid}.", "trace": trace}
         lines = [f"Found {len(semesters)} semester document(s) for {sid}:"]
         for i, s in enumerate(semesters, start=1):
             lines.append(f"{i}. CID={s.get('cid')} time={_format_ts(s.get('timestamp'))} gpa={s.get('gpa')}")
-        return "\n".join(lines)
+        return {
+            "answer": "\n".join(lines),
+            "trace": trace,
+        }
 
-    # (D) If there’s a student id but request sounds on-chain-ish → return on-chain info
+    # (D) Query for on-chain data
     if sid and any(k in q.lower() for k in ["year", "program", "on-chain", "onchain", "blockchain"]):
         data = get_onchain_student(sid)
         if not data:
-            return f"I couldn’t find on-chain data for {sid}."
-        return (
-            f"{sid}: {data.get('name')} — {data.get('program')} (year {data.get('year')}). "
-            f"Active: {data.get('is_active')}. Latest CID: {data.get('documents_ipfs_hash')}"
-        )
+            return {"answer": f"I couldn’t find on-chain data for {sid}."}
+        return {
+            "answer": (
+                f"{sid}: {data.get('name')} — {data.get('program')} (year {data.get('year')}). "
+                f"Active: {data.get('is_active')}. Latest CID: {data.get('documents_ipfs_hash')}"
+            ),
+            "trace": {
+                "source": "blockchain",
+                "student_id": sid,
+                "contract_call": "get_onchain_student",
+            },
+        }
 
-    # (E) Fallback to LLM for anything else
+    # (E) Fallback
     return _llm_answer(q)
