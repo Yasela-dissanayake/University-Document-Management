@@ -7,15 +7,31 @@
     <input type="text" id="question" placeholder="Your question" style="width:80%; padding:0.5rem;">
     <button type="submit">Ask</button>
 </form>
-<pre id="ai-response" style="margin-top:1rem; white-space:pre-wrap;"></pre>
+
+<div id="ai-output" style="margin-top:1rem;">
+    <h3 id="ai-answer-heading" style="display:none;">Answer:</h3>
+    <p id="ai-answer" style="white-space:pre-wrap;"></p>
+
+    <h4 id="ai-trace-heading" style="display:none;">Reasoning Trace:</h4>
+    <pre id="ai-trace" style="background:#f6f6f6; padding:1rem; border:1px solid #ccc; white-space:pre-wrap;"></pre>
+</div>
 
 <script>
 document.getElementById('ai-form').addEventListener('submit', async function (e) {
     e.preventDefault();
     const q = document.getElementById('question').value.trim();
     if (!q) return;
-    const resEl = document.getElementById('ai-response');
-    resEl.textContent = 'Sending...';
+
+    const answerEl = document.getElementById('ai-answer');
+    const traceEl = document.getElementById('ai-trace');
+    const ansHeading = document.getElementById('ai-answer-heading');
+    const traceHeading = document.getElementById('ai-trace-heading');
+
+    answerEl.textContent = 'Sending...';
+    traceEl.textContent = '';
+    ansHeading.style.display = 'block';
+    traceHeading.style.display = 'none';
+
     try {
         const resp = await fetch('{{ url_for('ai_query') }}', {
             method: 'POST',
@@ -23,9 +39,25 @@ document.getElementById('ai-form').addEventListener('submit', async function (e)
             body: JSON.stringify({ question: q })
         });
         const data = await resp.json();
-        resEl.textContent = data.answer || data.error || JSON.stringify(data);
+
+        if (typeof data === 'string') {
+            answerEl.textContent = data;
+        } else if (data.answer) {
+            if (typeof data.answer === 'string') {
+                answerEl.textContent = data.answer;
+            } else {
+                answerEl.textContent = data.answer.answer || JSON.stringify(data.answer);
+                if (data.answer.trace) {
+                    traceHeading.style.display = 'block';
+                    traceEl.textContent = JSON.stringify(data.answer.trace, null, 2);
+                }
+            }
+        } else {
+            answerEl.textContent = data.error || 'Unknown response.';
+        }
+
     } catch (err) {
-        resEl.textContent = 'Error querying AI: ' + err;
+        answerEl.textContent = 'Error querying AI: ' + err;
     }
 });
 </script>
