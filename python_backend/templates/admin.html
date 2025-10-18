@@ -1,0 +1,59 @@
+{% extends "layout.html" %} {% block content %}
+<h2>Admin Dashboard — Manage Roles</h2>
+
+<table id="userTable" border="1" cellpadding="6">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Change Role</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+  async function loadUsers() {
+    const res = await fetch("/admin/users");
+    const data = await res.json();
+    const tbody = document.querySelector("#userTable tbody");
+    tbody.innerHTML = "";
+    data.forEach((u) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+      <td>${u.id}</td>
+      <td>${u.username}</td>
+      <td>${u.role}</td>
+      <td>
+        <select id="role-${u.id}">
+          <option ${u.role === "STUDENT" ? "selected" : ""}>STUDENT</option>
+          <option ${u.role === "HOD" ? "selected" : ""}>HOD</option>
+          <option ${u.role === "DEAN" ? "selected" : ""}>DEAN</option>
+          <option ${u.role === "AR" ? "selected" : ""}>AR</option>
+          <option ${u.role === "DVC" ? "selected" : ""}>DVC</option>
+          <option ${u.role === "ADMIN" ? "selected" : ""}>ADMIN</option>
+        </select>
+      </td>
+      <td><button onclick="updateRole(${u.id})">Update</button></td>
+    `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  async function updateRole(userId) {
+    const newRole = document.getElementById(`role-${userId}`).value;
+    const res = await fetch("/admin/set-role", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: userId, role: newRole }),
+    });
+    const data = await res.json();
+    alert(data.message || data.error);
+    loadUsers();
+  }
+
+  loadUsers();
+</script>
+{% endblock %}

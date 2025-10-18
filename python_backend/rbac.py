@@ -175,3 +175,45 @@ def next_state(current_state: str, actor_role: str) -> str:
 
 def is_final_state(state: str) -> bool:
     return state == "FINAL"
+
+def is_validator_role(role):
+    validator_roles = ["HOD", "DEAN", "AR", "DVC","admin"]
+    return role.upper() in validator_roles
+
+# ==========================
+# Admin role management area
+# ==========================
+
+def get_all_users():
+    """
+    Fetch all registered users from the SQLite database.
+    Returns a list of dictionaries like:
+    [{"id": 1, "username": "admin", "role": "ADMIN", "student_id": "S12345", "wallet_address": "0x..."}]
+    """
+    users = []
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT id, username, role, student_id, wallet_address FROM users")
+            rows = cur.fetchall()
+
+        for r in rows:
+            users.append({
+                "id": r[0],
+                "username": r[1],
+                "role": r[2],
+                "student_id": r[3],
+                "wallet_address": r[4]
+            })
+    except Exception as e:
+        print("❌ Error fetching users:", e)
+    return users
+
+
+def set_user_role(username, new_role):
+    """Change a user's role"""
+    if username not in users:
+        return {"error": "User not found"}
+    users[username]["role"] = new_role
+    return {"message": f"Role of {username} updated to {new_role}."}
+

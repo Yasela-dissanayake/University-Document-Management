@@ -77,7 +77,7 @@ def ask_agent(question: str, user: Optional[Dict[str, Any]] = None) -> Dict[str,
 
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-secret")
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "supersecretkey")
 
 @app.context_processor
 def inject_current_year():
@@ -142,6 +142,8 @@ def login():
             flash("Invalid username or password.", "error")
             return redirect(url_for("login", next=next_url))
         session["uid"] = user["id"]
+        session["user"] = user["username"]
+        session["role"] = user["role"]
         flash(f"Welcome, {user['username']}!", "success")
         return redirect(next_url)
     return render_template("login.html")
@@ -339,6 +341,60 @@ def ai_query():
         return jsonify({"answer": answer})
     except Exception as e:
         return jsonify({"error": f"Agent failed: {e}"}), 500
+
+@app.route('/dashboard')
+def dashboard():
+    user = session.get("user")
+    role = user.get("role") if user else None
+    show_validator_link = rbac.is_validator_role(role)
+    return render_template("dashboard.html", show_validator_link=show_validator_link)
+
+@app.route('/validator')
+def validator_dashboard():
+    user = session.get("user")
+    role = user.get("role")
+    if not rbac.is_validator_role(role):
+        return "Access Denied", 403
+    return render_template("validator_dashboard.html", role=role)
+
+# ==========================
+# Admin Role Management Routes
+# ==========================
+@app.route("/admin")
+def admin_dashboard():
+    if session.get("role") != "ADMIN":
+        return redirect(url_for("index"))
+    return render_template("admin.html")
+
+
+@app.route("/admin/users", methods=["GET"])
+def admin_get_users():
+    from python_backend.rbac import get_all_users
+    if session.get("role") != "ADMIN":
+        return jsonify({"error": "Access denied"}), 403
+    return jsonify(get_all_users())
+
+
+@app.route("/admin/set-role", methods=["POST"])
+def admin_set_role():
+    from python_backend.rbac import set_user_role
+    if session.get("role") != "ADMIN":
+        return jsonify({"error": "Access denied"}), 403
+
+    data = request.json
+    username = data.get("username")
+    new_role = data.get("role")
+    return jsonify(set_user_role(username, new_role))
+
+
+@app.route("/session-debug")
+def session_debug():
+    return {
+        "user": session.get("user"),
+        "role": session.get("role")
+    }
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5000")), debug=True)
