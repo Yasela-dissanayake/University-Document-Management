@@ -8,6 +8,8 @@ from typing import Optional, Dict
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
+
 DB_PATH = os.path.join(os.path.dirname(__file__), "auth.sqlite")
 
 ALLOWED_OFFCHAIN_ROLES = {"ADMIN", "HOD", "DEAN", "AR", "DVC"}
@@ -210,10 +212,26 @@ def get_all_users():
     return users
 
 
-def set_user_role(username, new_role):
-    """Change a user's role"""
-    if username not in users:
-        return {"error": "User not found"}
-    users[username]["role"] = new_role
-    return {"message": f"Role of {username} updated to {new_role}."}
+
+def set_user_role(user_id: int, new_role: str) -> dict:
+    """
+    Update a user's role in the database.
+    Returns a success or error dictionary for JSON response.
+    """
+    try:
+        new_role = new_role.strip().upper()
+        with sqlite3.connect(DB_PATH) as conn:
+            cur = conn.cursor()
+            cur.execute("UPDATE users SET role = ? WHERE id = ?", (new_role, user_id))
+            conn.commit()
+
+            if cur.rowcount == 0:
+                return {"error": f"User with id {user_id} not found."}
+
+        print(f"✅ Role updated: User ID {user_id} → {new_role}")
+        return {"message": f"Role updated to {new_role} for user ID {user_id}."}
+
+    except Exception as e:
+        print(f"❌ Error updating user role: {e}")
+        return {"error": str(e)}
 
