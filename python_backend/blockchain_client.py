@@ -341,3 +341,24 @@ class UniversityBlockchainClient:
             # best-effort fallback
             pass
         return d
+
+    def add_letter_record(
+        self,
+        *,
+        student_id: str,
+        documents_ipfs_hash: str,
+        content_hash: str,
+        timestamp: int,
+    ) -> str:
+        """
+        Reuse addSemesterRecord() to store letter documents.
+        This creates a new document version on-chain tagged as a 'letter'.
+        """
+        print(f"📝 Adding letter record for {student_id} via addSemesterRecord()")
+        return self.add_semester_record(
+            student_id=student_id,
+            documents_ipfs_hash=documents_ipfs_hash,
+            content_hash=content_hash,
+            timestamp=timestamp,
+        )
+# End of python_backend/blockchain_client.py
