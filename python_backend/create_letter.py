@@ -1,7 +1,7 @@
 # python_backend/create_letter.py
 import time
-from python_backend.ipfs_client import UniversityIPFSClient
-from python_backend.blockchain_client import UniversityBlockchainClient
+from ipfs_client import UniversityIPFSClient
+from blockchain_client import UniversityBlockchainClient
 
 def create_letter(student_id: str, title: str, body: str, issuer_role: str):
     ipfs_client = UniversityIPFSClient()
@@ -33,7 +33,7 @@ def create_letter(student_id: str, title: str, body: str, issuer_role: str):
 
 if __name__ == "__main__":
     create_letter(
-        student_id="S20841",
+        student_id="S19357",
         title="Request for Exam Approval",
         body="This is to request approval for semester-end examination submission.",
         issuer_role="HOD",
