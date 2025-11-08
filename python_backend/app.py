@@ -21,6 +21,7 @@ except Exception:
     def load_dotenv(*args, **kwargs):
         return None
 
+letter_workflow = {}
 BASE_DIR = os.path.dirname(__file__)
 REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
 load_dotenv(os.path.join(REPO_ROOT, ".env"))
@@ -58,21 +59,26 @@ def _load_agent_function() -> Optional[Any]:
 
 _AGENT_FUNC = _load_agent_function()
 
-def ask_agent(question: str, user: Optional[Dict[str, Any]] = None) -> str:
+def ask_agent(question: str, user: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     if callable(_AGENT_FUNC):
         try:
-            # Newer agent signature
             out = _AGENT_FUNC(question, user_context=user)
         except TypeError:
-            # Back-compat: old agent without user_context
             out = _AGENT_FUNC(question)
         if isinstance(out, dict) and "answer" in out:
-            return str(out["answer"])
-        return str(out)
-    return "AI functionality not yet implemented."
+            return out
+        return {
+            "answer": str(out),
+            "trace": {"note": "Agent returned a raw string. No structured trace available."}
+        }
+    return {
+        "answer": "AI functionality not yet implemented.",
+        "trace": {"error": "No agent function available"}
+    }
+
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-secret")
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "supersecretkey")
 
 @app.context_processor
 def inject_current_year():
@@ -137,6 +143,8 @@ def login():
             flash("Invalid username or password.", "error")
             return redirect(url_for("login", next=next_url))
         session["uid"] = user["id"]
+        session["user"] = user["username"]
+        session["role"] = user["role"]
         flash(f"Welcome, {user['username']}!", "success")
         return redirect(next_url)
     return render_template("login.html")
@@ -324,9 +332,163 @@ def ai_query():
     try:
         user = _current_user()                # <- get session user
         answer = ask_agent(question, user)    # <- pass user to wrapper
+                
+        if isinstance(answer, dict):
+            print("AI Trace:\n", answer.get("trace"))
+        else:
+            print("AI response was not a dict:", answer)
+
+        
         return jsonify({"answer": answer})
     except Exception as e:
         return jsonify({"error": f"Agent failed: {e}"}), 500
+
+@app.route('/dashboard')
+def dashboard():
+    user = session.get("user")
+    role = user.get("role") if user else None
+    show_validator_link = rbac.is_validator_role(role)
+    return render_template("dashboard.html", show_validator_link=show_validator_link)
+
+# @app.route('/validator')
+# def validator_dashboard():
+#     user = session.get("user")
+#     role = user.get("role")
+#     if not rbac.is_validator_role(role):
+#         return "Access Denied", 403
+#     return render_template("validator_dashboard.html", role=role)
+
+# ==========================
+# Admin Role Management Routes
+# ==========================
+@app.route("/admin")
+def admin_dashboard():
+    if session.get("role") != "ADMIN":
+        return redirect(url_for("index"))
+    return render_template("admin.html")
+
+
+@app.route("/admin/users", methods=["GET"])
+def admin_get_users():
+    from python_backend.rbac import get_all_users
+    if session.get("role") != "ADMIN":
+        return jsonify({"error": "Access denied"}), 403
+    return jsonify(get_all_users())
+
+
+# @app.route("/admin/set-role", methods=["POST"])
+# def admin_set_role():
+#     from python_backend.rbac import set_user_role
+#     if session.get("role") != "ADMIN":
+#         return jsonify({"error": "Access denied"}), 403
+
+#     data = request.json
+#     username = data.get("username")
+#     new_role = data.get("role")
+#     return jsonify(set_user_role(username, new_role))
+
+@app.route("/admin/set-role", methods=["POST"])
+def admin_set_role():
+    """
+    Admin endpoint to update a user's role.
+    Accepts JSON: { "id": <user_id>, "role": "<new_role>" }
+    Returns a JSON message.
+    """
+    # Ensure user is logged in and is an admin
+    user = session.get("user")
+    role = session.get("role")
+
+    if not user or role != "ADMIN":
+        return jsonify({"error": "Access denied"}), 403
+
+    # Parse request
+    data = request.get_json(silent=True) or {}
+    user_id = data.get("id")
+    new_role = data.get("role")
+
+    if not user_id or not new_role:
+        return jsonify({"error": "Missing user_id or role"}), 400
+
+    # Update role in DB
+    result = rbac.set_user_role(user_id, new_role)
+    return jsonify(result)
+
+
+
+@app.route("/session-debug")
+def session_debug():
+    return {
+        "user": session.get("user"),
+        "role": session.get("role")
+    }
+
+
+
+# ==========================
+# Validator Workflow Routes
+# ==========================
+
+@app.route("/validator")
+def validator_dashboard():
+    user = _current_user()
+    role = user.get("role") if user else None
+
+    if not rbac.is_validator_role(role):
+        flash("Access denied.", "error")
+        return redirect(url_for("index"))
+
+    # Show all letters relevant to the role
+    visible_letters = [
+        l for l in letter_workflow.values()
+        if l["current_state"] in ["DRAFT", "HOD_APPROVED", "DEAN_APPROVED", "AR_APPROVED"]
+    ]
+    return render_template("validator_dashboard.html", role=role, letters=visible_letters)
+
+
+@app.route("/validator/create", methods=["POST"])
+def validator_create_letter():
+    user = _current_user()
+    role = user.get("role") if user else None
+
+    if role != "HOD":
+        return jsonify({"error": "Only HOD can create letters."}), 403
+
+    data = request.get_json()
+    doc_id = f"LETTER{len(letter_workflow)+1:03d}"
+    title = data.get("title", "Untitled Letter")
+
+    letter_workflow[doc_id] = {
+        "doc_id": doc_id,
+        "title": title,
+        "owner": user["username"],
+        "current_state": "DRAFT",
+        "history": [{"role": role, "action": "CREATE", "timestamp": datetime.utcnow().isoformat()}],
+    }
+    return jsonify({"message": f"Letter {doc_id} created by {role}."}), 200
+
+
+@app.route("/validator/approve", methods=["POST"])
+def validator_approve_letter():
+    user = _current_user()
+    role = user.get("role") if user else None
+
+    data = request.get_json()
+    doc_id = data.get("doc_id")
+
+    letter = letter_workflow.get(doc_id)
+    if not letter:
+        return jsonify({"error": "Letter not found."}), 404
+
+    try:
+        new_state = rbac.next_state(letter["current_state"], role)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+    letter["current_state"] = new_state
+    letter["history"].append({"role": role, "action": "APPROVE", "timestamp": datetime.utcnow().isoformat()})
+    return jsonify({"message": f"{role} approved {doc_id}, now state={new_state}"}), 200
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5000")), debug=True)

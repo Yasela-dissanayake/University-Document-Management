@@ -8,6 +8,8 @@ from typing import Optional, Dict
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
+
 DB_PATH = os.path.join(os.path.dirname(__file__), "auth.sqlite")
 
 ALLOWED_OFFCHAIN_ROLES = {"ADMIN", "HOD", "DEAN", "AR", "DVC"}
@@ -100,3 +102,136 @@ def can_view_offchain(user: Optional[Dict], target_student_id: str) -> bool:
         return bool(sid_user) and (sid_user == sid_target)
 
     return False
+
+
+
+# ---------------------------------------------------------------------
+# === Extended RBAC with Role Hierarchy & Workflow Permissions ===
+# ---------------------------------------------------------------------
+
+ROLE_HIERARCHY = {
+    "ADMIN": ["DVC", "AR", "DEAN", "HOD", "STUDENT"],
+    "DVC": ["AR", "DEAN", "HOD", "STUDENT"],
+    "AR": ["DEAN", "HOD", "STUDENT"],
+    "DEAN": ["HOD", "STUDENT"],
+    "HOD": ["STUDENT"],
+    "STUDENT": []
+}
+
+ROLE_PERMISSIONS = {
+    "ADMIN": [
+        "create_user", "approve_document", "reject_document",
+        "view_onchain", "view_offchain", "assign_role"
+    ],
+    "DVC": ["approve_document", "reject_document", "view_onchain", "view_offchain"],
+    "AR": ["approve_document", "reject_document", "view_onchain", "view_offchain"],
+    "DEAN": ["approve_document", "reject_document", "view_onchain", "view_offchain"],
+    "HOD": ["create_document", "approve_document", "view_onchain", "view_offchain"],
+    "STUDENT": ["create_document", "view_onchain", "view_offchain_own"]
+}
+
+# --- Hierarchy & permission utilities ---
+
+def can_act_on(target_role: str, actor_role: str) -> bool:
+    """Check if actor_role can perform actions on target_role (hierarchy)."""
+    return target_role in ROLE_HIERARCHY.get(actor_role, [])
+
+
+def has_permission_for_action(username: str, action: str) -> bool:
+    """Alias for has_permission but with new role dictionary."""
+    from python_backend.rbac import get_role
+    role = get_role(username)
+    allowed = ROLE_PERMISSIONS.get(role, [])
+    return action in allowed
+
+
+# --- Workflow state machine for order enforcement ---
+WORKFLOW_ORDER = ["DRAFT", "HOD_APPROVED", "DEAN_APPROVED", "AR_APPROVED", "DVC_APPROVED", "FINAL"]
+
+def next_state(current_state: str, actor_role: str) -> str:
+    """
+    Determine the next valid state based on the actor's role.
+    Ensures order enforcement (HOD → DEAN → AR → DVC).
+    """
+    transitions = {
+        "HOD": "HOD_APPROVED",
+        "DEAN": "DEAN_APPROVED",
+        "AR": "AR_APPROVED",
+        "DVC": "DVC_APPROVED"
+    }
+    next_expected = transitions.get(actor_role)
+    if not next_expected:
+        raise ValueError(f"Role {actor_role} cannot approve documents.")
+
+    # verify sequence order
+    try:
+        idx = WORKFLOW_ORDER.index(current_state)
+    except ValueError:
+        raise ValueError(f"Unknown current state: {current_state}")
+
+    if idx + 1 < len(WORKFLOW_ORDER) and WORKFLOW_ORDER[idx + 1] == next_expected:
+        return next_expected
+    else:
+        raise ValueError(f"Invalid order: {actor_role} cannot move from {current_state} to {next_expected}")
+
+
+def is_final_state(state: str) -> bool:
+    return state == "FINAL"
+
+def is_validator_role(role):
+    validator_roles = ["HOD", "DEAN", "AR", "DVC","admin"]
+    return role.upper() in validator_roles
+
+# ==========================
+# Admin role management area
+# ==========================
+
+def get_all_users():
+    """
+    Fetch all registered users from the SQLite database.
+    Returns a list of dictionaries like:
+    [{"id": 1, "username": "admin", "role": "ADMIN", "student_id": "S12345", "wallet_address": "0x..."}]
+    """
+    users = []
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT id, username, role, student_id, wallet_address FROM users")
+            rows = cur.fetchall()
+
+        for r in rows:
+            users.append({
+                "id": r[0],
+                "username": r[1],
+                "role": r[2],
+                "student_id": r[3],
+                "wallet_address": r[4]
+            })
+    except Exception as e:
+        print("❌ Error fetching users:", e)
+    return users
+
+
+
+def set_user_role(user_id: int, new_role: str) -> dict:
+    """
+    Update a user's role in the database.
+    Returns a success or error dictionary for JSON response.
+    """
+    try:
+        new_role = new_role.strip().upper()
+        with sqlite3.connect(DB_PATH) as conn:
+            cur = conn.cursor()
+            cur.execute("UPDATE users SET role = ? WHERE id = ?", (new_role, user_id))
+            conn.commit()
+
+            if cur.rowcount == 0:
+                return {"error": f"User with id {user_id} not found."}
+
+        print(f"✅ Role updated: User ID {user_id} → {new_role}")
+        return {"message": f"Role updated to {new_role} for user ID {user_id}."}
+
+    except Exception as e:
+        print(f"❌ Error updating user role: {e}")
+        return {"error": str(e)}
+

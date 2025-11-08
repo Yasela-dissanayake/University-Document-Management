@@ -1,109 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>University Document Management</title>
-    <!-- Simple CSS reset and basic styling -->
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #2563eb;
+        --primary-dark: #1e40af;
+        --primary-light: #3b82f6;
+        --secondary: #64748b;
+        --success: #10b981;
+        --danger: #ef4444;
+        --warning: #f59e0b;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8fafc;
+        --bg-tertiary: #f1f5f9;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-tertiary: #94a3b8;
+        --border: #e2e8f0;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: var(--text-primary);
+        line-height: 1.6;
+      }
+
+      nav {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 1rem 2rem;
+        box-shadow: var(--shadow-md);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid var(--border);
+      }
+
+      nav .nav-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      nav .logo {
+        font-size: 1.25rem;
+        font-weight: 700;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      nav .nav-links {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        flex: 1;
+      }
+
+      nav a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-sm);
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+      }
+
+      nav a:hover {
+        background: var(--bg-tertiary);
+        color: var(--primary);
+      }
+
+      main {
+        max-width: 1200px;
+        margin: 2rem auto;
+        background: var(--bg-primary);
+        padding: 2.5rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-lg);
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
         }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+        font-size: 1.875rem;
+        font-weight: 700;
+      }
+
+      h3 {
+        color: var(--text-primary);
+        margin: 2rem 0 1rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      p {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+      }
+
+      .flash {
+        background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        border-left: 4px solid var(--danger);
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        border-radius: var(--radius-sm);
+        color: #991b1b;
+        font-weight: 500;
+        animation: slideIn 0.3s ease;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 1.5rem;
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+      }
+
+      th,
+      td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+
+      th {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        font-weight: 600;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      tbody tr {
+        background: var(--bg-primary);
+        transition: background 0.2s ease;
+      }
+
+      tbody tr:hover {
+        background: var(--bg-secondary);
+      }
+
+      form {
+        margin-top: 1.5rem;
+      }
+
+      label {
+        display: block;
+        color: var(--text-primary);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="password"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.25rem;
+        border: 2px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-size: 0.95rem;
+        font-family: inherit;
+        transition: all 0.2s ease;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      textarea {
+        min-height: 150px;
+        resize: vertical;
+        font-family: "Courier New", monospace;
+      }
+
+      button {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--primary-light) 100%
+        );
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+        box-shadow: var(--shadow-sm);
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      button.secondary {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        border: 2px solid var(--border);
+      }
+
+      button.secondary:hover {
+        background: var(--bg-tertiary);
+        border-color: var(--secondary);
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding: 2rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.875rem;
+      }
+
+      .hint {
+        background: var(--bg-secondary);
+        border-left: 4px solid var(--primary);
+        padding: 1rem 1.25rem;
+        border-radius: var(--radius-sm);
+        margin: 1rem 0;
+      }
+
+      .hint p {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      .hint ul {
+        margin: 0.5rem 0 0 1.5rem;
+      }
+
+      .hint li {
+        margin: 0.25rem 0;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      code {
+        background: var(--bg-tertiary);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-family: "Courier New", monospace;
+        font-size: 0.875rem;
+        color: var(--primary);
+      }
+
+      pre {
+        background: var(--bg-secondary);
+        padding: 1rem;
+        border-radius: var(--radius-sm);
+        overflow-x: auto;
+        border: 1px solid var(--border);
+      }
+
+      @media (max-width: 768px) {
         nav {
-            background-color: #004080;
-            color: white;
-            padding: 1rem;
+          padding: 1rem;
         }
-        nav a {
-            color: white;
-            margin-right: 1rem;
-            text-decoration: none;
-            font-weight: bold;
+
+        nav .nav-content {
+          flex-direction: column;
+          gap: 1rem;
+          align-items: flex-start;
         }
-        nav a:hover {
-            text-decoration: underline;
-        }
+
         main {
-            max-width: 800px;
-            margin: 2rem auto;
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          margin: 1rem;
+          padding: 1.5rem;
         }
-        footer {
-            text-align: center;
-            margin-top: 3rem;
-            padding: 1rem;
-            color: #777;
-            font-size: 0.8rem;
+
+        h2 {
+          font-size: 1.5rem;
         }
-        .flash {
-            background-color: #ffdddd;
-            border: 1px solid #ff5c5c;
-            padding: 0.5rem 1rem;
-            margin-bottom: 1rem;
-            border-radius: 4px;
-        }
+
         table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
+          font-size: 0.875rem;
         }
-        th, td {
-            padding: 0.5rem;
-            border: 1px solid #ddd;
+
+        th,
+        td {
+          padding: 0.75rem 0.5rem;
         }
-        th {
-            background-color: #f0f0f0;
-        }
-        textarea {
-            width: 100%;
-            height: 150px;
-        }
-        input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #004080;
-            color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #003366;
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <nav>
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('register') }}">Register Student</a>
-        <a href="{{ url_for('update') }}">Update Semester</a>
-        <a href="{{ url_for('view') }}">Inspect Semesters</a>
-        <a href="{{ url_for('ai_page') }}">AI Query</a>
+      <div class="nav-content">
+        <div class="logo">📚 UniDoc</div>
+        <div class="nav-links">
+          <a href="{{ url_for('index') }}">Home</a>
+          <a href="{{ url_for('register') }}">Register Student</a>
+          <a href="{{ url_for('update') }}">Update Semester</a>
+          <a href="{{ url_for('view') }}">Inspect Semesters</a>
+          <a href="{{ url_for('ai_page') }}">AI Query</a>
+          {% if session.role == "ADMIN" %}
+          <a href="{{ url_for('admin_dashboard') }}">Admin Panel</a>
+          {% endif %} {% if session.role in ["HOD", "DEAN", "AR", "DVC"] %}
+          <a href="{{ url_for('validator_dashboard') }}">Validator Dashboard</a>
+          {% endif %}
+          <a href="{{ url_for('login') }}">Login</a>
+        </div>
+      </div>
     </nav>
     <main>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="flash">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
-        {% block content %}
-        {% endblock %}
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %}
+      <div class="flash">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock %}
     </main>
     <footer>
-        &copy; {{ current_year }} University Document Management System
+      &copy; {{ current_year }} University Document Management System
     </footer>
-</body>
+  </body>
 </html>

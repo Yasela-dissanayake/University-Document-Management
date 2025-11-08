@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Validator Dashboard (Role: {{ role }})</h2>
+
+{% if role == "HOD" %}
+<form id="createForm" onsubmit="createLetter(event)">
+  <input type="text" id="title" placeholder="Letter Title" required>
+  <button type="submit">Create Letter</button>
+</form>
+{% endif %}
+
+<h3>All Letters</h3>
+<table border="1" cellpadding="6">
+  <tr><th>ID</th><th>Title</th><th>Current State</th><th>Action</th></tr>
+  {% for l in letters %}
+  <tr>
+    <td>{{ l.doc_id }}</td>
+    <td>{{ l.title }}</td>
+    <td>{{ l.current_state }}</td>
+    <td>
+      <button onclick="approveLetter('{{ l.doc_id }}')">Approve</button>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<script>
+async function createLetter(e) {
+  e.preventDefault();
+  const title = document.getElementById("title").value;
+  const res = await fetch("/validator/create", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({title})
+  });
+  const data = await res.json();
+  alert(data.message || data.error);
+  location.reload();
+}
+
+async function approveLetter(docId) {
+  const res = await fetch("/validator/approve", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({doc_id: docId})
+  });
+  const data = await res.json();
+  alert(data.message || data.error);
+  location.reload();
+}
+</script>
+{% endblock %}

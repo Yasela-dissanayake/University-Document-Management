@@ -1,59 +1,218 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h2>Inspect Student Semesters</h2>
-<form method="post">
-  <label for="student_id">Student ID</label>
-  <input
-    type="text"
-    id="student_id"
-    name="student_id"
-    placeholder="Enter a student ID"
-    required
-  />
-  <button type="submit">Fetch Details</button>
-</form>
+<style>
+  .info-card {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
 
-{% if student %}
-<h3>On-Chain Student Data</h3>
-<table>
-  <tr><th>Field</th><th>Value</th></tr>
-  <tr><td>Student ID</td><td>{{ student.student_id }}</td></tr>
-  <tr><td>Name</td><td>{{ student.name }}</td></tr>
-  <tr><td>Program</td><td>{{ student.program }}</td></tr>
-  <tr><td>Year</td><td>{{ student.year }}</td></tr>
-  <tr><td>Latest IPFS Hash</td><td>{{ ipfs_hash }}</td></tr>
-  <tr><td>Is Active</td><td>{{ 'Yes' if student.is_active else 'No' }}</td></tr>
-  <tr>
-    <td>Timestamp</td>
-    <td><span class="epoch" data-epoch="{{ student.timestamp }}" title="{{ student.timestamp }}"></span></td>
-  </tr>
-</table>
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
 
-{% if semesters %}
-<h3>Semester Documents</h3>
-<table>
-  <tr><th>#</th><th>IPFS Hash</th><th>Action</th></tr>
-  {% for h in semesters %}
-  <tr>
-    <td>{{ loop.index }}</td>
-    <td>{{ h }}</td>
-    <td>
-      <form action="{{ url_for('offchain') }}" method="post" style="margin:0">
-        <input type="hidden" name="ipfs_hash" value="{{ h }}">
-        <input type="hidden" name="student_id" value="{{ student.student_id }}">
-        <button type="submit">View Document</button>
-      </form>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-{% else %}
-<p>No semesters found for this student.</p>
-{% endif %}
-{% elif request.method == 'POST' %}
-<p><em>Student not found.</em></p>
-{% endif %}
+  .info-row:last-child {
+    border-bottom: none;
+  }
+
+  .info-label {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .info-value {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .status-active {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .status-inactive {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  .semester-card {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    transition: all 0.2s ease;
+  }
+
+  .semester-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .semester-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .semester-number {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  .hash-display {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    word-break: break-all;
+  }
+</style>
+
+<div style="max-width: 900px; margin: 0 auto;">
+  <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+    <div style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+      <span style="font-size: 1.5rem;">🔍</span>
+    </div>
+    <div>
+      <h2 style="margin: 0;">Inspect Student Semesters</h2>
+      <p style="margin: 0; color: var(--text-secondary); font-size: 0.95rem;">View student records and semester documents</p>
+    </div>
+  </div>
+
+  <form method="post" style="margin-bottom: 3rem;">
+    <label for="student_id">Student ID</label>
+    <div style="display: flex; gap: 0.75rem;">
+      <input
+        type="text"
+        id="student_id"
+        name="student_id"
+        placeholder="Enter a student ID (e.g., S12345)"
+        required
+        style="flex: 1; margin-bottom: 0;"
+      />
+      <button type="submit" style="padding: 0.75rem 2rem; margin-bottom: 0;">
+        🔍 Search
+      </button>
+    </div>
+  </form>
+
+  {% if student %}
+  <div style="animation: fadeIn 0.4s ease;">
+    <h3 style="display: flex; align-items: center; gap: 0.75rem;">
+      <span>📊</span>
+      <span>Student Profile</span>
+    </h3>
+    
+    <div class="info-card">
+      <div class="info-row">
+        <span class="info-label">Student ID</span>
+        <span class="info-value">{{ student.student_id }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Name</span>
+        <span class="info-value">{{ student.name }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Program</span>
+        <span class="info-value">{{ student.program }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Year</span>
+        <span class="info-value">Year {{ student.year }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Status</span>
+        <span class="status-badge {% if student.is_active %}status-active{% else %}status-inactive{% endif %}">
+          {{ 'Active' if student.is_active else 'Inactive' }}
+        </span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Last Updated</span>
+        <span class="info-value epoch" data-epoch="{{ student.timestamp }}" title="{{ student.timestamp }}"></span>
+      </div>
+      <div class="info-row" style="border-bottom: none;">
+        <span class="info-label">Latest IPFS Hash</span>
+        <span class="info-value hash-display">{{ ipfs_hash }}</span>
+      </div>
+    </div>
+
+    {% if semesters %}
+    <h3 style="display: flex; align-items: center; gap: 0.75rem; margin-top: 2.5rem;">
+      <span>📚</span>
+      <span>Semester Documents ({{ semesters|length }})</span>
+    </h3>
+    
+    <div style="margin-top: 1rem;">
+      {% for h in semesters %}
+      <div class="semester-card">
+        <div class="semester-header">
+          <div style="display: flex; align-items: center; gap: 1rem; flex: 1;">
+            <div class="semester-number">{{ loop.index }}</div>
+            <div style="flex: 1;">
+              <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">
+                Semester {{ loop.index }}
+              </div>
+              <div class="hash-display">{{ h }}</div>
+            </div>
+          </div>
+          <form action="{{ url_for('offchain') }}" method="post" style="margin: 0;">
+            <input type="hidden" name="ipfs_hash" value="{{ h }}">
+            <input type="hidden" name="student_id" value="{{ student.student_id }}">
+            <button type="submit" style="padding: 0.6rem 1.25rem; white-space: nowrap;">
+              📄 View Document
+            </button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 3rem 1rem; background: var(--bg-secondary); border-radius: var(--radius-sm); margin-top: 2rem;">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">📭</div>
+      <p style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem;">
+        No Semester Documents Found
+      </p>
+      <p style="color: var(--text-secondary); margin: 0;">
+        This student doesn't have any semester records yet.
+      </p>
+    </div>
+    {% endif %}
+  </div>
+  {% elif request.method == 'POST' %}
+  <div style="text-align: center; padding: 3rem 1rem; background: var(--bg-secondary); border-radius: var(--radius-sm);">
+    <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+    <p style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem;">
+      Student Not Found
+    </p>
+    <p style="color: var(--text-secondary); margin: 0;">
+      No student found with the provided ID. Please check and try again.
+    </p>
+  </div>
+  {% endif %}
+</div>
 
 <script>
   (function () {

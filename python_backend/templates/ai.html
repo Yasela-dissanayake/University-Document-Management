@@ -1,32 +1,47 @@
-{% extends "layout.html" %}
-
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <h2>Ask the AI</h2>
 <p>Enter your question about a student (e.g., "Show all grades for S12345").</p>
 <form id="ai-form">
-    <input type="text" id="question" placeholder="Your question" style="width:80%; padding:0.5rem;">
-    <button type="submit">Ask</button>
+  <input
+    type="text"
+    id="question"
+    placeholder="Your question"
+    style="width: 80%; padding: 0.5rem"
+  />
+  <button type="submit">Ask</button>
 </form>
-<pre id="ai-response" style="margin-top:1rem; white-space:pre-wrap;"></pre>
+<pre id="ai-response" style="margin-top: 1rem; white-space: pre-wrap"></pre>
 
 <script>
-document.getElementById('ai-form').addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const q = document.getElementById('question').value.trim();
-    if (!q) return;
-    const resEl = document.getElementById('ai-response');
-    resEl.textContent = 'Sending...';
-    try {
+  document.getElementById('ai-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const q = document.getElementById('question').value.trim();
+      if (!q) return;
+      const resEl = document.getElementById('ai-response');
+      resEl.textContent = 'Sending...';
+          try {
         const resp = await fetch('{{ url_for('ai_query') }}', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ question: q })
         });
+
         const data = await resp.json();
-        resEl.textContent = data.answer || data.error || JSON.stringify(data);
+        console.log('Received response:', data);
+
+        if (data.error) {
+            resEl.textContent = 'Error: ' + data.error;
+        } else if (data.answer && typeof data.answer === 'object' && data.answer.answer) {
+            resEl.textContent = data.answer.answer;
+        } else if (data.answer) {
+            resEl.textContent = data.answer;
+        } else {
+            resEl.textContent = JSON.stringify(data, null, 2);
+        }
     } catch (err) {
+        console.error('Error:', err);
         resEl.textContent = 'Error querying AI: ' + err;
     }
-});
+  });
 </script>
 {% endblock %}
