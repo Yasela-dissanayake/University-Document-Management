@@ -1,149 +1,291 @@
-# python_backend/ai/agent.py
-from __future__ import annotations
+"""
+Integrated AI Agent for University Blockchain System
+---------------------------------------------------
+Handles both on-chain (public) and off-chain (ACL-protected) queries
+Uses existing tools + RAG for comprehensive query answering
+"""
 
+import json
+import logging
 import os
-import re
-from typing import Any, Dict, Optional
+from typing import Dict, Any, Optional
 
-# Optional LLM (Ollama) for general questions
-try:
-    from langchain_ollama import OllamaLLM  # type: ignore
-    _HAS_LLM = True
-except Exception:
-    _HAS_LLM = False
+from langchain_ollama import OllamaLLM
 
+# Import existing tools
 from python_backend.ai.tools import (
     get_onchain_student,
+    list_semester_cids,
     get_offchain_semesters,
-    get_course_grade,
+    get_course_grade
 )
 
-
-_STUDENT_RE = re.compile(r"\bS\d{5}\b", re.IGNORECASE)
-_COURSE_RE = re.compile(r"\b([A-Za-z]{2,}\d{3,})\b")
-
-
-def _extract_sid(text: str) -> Optional[str]:
-    m = _STUDENT_RE.search(text or "")
-    return m.group(0).upper() if m else None
+# Import user-aware RAG
+from python_backend.ai.rag_agent import rag_answer
 
 
-def _extract_course_code(text: str) -> Optional[str]:
-    m = _COURSE_RE.search(text or "")
-    return m.group(1).upper() if m else None
+# Load system prompt
+PROMPT_FILE = os.path.join(os.path.dirname(__file__), "prompts", "base_prompt.txt")
+if os.path.exists(PROMPT_FILE):
+    with open(PROMPT_FILE, "r") as f:
+        BASE_SYSTEM_PROMPT = f.read()
+else:
+    BASE_SYSTEM_PROMPT = """You are an AI assistant for a university blockchain system.
+You help users query student records and academic documents."""
 
 
-def _wants_all_grades(text: str) -> bool:
-    t = (text or "").lower()
-    return "all the grades" in t or ("all" in t and "grades" in t)
+def _classify_query(question: str) -> str:
+    """
+    Classify query type to route appropriately:
+    - 'onchain': Basic student info, registration, IPFS hashes
+    - 'offchain': Document contents, grades, courses, GPA, academic performance
+    """
+    question_lower = question.lower()
+    
+    # Off-chain indicators (detailed academic content)
+    offchain_keywords = [
+        'grade', 'course', 'gpa', 'subject', 'mark', 'score',
+        'performance', 'transcript', 'academic record',
+        'what did', 'how did', 'course details', 'semester results',
+        'passed', 'failed', 'credits', 'cgpa'
+    ]
+    
+    # On-chain indicators (metadata only)
+    onchain_keywords = [
+        'register', 'ipfs hash', 'cid', 'blockchain',
+        'student id', 'name', 'program', 'year',
+        'is registered', 'exists', 'status'
+    ]
+    
+    # Count keyword matches
+    offchain_score = sum(1 for kw in offchain_keywords if kw in question_lower)
+    onchain_score = sum(1 for kw in onchain_keywords if kw in question_lower)
+    
+    # If explicitly asking about document content, it's off-chain
+    if offchain_score > 0:
+        return 'offchain'
+    
+    # Otherwise assume on-chain
+    return 'onchain'
 
 
-def _format_ts(ts: Optional[int]) -> str:
-    if not ts:
-        return ""
-    try:
-        from datetime import datetime, timezone
-        return datetime.fromtimestamp(int(ts), tz=timezone.utc).isoformat()
-    except Exception:
-        return str(ts)
+def answer_question(question: str, user_context: Optional[Dict] = None) -> Dict[str, Any]:
+    """
+    Main agent entry point that intelligently routes queries:
+    
+    1. Classify query type (on-chain vs off-chain)
+    2. Check authentication for off-chain queries
+    3. Try tool-based approach first (structured data)
+    4. Fall back to RAG for complex/natural language queries
+    """
+    
+    query_type = _classify_query(question)
+    logging.info(f"📊 Query classified as: {query_type}")
+    
+    # === OFF-CHAIN QUERIES (ACL-Protected) ===
+    if query_type == 'offchain':
+        if not user_context:
+            return {
+                "answer": "🔒 Authentication required to access academic records. Please log in to view detailed student information.",
+                "trace": {
+                    "query_type": "offchain",
+                    "auth_required": True,
+                    "reason": "Off-chain data requires authentication"
+                }
+            }
+        
+        logging.info(f"🔐 Off-chain query from user: {user_context.get('username')} ({user_context.get('role')})")
+        
+        # Try structured tool approach first for specific queries
+        tool_result = _try_tools_for_offchain(question, user_context)
+        if tool_result:
+            return tool_result
+        
+        # Fall back to RAG for complex/natural language queries
+        logging.info("📚 Using RAG for complex off-chain query")
+        result = rag_answer(question, user=user_context)
+        result["trace"]["query_type"] = "offchain"
+        result["trace"]["method"] = "rag"
+        return result
+    
+    # === ON-CHAIN QUERIES (Public) ===
+    logging.info("⛓️ On-chain query - using public blockchain data")
+    return _handle_onchain_query(question, user_context)
 
 
-def _llm_answer(prompt: str) -> Dict[str, Any]:
-    if not _HAS_LLM:
-        return {"answer": "I can’t answer that without the LLM installed."}
-    model = os.getenv("OLLAMA_MODEL", "llama3")
-    llm = OllamaLLM(model=model)
+def _try_tools_for_offchain(question: str, user: Dict) -> Optional[Dict[str, Any]]:
+    """
+    Try to answer off-chain query using structured tools.
+    Returns result if successful, None if query is too complex for tools.
+    """
+    question_lower = question.lower()
+    
+    # Extract student ID from question
+    import re
+    student_id_match = re.search(r'S\d{5}', question, re.IGNORECASE)
+    if not student_id_match:
+        return None
+    
+    student_id = student_id_match.group(0).upper()
+    
+    # Try specific tool patterns
+    
+    # Pattern 1: Specific course grade query
+    course_match = re.search(r'grade.*(for|in|of)\s+([A-Z]{2,4}\d{3,4})', question, re.IGNORECASE)
+    if course_match:
+        course_code = course_match.group(2).upper()
+        logging.info(f"🎯 Specific course grade query: {student_id} - {course_code}")
+        
+        result = get_course_grade(student_id, course_code, user)
+        
+        if result.get("ok") and result.get("found"):
+            answer = f"The grade for {course_code} for student {student_id} is: {result.get('grade')}"
+            return {
+                "answer": answer,
+                "trace": {
+                    "query_type": "offchain",
+                    "method": "tool",
+                    "tool": "get_course_grade",
+                    "result": result
+                }
+            }
+        elif result.get("ok") and not result.get("found"):
+            return {
+                "answer": f"No grade found for course {course_code} for student {student_id}.",
+                "trace": result.get("trace")
+            }
+        else:
+            return {
+                "answer": "Access denied or error retrieving course grade.",
+                "trace": result.get("trace")
+            }
+    
+    # Pattern 2: All semesters/grades query
+    if any(kw in question_lower for kw in ['all grades', 'all courses', 'semester', 'transcript']):
+        logging.info(f"🎯 All semesters query: {student_id}")
+        
+        result = get_offchain_semesters(student_id, user)
+        
+        if result.get("ok"):
+            semesters = result.get("semesters", [])
+            if not semesters:
+                return {
+                    "answer": f"No semester records found for {student_id}.",
+                    "trace": result.get("trace")
+                }
+            
+            # Format the answer
+            answer_lines = [f"Academic records for {student_id}:\n"]
+            for i, sem in enumerate(semesters, 1):
+                answer_lines.append(f"\nSemester {i}:")
+                if sem.get("gpa"):
+                    answer_lines.append(f"  GPA: {sem['gpa']}")
+                courses = sem.get("courses", [])
+                if courses:
+                    answer_lines.append(f"  Courses:")
+                    for course in courses:
+                        code = course.get("code", "N/A")
+                        name = course.get("name", "Unknown")
+                        grade = course.get("grade", "-")
+                        answer_lines.append(f"    • {code} ({name}): {grade}")
+            
+            return {
+                "answer": "\n".join(answer_lines),
+                "trace": {
+                    "query_type": "offchain",
+                    "method": "tool",
+                    "tool": "get_offchain_semesters",
+                    "semesters_found": len(semesters)
+                }
+            }
+        else:
+            return {
+                "answer": "Access denied or error retrieving semester records.",
+                "trace": result.get("trace")
+            }
+    
+    # Query too complex for simple tools, return None to trigger RAG
+    return None
+
+
+def _handle_onchain_query(question: str, user: Optional[Dict]) -> Dict[str, Any]:
+    """Handle on-chain queries using blockchain tools"""
+    
+    # Extract student ID
+    import re
+    student_id_match = re.search(r'S\d{5}', question, re.IGNORECASE)
+    
+    if not student_id_match:
+        return {
+            "answer": "Please specify a student ID (e.g., S20841) in your query.",
+            "trace": {"query_type": "onchain", "error": "No student ID found"}
+        }
+    
+    student_id = student_id_match.group(0).upper()
+    
+    # Get on-chain student data
+    student = get_onchain_student(student_id)
+    
+    if not student:
+        return {
+            "answer": f"Student {student_id} not found in the blockchain.",
+            "trace": {"query_type": "onchain", "student_id": student_id, "found": False}
+        }
+    
+    # Get semester CIDs
+    cids = list_semester_cids(student_id)
+    
+    # Use LLM to format the response naturally
+    llm = OllamaLLM(model=os.getenv("OLLAMA_MODEL", "llama3"))
+    
+    prompt = f"""Based on this blockchain data for student {student_id}, answer the user's question naturally.
+
+Blockchain Data:
+- Name: {student.get('name')}
+- Program: {student.get('program')}
+- Year: {student.get('year')}
+- Status: {'Active' if student.get('is_active') else 'Inactive'}
+- Registration Timestamp: {student.get('timestamp')}
+- Main IPFS Hash: {student.get('documents_ipfs_hash')}
+- Semester Records (IPFS CIDs): {len(cids)} documents
+  {chr(10).join(f'  - {cid}' for cid in cids[:5])}
+
+User Question: {question}
+
+Provide a clear, concise answer:"""
+    
     answer = llm.invoke(prompt)
+    
     return {
         "answer": answer,
         "trace": {
-            "llm_model": model,
-            "used_prompt": prompt,
-            "note": "No structured data was retrieved for this answer.",
-        },
+            "query_type": "onchain",
+            "method": "blockchain_tools",
+            "student_id": student_id,
+            "data_retrieved": {
+                "student_found": True,
+                "semester_records": len(cids)
+            }
+        }
     }
 
 
-def answer_question(question: str, user_context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    q = (question or "").strip()
-    if not q:
-        return {"answer": "Please provide a question."}
-
-    sid = _extract_sid(q)
-    course = _extract_course_code(q)
-
-    # (A) Query for course grade
-    if sid and course and ("grade" in q.lower() or "result" in q.lower()):
-        resp = get_course_grade(sid, course, user_context)
-        trace = resp.get("trace", {})
-        if not resp.get("ok"):
-            return {"answer": f"You’re not authorized to access off-chain records of {sid}.", "trace": trace}
-        if not resp.get("found"):
-            return {"answer": f"I couldn’t find {course} for {sid} in the available semester documents.", "trace": trace}
-        grade = resp.get("grade")
-        when = _format_ts(resp.get("when"))
-        return {
-            "answer": f"The grade of {course} for {sid} is {grade}." + (f" (as of {when})" if when else ""),
-            "trace": trace,
-        }
-
-    # (B) Query for all grades
-    if sid and _wants_all_grades(q):
-        resp = get_offchain_semesters(sid, user_context)
-        trace = resp.get("trace", {})
-        if not resp.get("ok"):
-            return {"answer": f"You’re not authorized to access off-chain records of {sid}.", "trace": trace}
-        semesters = resp.get("semesters", [])
-        if not semesters:
-            return {"answer": f"No off-chain semester documents found for {sid}.", "trace": trace}
-        latest = semesters[0]
-        courses = latest.get("courses") or []
-        if not courses:
-            return {"answer": f"No course list found in the latest semester document for {sid}.", "trace": trace}
-        lines = [f"Latest semester grades for {sid}:"]
-        for c in courses:
-            code = c.get("code", "")
-            grade = c.get("grade", "")
-            name = c.get("name", "")
-            lines.append(f"- {code}: {grade} ({name})")
-        return {
-            "answer": "\n".join(lines),
-            "trace": trace,
-        }
-
-    # (C) Query for transcript or semester list
-    if sid and ("semester" in q.lower() or "transcript" in q.lower()):
-        resp = get_offchain_semesters(sid, user_context)
-        trace = resp.get("trace", {})
-        if not resp.get("ok"):
-            return {"answer": f"You’re not authorized to access off-chain records of {sid}.", "trace": trace}
-        semesters = resp.get("semesters", [])
-        if not semesters:
-            return {"answer": f"No off-chain semester documents found for {sid}.", "trace": trace}
-        lines = [f"Found {len(semesters)} semester document(s) for {sid}:"]
-        for i, s in enumerate(semesters, start=1):
-            lines.append(f"{i}. CID={s.get('cid')} time={_format_ts(s.get('timestamp'))} gpa={s.get('gpa')}")
-        return {
-            "answer": "\n".join(lines),
-            "trace": trace,
-        }
-
-    # (D) Query for on-chain data
-    if sid and any(k in q.lower() for k in ["year", "program", "on-chain", "onchain", "blockchain"]):
-        data = get_onchain_student(sid)
-        if not data:
-            return {"answer": f"I couldn’t find on-chain data for {sid}."}
-        return {
-            "answer": (
-                f"{sid}: {data.get('name')} — {data.get('program')} (year {data.get('year')}). "
-                f"Active: {data.get('is_active')}. Latest CID: {data.get('documents_ipfs_hash')}"
-            ),
-            "trace": {
-                "source": "blockchain",
-                "student_id": sid,
-                "contract_call": "get_onchain_student",
-            },
-        }
-
-    # (E) Fallback
-    return _llm_answer(q)
+def rebuild_rag_index():
+    """
+    Utility function to rebuild the RAG index.
+    Call this after adding new documents to the system.
+    """
+    import shutil
+    
+    rag_store_path = os.path.join(os.path.dirname(__file__), "rag_store")
+    
+    if os.path.exists(rag_store_path):
+        shutil.rmtree(rag_store_path)
+        logging.info("🗑️ Deleted old RAG index")
+    
+    # Reset singleton
+    import python_backend.ai.rag_agent as rag_module
+    rag_module._rag_instance = None
+    
+    logging.info("✅ RAG index will be rebuilt on next query")
+    return {"status": "success", "message": "RAG index scheduled for rebuild"}
