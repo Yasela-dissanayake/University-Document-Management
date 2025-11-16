@@ -1,0 +1,326 @@
+{% extends "layout.html" %} {% block content %}
+<style>
+  .pending-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .header-section {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 2rem;
+  }
+
+  .header-section h2 {
+    margin: 0 0 0.5rem 0;
+  }
+
+  .pending-card {
+    background: white;
+    border: 2px solid var(--border);
+    border-left: 5px solid #f59e0b;
+    border-radius: var(--radius-sm);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s;
+  }
+
+  .pending-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .pending-card.urgent {
+    border-left-color: #ef4444;
+  }
+
+  .pending-card.high {
+    border-left-color: #f59e0b;
+  }
+
+  .pending-card.normal {
+    border-left-color: #3b82f6;
+  }
+
+  .pending-card.low {
+    border-left-color: #6b7280;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 1rem;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .waiting-badge {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .urgency-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .urgency-urgent {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  .urgency-high {
+    background: #fed7aa;
+    color: #9a3412;
+  }
+
+  .urgency-normal {
+    background: #e0e7ff;
+    color: #3730a3;
+  }
+
+  .urgency-low {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+  }
+
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  .stats-bar {
+    background: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+</style>
+
+<div class="pending-container">
+  <!-- Header -->
+  <div class="header-section">
+    <h2>⏳ Pending Approvals</h2>
+    <p style="margin: 0; opacity: 0.9">
+      Letters waiting for approval from <strong>{{ role }}</strong>
+    </p>
+  </div>
+
+  <!-- Statistics Bar -->
+  {% if pending %}
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-number">{{ pending|length }}</div>
+      <div class="stat-label">Total Pending</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">
+        {{ pending|selectattr('urgency', 'equalto', 'URGENT')|list|length }}
+      </div>
+      <div class="stat-label">Urgent</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">
+        {{ pending|selectattr('urgency', 'equalto', 'HIGH')|list|length }}
+      </div>
+      <div class="stat-label">High Priority</div>
+    </div>
+    <div class="stat-item">
+      {% set old_pending = pending|selectattr('waiting_days', 'gt',
+      7)|list|length %}
+      <div class="stat-number">{{ old_pending }}</div>
+      <div class="stat-label">Waiting 7+ Days</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Pending Letters List -->
+  {% if pending %}
+  <h3>Letters Requiring Your Approval</h3>
+  <p style="color: var(--text-secondary); margin-bottom: 1.5rem">
+    Click on any letter to view details and approve.
+  </p>
+
+  {% for letter in pending|sort(attribute='urgency',
+  reverse=true)|sort(attribute='waiting_days', reverse=true) %}
+  <div class="pending-card {{ letter.urgency|lower }}">
+    <div class="card-header">
+      <div style="flex: 1">
+        <h4 class="card-title">{{ letter.doc_id }}: {{ letter.title }}</h4>
+        <div class="card-meta">
+          <span>📝 {{ letter.letter_type }}</span>
+          <span>👤 {{ letter.created_by }} ({{ letter.creator_role }})</span>
+          {% if letter.student_id %}
+          <span>🎓 {{ letter.student_id }}</span>
+          {% endif %}
+          <span
+            >📅 <span class="epoch" data-epoch="{{ letter.created_at }}"></span
+          ></span>
+        </div>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          align-items: flex-end;
+        "
+      >
+        <span class="urgency-badge urgency-{{ letter.urgency|lower }}">
+          {% if letter.urgency == 'URGENT' %}🚨{% elif letter.urgency == 'HIGH'
+          %}⚠️{% elif letter.urgency == 'NORMAL' %}📋{% else %}📄{% endif %} {{
+          letter.urgency }}
+        </span>
+
+        {% if letter.waiting_days > 7 %}
+        <span class="waiting-badge">
+          ⏰ {{ letter.waiting_days }} days waiting
+        </span>
+        {% elif letter.waiting_days > 3 %}
+        <span
+          style="
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+          "
+        >
+          ⏱️ {{ letter.waiting_days }} days
+        </span>
+        {% else %}
+        <span
+          style="
+            background: #d1fae5;
+            color: #065f46;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+          "
+        >
+          🆕 {{ letter.waiting_days }} days
+        </span>
+        {% endif %}
+      </div>
+    </div>
+
+    <div
+      style="
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      "
+    >
+      <a href="{{ url_for('view_letter', doc_id=letter.doc_id) }}">
+        <button>👁️ View Details</button>
+      </a>
+      <form
+        method="post"
+        action="{{ url_for('approve_letter_route', doc_id=letter.doc_id) }}"
+        style="margin: 0"
+        onsubmit="return confirm('Are you sure you want to approve {{ letter.doc_id }}?');"
+      >
+        <button type="submit" style="background: #10b981">
+          ✅ Approve Now
+        </button>
+      </form>
+    </div>
+  </div>
+  {% endfor %} {% else %}
+  <!-- Empty State -->
+  <div class="empty-state">
+    <div class="empty-icon">✅</div>
+    <h3 style="margin: 0 0 0.5rem 0">All Caught Up!</h3>
+    <p style="color: var(--text-secondary); margin: 0">
+      No letters are currently waiting for your approval.
+    </p>
+    <div style="margin-top: 2rem">
+      <a href="{{ url_for('letters_dashboard') }}">
+        <button>← Back to Dashboard</button>
+      </a>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Back Button -->
+  {% if pending %}
+  <div style="margin-top: 2rem; text-align: center">
+    <a href="{{ url_for('letters_dashboard') }}" style="text-decoration: none">
+      <button
+        style="background: var(--bg-secondary); color: var(--text-primary)"
+      >
+        ← Back to Dashboard
+      </button>
+    </a>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+  (function () {
+    function fmtEpoch(sec) {
+      if (!sec) return "—";
+      const d = new Date(sec * 1000);
+      return d.toLocaleString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+    document.querySelectorAll(".epoch").forEach((el) => {
+      el.textContent = fmtEpoch(el.getAttribute("data-epoch"));
+    });
+  })();
+</script>
+{% endblock %}

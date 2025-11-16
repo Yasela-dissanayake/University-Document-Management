@@ -1,0 +1,386 @@
+{% extends "layout.html" %} {% block content %}
+<style>
+  .letter-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .letter-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 2rem;
+  }
+
+  .letter-header h2 {
+    margin: 0 0 0.5rem 0;
+  }
+
+  .letter-header .meta {
+    opacity: 0.9;
+    font-size: 0.9rem;
+  }
+
+  .info-section {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.5rem;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+
+  .info-value {
+    font-size: 1rem;
+    color: var(--text-primary);
+  }
+
+  .letter-content {
+    background: white;
+    border: 2px solid var(--border);
+    padding: 2rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    font-family: Georgia, serif;
+  }
+
+  .timeline {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-left: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-left: 3px solid var(--border);
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+    border-left-color: transparent;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -0.6rem;
+    top: 0;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: var(--primary);
+    border: 3px solid white;
+  }
+
+  .timeline-item.completed .timeline-dot {
+    background: #10b981;
+  }
+
+  .timeline-content {
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .badge-approved {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .badge-pending {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .badge-urgent {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  .badge-high {
+    background: #fed7aa;
+    color: #9a3412;
+  }
+
+  .badge-normal {
+    background: #e0e7ff;
+    color: #3730a3;
+  }
+
+  .workflow-path {
+    background: #f3f4f6;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+  }
+
+  .workflow-steps {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .workflow-step {
+    padding: 0.5rem 1rem;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .workflow-step.completed {
+    background: #d1fae5;
+    border-color: #10b981;
+    color: #065f46;
+  }
+
+  .workflow-step.current {
+    background: #fef3c7;
+    border-color: #f59e0b;
+    color: #92400e;
+  }
+
+  .workflow-arrow {
+    color: var(--text-secondary);
+    font-weight: bold;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+  }
+</style>
+
+<div class="letter-container">
+  <!-- Back Button -->
+  <a
+    href="{{ url_for('letters_dashboard') }}"
+    style="
+      text-decoration: none;
+      color: var(--text-secondary);
+      display: inline-block;
+      margin-bottom: 1rem;
+    "
+  >
+    ← Back to Dashboard
+  </a>
+
+  <!-- Letter Header -->
+  <div class="letter-header">
+    <h2>{{ letter.doc_id }}</h2>
+    <div class="meta">
+      <strong>{{ letter.title }}</strong>
+    </div>
+  </div>
+
+  <!-- Letter Information -->
+  <div class="info-section">
+    <h3 style="margin-top: 0">Letter Information</h3>
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Document ID</span>
+        <span class="info-value">{{ letter.doc_id }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Type</span>
+        <span class="info-value">{{ letter.letter_type }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Urgency</span>
+        <span class="info-value">
+          <span class="badge badge-{{ letter.urgency|lower }}"
+            >{{ letter.urgency }}</span
+          >
+        </span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Status</span>
+        <span class="info-value">
+          {% if letter.current_state == "APPROVED" %}
+          <span class="badge badge-approved">✅ Approved</span>
+          {% else %}
+          <span class="badge badge-pending">{{ letter.current_state }}</span>
+          {% endif %}
+        </span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Created By</span>
+        <span class="info-value"
+          >{{ letter.created_by }} ({{ letter.creator_role }})</span
+        >
+      </div>
+      {% if letter.student_id %}
+      <div class="info-item">
+        <span class="info-label">Related Student</span>
+        <span class="info-value">{{ letter.student_id }}</span>
+      </div>
+      {% endif %}
+      <div class="info-item">
+        <span class="info-label">Created At</span>
+        <span
+          class="info-value epoch"
+          data-epoch="{{ letter.created_at }}"
+        ></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Last Updated</span>
+        <span
+          class="info-value epoch"
+          data-epoch="{{ letter.updated_at }}"
+        ></span>
+      </div>
+    </div>
+
+    <!-- Workflow Path -->
+    <div class="workflow-path">
+      <strong>Approval Workflow:</strong>
+      <div class="workflow-steps">
+        {% for role in letter.workflow_path %} {% set is_current =
+        letter.current_state == "PENDING_" + role %} {% set is_completed =
+        loop.index0 <
+        letter.workflow_path.index(letter.current_state.replace("PENDING_", ""))
+        or letter.current_state == "APPROVED" %}
+
+        <div
+          class="workflow-step {% if is_completed %}completed{% elif is_current %}current{% endif %}"
+        >
+          {% if is_completed %}✅{% elif is_current %}⏳{% endif %} {{ role }}
+        </div>
+
+        {% if not loop.last %}
+        <span class="workflow-arrow">→</span>
+        {% endif %} {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Letter Content -->
+  <div>
+    <h3>Letter Content</h3>
+    <div class="letter-content">{{ letter.content }}</div>
+  </div>
+
+  <!-- Approval History Timeline -->
+  <div class="timeline">
+    <h3 style="margin-top: 0">Approval History</h3>
+    {% for history_item in letter.approval_history %}
+    <div
+      class="timeline-item {% if history_item.action == 'APPROVED' or history_item.action == 'CREATED' %}completed{% endif %}"
+    >
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+          "
+        >
+          <div>
+            <strong>{{ history_item.action }}</strong> by {{ history_item.role
+            }}
+            <div
+              style="
+                font-size: 0.85rem;
+                color: var(--text-secondary);
+                margin-top: 0.25rem;
+              "
+            >
+              User: {{ history_item.user }}
+            </div>
+            {% if history_item.previous_state %}
+            <div style="font-size: 0.85rem; color: var(--text-secondary)">
+              {{ history_item.previous_state }} → {{ history_item.state }}
+            </div>
+            {% endif %}
+          </div>
+          <span
+            class="epoch"
+            data-epoch="{{ history_item.timestamp }}"
+            style="font-size: 0.85rem; color: var(--text-secondary)"
+          ></span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="action-buttons">
+    {% if can_approve %}
+    <form
+      method="post"
+      action="{{ url_for('approve_letter_route', doc_id=letter.doc_id) }}"
+      onsubmit="return confirm('Are you sure you want to approve this letter?');"
+    >
+      <button type="submit" style="background: #10b981">
+        ✅ Approve Letter
+      </button>
+    </form>
+    {% elif letter.current_state == "APPROVED" %}
+    <button
+      disabled
+      style="background: #10b981; opacity: 0.6; cursor: not-allowed"
+    >
+      ✅ Already Approved
+    </button>
+    {% else %}
+    <button disabled style="opacity: 0.6; cursor: not-allowed">
+      ⏳ Waiting for {{ letter.current_state.replace("PENDING_", "") }}
+    </button>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  (function () {
+    function fmtEpoch(sec) {
+      if (!sec) return "—";
+      const d = new Date(sec * 1000);
+      return d.toLocaleString(undefined, {
+        timeZone: "Asia/Colombo",
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+    }
+    document.querySelectorAll(".epoch").forEach((el) => {
+      el.textContent = fmtEpoch(el.getAttribute("data-epoch"));
+    });
+  })();
+</script>
+{% endblock %}

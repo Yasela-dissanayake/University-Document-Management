@@ -1,0 +1,324 @@
+{% extends "layout.html" %} {% block content %}
+<style>
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: var(--radius-sm);
+    text-align: center;
+  }
+
+  .stat-card h3 {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  .stat-card p {
+    margin: 0.5rem 0 0 0;
+    opacity: 0.9;
+  }
+
+  .letter-card {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s;
+  }
+
+  .letter-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .letter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .letter-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .letter-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .badge-pending {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .badge-approved {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .badge-urgent {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  .badge-high {
+    background: #fed7aa;
+    color: #9a3412;
+  }
+
+  .badge-normal {
+    background: #e0e7ff;
+    color: #3730a3;
+  }
+
+  .badge-low {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 1rem;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 2rem;
+  }
+
+  .tab {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+  }
+</style>
+
+<div style="max-width: 1200px; margin: 0 auto">
+  <!-- Header -->
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    "
+  >
+    <div>
+      <h2 style="margin: 0">📨 Letters Dashboard</h2>
+      <p style="margin: 0; color: var(--text-secondary)">
+        Role: <strong>{{ role }}</strong>
+      </p>
+    </div>
+    <a
+      href="{{ url_for('create_letter_route') }}"
+      style="text-decoration: none"
+    >
+      <button>✏️ Create New Letter</button>
+    </a>
+  </div>
+
+  <!-- Statistics (Admin only) -->
+  {% if stats %}
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>{{ stats.total_letters }}</h3>
+      <p>Total Letters</p>
+    </div>
+    <div
+      class="stat-card"
+      style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+    >
+      <h3>{{ stats.pending_count }}</h3>
+      <p>Pending</p>
+    </div>
+    <div
+      class="stat-card"
+      style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+    >
+      <h3>{{ stats.approved_count }}</h3>
+      <p>Approved</p>
+    </div>
+    <div
+      class="stat-card"
+      style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)"
+    >
+      <h3>{{ stats.avg_approval_time_days|round(1) }}</h3>
+      <p>Avg. Days</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('pending')">
+      🔔 Pending for Me ({{ pending|length }})
+    </button>
+    <button class="tab" onclick="switchTab('all')">
+      📋 All Accessible Letters ({{ letters|length }})
+    </button>
+  </div>
+
+  <!-- Pending Letters Tab -->
+  <div id="pending-tab" class="tab-content active">
+    <h3>Letters Pending Your Approval</h3>
+
+    {% if pending %} {% for letter in pending %}
+    <div class="letter-card">
+      <div class="letter-header">
+        <div style="flex: 1">
+          <h4 class="letter-title">{{ letter.doc_id }}: {{ letter.title }}</h4>
+          <div class="letter-meta">
+            <span>📝 Type: {{ letter.letter_type }}</span>
+            <span
+              >👤 Created by: {{ letter.created_by }} ({{ letter.creator_role
+              }})</span
+            >
+            {% if letter.student_id %}
+            <span>🎓 Student: {{ letter.student_id }}</span>
+            {% endif %}
+            <span>⏳ Waiting: {{ letter.waiting_days }} days</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+          <span class="badge badge-{{ letter.urgency|lower }}"
+            >{{ letter.urgency }}</span
+          >
+          <a href="{{ url_for('view_letter', doc_id=letter.doc_id) }}">
+            <button style="padding: 0.5rem 1rem">View & Approve</button>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <div class="empty-state">
+      <div style="font-size: 3rem; margin-bottom: 1rem">✅</div>
+      <p style="font-size: 1.1rem; font-weight: 600">No pending approvals</p>
+      <p>All caught up! No letters waiting for your approval.</p>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- All Letters Tab -->
+  <div id="all-tab" class="tab-content">
+    <h3>All Accessible Letters</h3>
+    <p style="color: var(--text-secondary); margin-bottom: 1.5rem">
+      You can access letters created at your level or below.
+    </p>
+
+    {% if letters %} {% for letter in letters %}
+    <div class="letter-card">
+      <div class="letter-header">
+        <div style="flex: 1">
+          <h4 class="letter-title">{{ letter.doc_id }}: {{ letter.title }}</h4>
+          <div class="letter-meta">
+            <span>📝 {{ letter.letter_type }}</span>
+            <span>👤 {{ letter.created_by }} ({{ letter.creator_role }})</span>
+            {% if letter.student_id %}
+            <span>🎓 {{ letter.student_id }}</span>
+            {% endif %}
+            <span>📅 {{ letter.created_at }}</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+          {% if letter.current_state == "APPROVED" %}
+          <span class="badge badge-approved">✅ Approved</span>
+          {% else %}
+          <span class="badge badge-pending">{{ letter.current_state }}</span>
+          {% endif %}
+          <span class="badge badge-{{ letter.urgency|lower }}"
+            >{{ letter.urgency }}</span
+          >
+          <a href="{{ url_for('view_letter', doc_id=letter.doc_id) }}">
+            <button style="padding: 0.5rem 1rem">View</button>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <div class="empty-state">
+      <div style="font-size: 3rem; margin-bottom: 1rem">📭</div>
+      <p style="font-size: 1.1rem; font-weight: 600">No letters found</p>
+      <p>No letters have been created yet.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  function switchTab(tabName) {
+    // Update tab buttons
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.classList.remove("active");
+    });
+    event.target.classList.add("active");
+
+    // Update tab content
+    document.querySelectorAll(".tab-content").forEach((content) => {
+      content.classList.remove("active");
+    });
+    document.getElementById(tabName + "-tab").classList.add("active");
+  }
+
+  // Format timestamps
+  (function () {
+    function fmtEpoch(sec) {
+      if (!sec) return "—";
+      const d = new Date(sec * 1000);
+      return d.toLocaleString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+    document.querySelectorAll("[data-epoch]").forEach((el) => {
+      el.textContent = fmtEpoch(el.getAttribute("data-epoch"));
+    });
+  })();
+</script>
+{% endblock %}

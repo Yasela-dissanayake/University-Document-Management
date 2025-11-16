@@ -21,6 +21,19 @@ from semester_workflow import approve_semester_workflow
 from semester_workflow import get_semester_workflow
 from semester_workflow import create_semester_workflow
 
+
+from letter_workflow import (
+    create_letter,
+    get_letter,
+    approve_letter,
+    get_pending_letters_for_role,
+    get_accessible_letters_for_role,
+    can_user_access_letter,
+    can_user_approve_letter,
+    get_letter_statistics
+)
+
+
 # --- .env early load ---
 try:
     from dotenv import load_dotenv  # type: ignore
@@ -641,6 +654,207 @@ def workflow_status(student_id: str):
                          workflows=workflows,
                          user=user)
 
+
+@app.route("/letters")
+def letters_dashboard():
+    """View all accessible letters"""
+    user = _current_user()
+    if not user:
+        return redirect(url_for("login"))
+    
+    role = user.get("role")
+    
+    # Check if user has validator role
+    if not rbac.is_validator_role(role):
+        flash("Access denied. Only validator roles can access letters.", "error")
+        return redirect(url_for("index"))
+    
+    # Get accessible letters
+    letters = get_accessible_letters_for_role(role)
+    
+    # Get pending for this role
+    pending = get_pending_letters_for_role(role)
+    
+    # Get statistics (admin only)
+    stats = None
+    if role == "ADMIN":
+        stats = get_letter_statistics()
+    
+    return render_template("letters_dashboard.html",
+                         role=role,
+                         letters=letters,
+                         pending=pending,
+                         stats=stats,
+                         user=user)
+
+
+@app.route("/letters/create", methods=["GET", "POST"])
+def create_letter_route():
+    """Create a new letter"""
+    user = _current_user()
+    if not user:
+        return redirect(url_for("login"))
+    
+    role = user.get("role")
+    
+    # Check if user can create letters
+    if role not in ["HOD", "DEAN", "AR", "DVC"]:
+        flash("Only HOD, DEAN, AR, and DVC can create letters.", "error")
+        return redirect(url_for("index"))
+    
+    if request.method == "POST":
+        title = request.form.get("title", "").strip()
+        content = request.form.get("content", "").strip()
+        letter_type = request.form.get("letter_type", "GENERAL")
+        student_id = request.form.get("student_id", "").strip() or None
+        urgency = request.form.get("urgency", "NORMAL")
+        
+        if not title or not content:
+            flash("Title and content are required.", "error")
+            return redirect(url_for("create_letter_route"))
+        
+        try:
+            result = create_letter(
+                title=title,
+                content=content,
+                letter_type=letter_type,
+                student_id=student_id,
+                urgency=urgency,
+                created_by=user["username"],
+                creator_role=role
+            )
+            
+            if result["current_state"] == "APPROVED":
+                flash(f"✅ Letter {result['doc_id']} created and auto-approved (DVC level).", "success")
+            else:
+                flash(f"✅ Letter {result['doc_id']} created. Status: {result['current_state']}", "success")
+                if result["next_approver"]:
+                    flash(f"📋 Next: {result['next_approver']} needs to approve", "info")
+            
+            return redirect(url_for("view_letter", doc_id=result["doc_id"]))
+            
+        except Exception as e:
+            flash(f"Failed to create letter: {e}", "error")
+            return redirect(url_for("create_letter_route"))
+    
+    return render_template("create_letter.html", role=role, user=user)
+
+
+@app.route("/letters/<doc_id>")
+def view_letter(doc_id: str):
+    """View a specific letter"""
+    user = _current_user()
+    if not user:
+        return redirect(url_for("login"))
+    
+    role = user.get("role")
+    
+    try:
+        letter = get_letter(doc_id)
+        if not letter:
+            flash("Letter not found.", "error")
+            return redirect(url_for("letters_dashboard"))
+        
+        # Check access
+        if not can_user_access_letter(role, letter):
+            flash("You don't have permission to view this letter.", "error")
+            return redirect(url_for("letters_dashboard"))
+        
+        # Check if user can approve
+        can_approve = can_user_approve_letter(role, letter)
+        
+        return render_template("view_letter.html",
+                             letter=letter,
+                             can_approve=can_approve,
+                             user=user)
+        
+    except Exception as e:
+        flash(f"Error loading letter: {e}", "error")
+        return redirect(url_for("letters_dashboard"))
+
+
+@app.route("/letters/<doc_id>/approve", methods=["POST"])
+def approve_letter_route(doc_id: str):
+    """Approve a letter"""
+    user = _current_user()
+    if not user:
+        return redirect(url_for("login"))
+    
+    role = user.get("role")
+    
+    try:
+        result = approve_letter(
+            doc_id=doc_id,
+            approver_role=role,
+            approver_user=user["username"]
+        )
+        
+        if result["is_final_approved"]:
+            flash(f"✅ Letter {doc_id} APPROVED! This is now final.", "success")
+        else:
+            flash(f"✅ Approved by {role}. Now pending: {result['next_approver']}", "success")
+        
+        return redirect(url_for("view_letter", doc_id=doc_id))
+        
+    except ValueError as e:
+        flash(str(e), "error")
+        return redirect(url_for("view_letter", doc_id=doc_id))
+    except Exception as e:
+        flash(f"Approval failed: {e}", "error")
+        return redirect(url_for("view_letter", doc_id=doc_id))
+
+
+@app.route("/letters/pending")
+def pending_letters():
+    """View pending letters for current user's role"""
+    user = _current_user()
+    if not user:
+        return redirect(url_for("login"))
+    
+    role = user.get("role")
+    
+    if not rbac.is_validator_role(role):
+        flash("Access denied.", "error")
+        return redirect(url_for("index"))
+    
+    pending = get_pending_letters_for_role(role)
+    
+    return render_template("pending_letters.html",
+                         pending=pending,
+                         role=role,
+                         user=user)
+
+
+# API endpoint for creating letters (JSON)
+@app.route("/api/letters/create", methods=["POST"])
+def api_create_letter():
+    """API endpoint for creating letters"""
+    user = _current_user()
+    if not user:
+        return jsonify({"error": "Authentication required"}), 401
+    
+    role = user.get("role")
+    
+    if role not in ["HOD", "DEAN", "AR", "DVC"]:
+        return jsonify({"error": "Unauthorized role"}), 403
+    
+    data = request.get_json()
+    
+    try:
+        result = create_letter(
+            title=data.get("title"),
+            content=data.get("content"),
+            letter_type=data.get("letter_type", "GENERAL"),
+            student_id=data.get("student_id"),
+            urgency=data.get("urgency", "NORMAL"),
+            created_by=user["username"],
+            creator_role=role
+        )
+        
+        return jsonify(result), 200
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 
 

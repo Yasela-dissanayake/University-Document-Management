@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+  <h2>📝 Create New Letter</h2>
+  <p>Role: <strong>{{ role }}</strong></p>
+
+  <form method="post" style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--radius-sm);">
+    
+    <div style="margin-bottom: 1.5rem;">
+      <label for="title">Letter Title *</label>
+      <input type="text" id="title" name="title" required 
+             placeholder="e.g., Recommendation Letter for S20841"
+             style="width: 100%;">
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <label for="letter_type">Letter Type *</label>
+      <select id="letter_type" name="letter_type" required style="width: 100%;">
+        <option value="GENERAL">General Letter</option>
+        <option value="RECOMMENDATION">Recommendation Letter</option>
+        <option value="TRANSCRIPT_REQUEST">Transcript Request</option>
+        <option value="CLEARANCE">Clearance Letter</option>
+        <option value="VERIFICATION">Verification Letter</option>
+        <option value="OFFICIAL">Official Communication</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <label for="student_id">Related Student ID (Optional)</label>
+      <input type="text" id="student_id" name="student_id" 
+             placeholder="e.g., S20841" pattern="S\d{5}"
+             style="width: 100%;">
+      <small>Leave empty if not student-specific</small>
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <label for="urgency">Urgency Level *</label>
+      <select id="urgency" name="urgency" required style="width: 100%;">
+        <option value="LOW">Low</option>
+        <option value="NORMAL" selected>Normal</option>
+        <option value="HIGH">High</option>
+        <option value="URGENT">Urgent</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <label for="content">Letter Content *</label>
+      <textarea id="content" name="content" required 
+                rows="10" style="width: 100%; font-family: inherit;"
+                placeholder="Enter the letter content here..."></textarea>
+    </div>
+
+    <div style="background: #dbeafe; border-left: 4px solid #3b82f6; padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px;">
+      <strong>ℹ️ Workflow Information:</strong>
+      <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem;">
+        {% if role == "HOD" %}
+          Your letter will follow: HOD → DEAN → AR → DVC
+        {% elif role == "DEAN" %}
+          Your letter will follow: DEAN → AR → DVC (HOD will NOT see this)
+        {% elif role == "AR" %}
+          Your letter will follow: AR → DVC (HOD and DEAN will NOT see this)
+        {% elif role == "DVC" %}
+          Your letter will be automatically approved (highest level)
+        {% endif %}
+      </p>
+    </div>
+
+    <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+      <button type="button" id="cancel-btn"
+              style="background: var(--bg-secondary); color: var(--text-primary);">
+        Cancel
+      </button>
+      <button type="submit">
+        ✅ Create Letter
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Auto-uppercase student ID
+  document.getElementById('student_id').addEventListener('input', function(e) {
+    e.target.value = e.target.value.toUpperCase();
+  });
+
+  // Cancel button navigates to letters dashboard
+  document.getElementById('cancel-btn').addEventListener('click', function() {
+    window.location.href = '{{ url_for("letters_dashboard") }}';
+  });
+</script>
+{% endblock %}
