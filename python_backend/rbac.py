@@ -235,3 +235,76 @@ def set_user_role(user_id: int, new_role: str) -> dict:
         print(f"❌ Error updating user role: {e}")
         return {"error": str(e)}
 
+def can_update_semester(user: Optional[Dict], student_id: str) -> bool:
+    """
+    Check if user can update semester records.
+    Only ADMIN and EXAM_DIVISION can update semester records.
+    Students CANNOT update their own records.
+    """
+    if not user:
+        return False
+    
+    role = (user.get("role") or "").strip().upper()
+    
+    # Only these roles can update semester records
+    allowed_roles = ["ADMIN", "EXAM_DIVISION", "REGISTRAR"]
+    
+    return role in allowed_roles
+
+
+def can_approve_semester(user: Optional[Dict], current_state: str) -> bool:
+    """
+    Check if user can approve semester record at current workflow state.
+    
+    Workflow: DRAFT → HOD → DEAN → APPROVED
+    """
+    if not user:
+        return False
+    
+    role = (user.get("role") or "").strip().upper()
+    
+    # Define who can approve at each state
+    approval_permissions = {
+        "DRAFT": [],  # No approval needed at draft
+        "PENDING_HOD": ["HOD"],
+        "PENDING_DEAN": ["DEAN"],
+        "PENDING_AR": ["AR"],  # Optional: if you want AR review
+    }
+    
+    return role in approval_permissions.get(current_state, [])
+
+
+def next_semester_state(current_state: str, approver_role: str) -> str:
+    """
+    Determine next state in semester approval workflow.
+    
+    Workflow states:
+    - DRAFT: Initial submission by EXAM_DIVISION
+    - PENDING_HOD: Waiting for HOD approval
+    - PENDING_DEAN: Waiting for DEAN approval
+    - APPROVED: Final approved state
+    """
+    
+    workflow_transitions = {
+        "DRAFT": {
+            "EXAM_DIVISION": "PENDING_HOD",  # Submit for approval
+            "ADMIN": "PENDING_HOD"
+        },
+        "PENDING_HOD": {
+            "HOD": "PENDING_DEAN"
+        },
+        "PENDING_DEAN": {
+            "DEAN": "APPROVED"
+        }
+    }
+    
+    transitions = workflow_transitions.get(current_state, {})
+    next_state = transitions.get(approver_role)
+    
+    if not next_state:
+        raise ValueError(
+            f"Role '{approver_role}' cannot approve at state '{current_state}'"
+        )
+    
+    return next_state
+

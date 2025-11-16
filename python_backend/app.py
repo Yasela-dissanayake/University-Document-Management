@@ -9,10 +9,17 @@ import hashlib
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional
 
+
 from flask import (
     Flask, jsonify, redirect, render_template, request,
     url_for, flash, session
 )
+
+from semester_workflow import get_student_workflows
+from semester_workflow import get_pending_approvals
+from semester_workflow import approve_semester_workflow
+from semester_workflow import get_semester_workflow
+from semester_workflow import create_semester_workflow
 
 # --- .env early load ---
 try:
@@ -223,8 +230,8 @@ def register():
 
     return render_template("register.html")
 
-@app.route("/update", methods=["GET", "POST"])
-def update():
+# @app.route("/update", methods=["GET", "POST"])
+#  def update():
     if request.method == "POST":
         student_id = _canon_sid(request.form.get("student_id", ""))
         doc_raw    = request.form.get("document", "").strip()
@@ -259,6 +266,77 @@ def update():
             return redirect(url_for("update"))
 
     return render_template("update.html")
+
+@app.route("/update", methods=["GET", "POST"])
+def update():
+    """Update semester record - RBAC protected"""
+    
+    user = _current_user()
+    if not user:
+        return redirect(url_for("login", next=url_for("update")))
+    
+    if request.method == "POST":
+        student_id = _canon_sid(request.form.get("student_id", ""))
+        doc_raw    = request.form.get("document", "").strip()
+
+        if not student_id:
+            flash("Student ID is required.", "error")
+            return redirect(url_for("update"))
+        
+        # Check permission
+        if not rbac.can_update_semester(user, student_id):
+            flash(f"❌ Access denied. Only ADMIN and EXAM_DIVISION can update semester records.", "error")
+            return redirect(url_for("index"))
+        
+        if not doc_raw:
+            flash("Please generate the Document JSON.", "error")
+            return redirect(url_for("update"))
+
+        try:
+            doc = json.loads(doc_raw)
+            doc["student_id"] = student_id
+            timestamp = _parse_timestamp(doc.get("timestamp"))
+            doc["timestamp"] = timestamp
+
+            # Encrypt & store with ACL
+            principals = acl.default_principals(student_id)
+            ipfs_hash, content_hash = acl.encrypt_and_store(doc, principals, ipfs)
+
+            # ✅ ADD THIS: Create workflow record BEFORE blockchain
+            from python_backend.semester_workflow import create_semester_workflow
+            
+            workflow_id = create_semester_workflow(
+                student_id=student_id,
+                ipfs_hash=ipfs_hash,
+                content_hash=content_hash,
+                submitted_by=user["username"],
+                timestamp=timestamp
+            )
+            
+            # Store on blockchain
+            tx = bc.add_semester_record(
+                student_id=student_id,
+                documents_ipfs_hash=ipfs_hash,
+                content_hash=content_hash,
+                timestamp=timestamp,
+            )
+            
+            flash(f"✅ Semester record created for {student_id}. Status: DRAFT (pending approval)", "success")
+            flash(f"📋 Next: HOD needs to approve this record", "warning")
+            return redirect(url_for("view", student_id=student_id))
+            
+        except Exception as e:
+            flash(f"Update failed: {e}", "error")
+            import traceback
+            traceback.print_exc()
+            return redirect(url_for("update"))
+
+    # Check permission for GET too
+    if not rbac.can_update_semester(user, ""):
+        flash("❌ You don't have permission to access this page.", "error")
+        return redirect(url_for("index"))
+
+    return render_template("update.html", user=user)
 
 @app.route("/view", methods=["GET", "POST"])
 def view():
@@ -487,6 +565,82 @@ def validator_approve_letter():
     letter["current_state"] = new_state
     letter["history"].append({"role": role, "action": "APPROVE", "timestamp": datetime.utcnow().isoformat()})
     return jsonify({"message": f"{role} approved {doc_id}, now state={new_state}"}), 200
+
+@app.route("/semester/approve/<ipfs_hash>", methods=["POST"])
+def approve_semester(ipfs_hash: str):
+    """Approve a semester record"""
+    user = _current_user()
+    if not user:
+        return redirect(url_for("login"))
+    
+    try:
+        workflow = get_semester_workflow(ipfs_hash)
+        if not workflow:
+            flash("❌ Workflow not found", "error")
+            return redirect(url_for("index"))
+        
+        # Check if user can approve at current state
+        if not rbac.can_approve_semester(user, workflow["workflow_state"]):
+            flash(f"❌ You cannot approve at state: {workflow['workflow_state']}", "error")
+            return redirect(url_for("pending_approvals"))
+        
+        # Approve
+        result = approve_semester_workflow(
+            ipfs_hash=ipfs_hash,
+            approver_role=user["role"],
+            approver_user=user["username"],
+            timestamp=int(time.time())
+        )
+        
+        if result["is_final_approved"]:
+            flash(f"✅ Semester record APPROVED! This is now the official record.", "success")
+        else:
+            flash(f"✅ Approved by {user['role']}. Now pending: {result['next_approver']}", "success")
+        
+        return redirect(url_for("pending_approvals"))
+        
+    except Exception as e:
+        flash(f"❌ Approval failed: {e}", "error")
+        return redirect(url_for("pending_approvals"))
+
+
+@app.route("/approvals/pending")
+def pending_approvals():
+    """Show pending approvals for current user"""
+    user = _current_user()
+    if not user:
+        return redirect(url_for("login"))
+    
+    role = user.get("role")
+        # DEBUG: Add this
+    print(f"DEBUG: User role is: {role}")
+    print(f"DEBUG: User object: {user}")
+    
+    pending = get_pending_approvals(role)
+    
+    print(f"DEBUG: Found {len(pending)} pending approvals")
+    
+    return render_template("pending_approvals.html", 
+                         pending=pending, 
+                         role=role,
+                         user=user)
+
+
+
+@app.route("/workflow/status/<student_id>")
+def workflow_status(student_id: str):
+    """View workflow status for all semester records of a student"""
+    user = _current_user()
+    if not user:
+        return redirect(url_for("login"))
+    
+    workflows = get_student_workflows(student_id)
+    
+    return render_template("workflow_status.html",
+                         student_id=student_id,
+                         workflows=workflows,
+                         user=user)
+
 
 
 
