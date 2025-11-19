@@ -97,6 +97,76 @@
         color: var(--primary);
       }
 
+      nav a.active {
+        background: var(--primary);
+        color: white;
+      }
+
+      /* User info badge */
+      .user-badge {
+        background: var(--bg-secondary);
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .user-badge .role {
+        background: var(--primary);
+        color: white;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 0.75rem;
+      }
+
+      /* Dropdown for letter workflows */
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-toggle {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        margin-top: 0.5rem;
+        background: white;
+        border: 2px solid var(--border);
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow-lg);
+        min-width: 200px;
+        z-index: 1000;
+      }
+
+      .dropdown:hover .dropdown-menu {
+        display: block;
+      }
+
+      .dropdown-menu a {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: all 0.2s;
+        border-radius: 0;
+      }
+
+      .dropdown-menu a:hover {
+        background: var(--bg-secondary);
+        color: var(--primary);
+      }
+
       main {
         max-width: 1200px;
         margin: 2rem auto;
@@ -146,6 +216,24 @@
         color: #991b1b;
         font-weight: 500;
         animation: slideIn 0.3s ease;
+      }
+
+      .flash.success {
+        background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        border-left-color: var(--success);
+        color: #065f46;
+      }
+
+      .flash.info {
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        border-left-color: var(--primary);
+        color: #1e40af;
+      }
+
+      .flash.warning {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border-left-color: var(--warning);
+        color: #92400e;
       }
 
       @keyframes slideIn {
@@ -355,6 +443,11 @@
         td {
           padding: 0.75rem 0.5rem;
         }
+
+        .dropdown-menu {
+          position: relative;
+          margin-top: 0.25rem;
+        }
       }
     </style>
   </head>
@@ -363,24 +456,59 @@
       <div class="nav-content">
         <div class="logo">📚 UniDoc</div>
         <div class="nav-links">
-          <a href="{{ url_for('index') }}">Home</a>
-          <a href="{{ url_for('register') }}">Register Student</a>
-          <a href="{{ url_for('update') }}">Update Semester</a>
-          <a href="{{ url_for('view') }}">Inspect Semesters</a>
-          <a href="{{ url_for('ai_page') }}">AI Query</a>
-          {% if session.role == "ADMIN" %}
-          <a href="{{ url_for('admin_dashboard') }}">Admin Panel</a>
-          {% endif %} {% if session.role in ["HOD", "DEAN", "AR", "DVC"] %}
-          <a href="{{ url_for('validator_dashboard') }}">Validator Dashboard</a>
+          <a href="{{ url_for('index') }}">🏠 Home</a>
+          <a href="{{ url_for('register') }}">📝 Register Student</a>
+
+          <!-- Show Update Semester only for authorized roles -->
+          {% if session.role in ["ADMIN", "EXAM_DIVISION", "REGISTRAR"] %}
+          <a href="{{ url_for('update') }}">📊 Update Semester</a>
           {% endif %}
-          <a href="{{ url_for('login') }}">Login</a>
+
+          <a href="{{ url_for('view') }}">🔍 Inspect Semesters</a>
+          <a href="{{ url_for('ai_page') }}">🤖 AI Query</a>
+
+          <!-- Admin Panel -->
+          {% if session.role == "ADMIN" %}
+          <a href="{{ url_for('admin_dashboard') }}">⚙️ Admin Panel</a>
+          {% endif %}
+
+          <!-- Letter Workflow (HOD, DEAN, AR, DVC only) -->
+          {% if session.role in ["HOD", "DEAN", "AR", "DVC", "ADMIN"] %}
+          <div class="dropdown">
+            <a class="dropdown-toggle"> 📨 Letters ▾ </a>
+            <div class="dropdown-menu">
+              <a href="{{ url_for('letters_dashboard') }}">📋 Dashboard</a>
+              <a href="{{ url_for('create_letter_route') }}"
+                >✏️ Create Letter</a
+              >
+              <a href="{{ url_for('pending_letters') }}"
+                >⏳ Pending Approvals</a
+              >
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Show user info or login -->
+          {% if session.user %}
+          <div class="user-badge">
+            <span>👤 {{ session.user }}</span>
+            <span class="role">{{ session.role }}</span>
+            <a
+              href="{{ url_for('logout') }}"
+              style="color: var(--danger); padding: 0"
+              >Logout</a
+            >
+          </div>
+          {% else %}
+          <a href="{{ url_for('login') }}">🔐 Login</a>
+          {% endif %}
         </div>
       </div>
     </nav>
     <main>
-      {% with messages = get_flashed_messages() %} {% if messages %} {% for
-      message in messages %}
-      <div class="flash">{{ message }}</div>
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
       {% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock %}
     </main>
     <footer>
