@@ -1,11 +1,7 @@
 """
-Complete Integrated AI Agent
+Complete Integrated AI Agent - FIXED VERSION
 ----------------------------
-Routes queries to appropriate handlers:
-1. On-chain queries → Blockchain tools
-2. Off-chain academic queries → RAG with ACL
-3. Letter workflow queries → Letter Workflow RAG (NEW)
-4. Semester workflow queries → Semester Workflow RAG
+Routes queries to appropriate handlers with proper error handling
 """
 
 import json
@@ -26,7 +22,7 @@ from python_backend.ai.tools import (
 # Import RAG systems
 from python_backend.ai.rag_agent import rag_answer
 
-# Import letter workflow RAG (NEW - safe, won't break anything)
+# Import letter workflow RAG
 try:
     from python_backend.ai.letter_workflow_rag import letter_workflow_query
     LETTER_RAG_AVAILABLE = True
@@ -37,15 +33,11 @@ except ImportError:
 
 def _classify_query(question: str) -> str:
     """
-    Classify query type to route appropriately:
-    - 'letter_workflow': Letter status, approvals, analytics (NEW)
-    - 'semester_workflow': Semester approval workflow
-    - 'offchain': Document contents, grades, courses, GPA
-    - 'onchain': Basic student info, registration, IPFS hashes
+    Classify query type to route appropriately
     """
     question_lower = question.lower()
     
-    # Letter workflow keywords (NEW)
+    # Letter workflow keywords
     letter_keywords = [
         'letter', 'ltr', 'approval', 'approve', 'pending letter',
         'letter status', 'letter workflow', 'letter statistics',
@@ -74,7 +66,7 @@ def _classify_query(question: str) -> str:
         'is registered', 'exists'
     ]
     
-    # Check letter workflow first (highest priority for letter queries)
+    # Check letter workflow first
     letter_score = sum(1 for kw in letter_keywords if kw in question_lower)
     if letter_score > 0:
         return 'letter_workflow'
@@ -94,7 +86,6 @@ def _classify_query(question: str) -> str:
     if onchain_score > 0:
         return 'onchain'
     
-    # If unclear, default to general which will try to classify further
     return 'general'
 
 
@@ -106,7 +97,7 @@ def answer_question(question: str, user_context: Optional[Dict] = None) -> Dict[
     query_type = _classify_query(question)
     logging.info(f"📊 Query classified as: {query_type}")
     
-    # === LETTER WORKFLOW QUERIES (NEW) ===
+    # === LETTER WORKFLOW QUERIES ===
     if query_type == 'letter_workflow':
         if not user_context:
             return {
@@ -128,6 +119,13 @@ def answer_question(question: str, user_context: Optional[Dict] = None) -> Dict[
         
         logging.info(f"📨 Letter workflow query from: {user_context.get('username')} ({user_context.get('role')})")
         result = letter_workflow_query(question, user=user_context)
+        
+        # FIXED: Ensure result has trace key
+        if not isinstance(result, dict):
+            result = {"answer": str(result), "trace": {}}
+        if "trace" not in result:
+            result["trace"] = {}
+        
         result["trace"]["query_type"] = "letter_workflow"
         return result
     
@@ -144,7 +142,6 @@ def answer_question(question: str, user_context: Optional[Dict] = None) -> Dict[
         
         logging.info(f"📋 Semester workflow query from: {user_context.get('username')} ({user_context.get('role')})")
         
-        # Placeholder - integrate semester workflow RAG later
         return {
             "answer": "Semester workflow monitoring is coming soon. Currently, you can view semester status in the Pending Approvals page.",
             "trace": {
@@ -164,7 +161,7 @@ def answer_question(question: str, user_context: Optional[Dict] = None) -> Dict[
                 }
             }
         
-        logging.info(f"🔐 Off-chain query from: {user_context.get('username')} ({user_context.get('role')})")
+        logging.info(f"📖 Off-chain query from: {user_context.get('username')} ({user_context.get('role')})")
         
         # Try structured tools first
         tool_result = _try_tools_for_offchain(question, user_context)
@@ -173,10 +170,31 @@ def answer_question(question: str, user_context: Optional[Dict] = None) -> Dict[
         
         # Fall back to RAG
         logging.info("📚 Using RAG for complex off-chain query")
-        result = rag_answer(question, user=user_context)
-        result["trace"]["query_type"] = "offchain"
-        result["trace"]["method"] = "rag"
-        return result
+        
+        try:
+            result = rag_answer(question, user=user_context)
+            
+            # FIXED: Ensure result is a dict with trace
+            if not isinstance(result, dict):
+                result = {"answer": str(result), "trace": {}}
+            
+            if "trace" not in result:
+                result["trace"] = {}
+            
+            result["trace"]["query_type"] = "offchain"
+            result["trace"]["method"] = "rag"
+            return result
+            
+        except Exception as e:
+            logging.error(f"RAG error: {e}")
+            return {
+                "answer": f"Error retrieving academic information: {str(e)}",
+                "trace": {
+                    "query_type": "offchain",
+                    "method": "rag",
+                    "error": str(e)
+                }
+            }
     
     # === ON-CHAIN QUERIES (Public) ===
     elif query_type == 'onchain':
@@ -185,7 +203,6 @@ def answer_question(question: str, user_context: Optional[Dict] = None) -> Dict[
     
     # === GENERAL QUERIES ===
     else:
-        # Try to intelligently route general queries
         return _handle_general_query(question, user_context)
 
 
@@ -194,29 +211,51 @@ def _try_tools_for_offchain(question: str, user: Dict) -> Optional[Dict[str, Any
     question_lower = question.lower()
     
     import re
-    student_id_match = re.search(r'S\d{5}', question, re.IGNORECASE)
+    student_id_match = re.search(r'S\d{5}|STD\d{3}', question, re.IGNORECASE)
     if not student_id_match:
         return None
     
     student_id = student_id_match.group(0).upper()
     
     # Specific course grade query
-    course_match = re.search(r'grade.*(for|in|of)\s+([A-Z]{2,4}\d{3,4})', question, re.IGNORECASE)
-    if course_match:
-        course_code = course_match.group(2).upper()
+    course_match = re.search(r'([A-Z]{2,4}\d{3,4})', question, re.IGNORECASE)
+    if course_match and any(kw in question_lower for kw in ['grade', 'score', 'mark']):
+        course_code = course_match.group(1).upper()
         logging.info(f"🎯 Specific course grade query: {student_id} - {course_code}")
         
-        result = get_course_grade(student_id, course_code, user)
-        
-        if result.get("ok") and result.get("found"):
-            answer = f"The grade for {course_code} for student {student_id} is: {result.get('grade')}"
+        try:
+            result = get_course_grade(student_id, course_code, user)
+            
+            if result.get("ok") and result.get("found"):
+                answer = f"The grade for {course_code} for student {student_id} is: {result.get('grade')}"
+                return {
+                    "answer": answer,
+                    "trace": {
+                        "query_type": "offchain",
+                        "method": "tool",
+                        "tool": "get_course_grade",
+                        "result": result
+                    }
+                }
+            elif result.get("ok") and not result.get("found"):
+                return {
+                    "answer": f"No grade found for course {course_code} for student {student_id}.",
+                    "trace": {
+                        "query_type": "offchain",
+                        "method": "tool",
+                        "tool": "get_course_grade",
+                        "found": False
+                    }
+                }
+        except Exception as e:
+            logging.error(f"Error getting course grade: {e}")
             return {
-                "answer": answer,
+                "answer": f"Error retrieving grade information: {str(e)}",
                 "trace": {
                     "query_type": "offchain",
                     "method": "tool",
                     "tool": "get_course_grade",
-                    "result": result
+                    "error": str(e)
                 }
             }
     
@@ -224,37 +263,54 @@ def _try_tools_for_offchain(question: str, user: Dict) -> Optional[Dict[str, Any
     if any(kw in question_lower for kw in ['all grades', 'all courses', 'semester', 'transcript']):
         logging.info(f"🎯 All semesters query: {student_id}")
         
-        result = get_offchain_semesters(student_id, user)
-        
-        if result.get("ok"):
-            semesters = result.get("semesters", [])
-            if not semesters:
+        try:
+            result = get_offchain_semesters(student_id, user)
+            
+            if result.get("ok"):
+                semesters = result.get("semesters", [])
+                if not semesters:
+                    return {
+                        "answer": f"No semester records found for {student_id}.",
+                        "trace": {
+                            "query_type": "offchain",
+                            "method": "tool",
+                            "tool": "get_offchain_semesters",
+                            "semesters_found": 0
+                        }
+                    }
+                
+                answer_lines = [f"Academic records for {student_id}:\n"]
+                for i, sem in enumerate(semesters, 1):
+                    answer_lines.append(f"\nSemester {i}:")
+                    if sem.get("gpa"):
+                        answer_lines.append(f"  GPA: {sem['gpa']}")
+                    courses = sem.get("courses", [])
+                    if courses:
+                        answer_lines.append(f"  Courses:")
+                        for course in courses:
+                            code = course.get("code", "N/A")
+                            name = course.get("name", "Unknown")
+                            grade = course.get("grade", "-")
+                            answer_lines.append(f"    • {code} ({name}): {grade}")
+                
                 return {
-                    "answer": f"No semester records found for {student_id}.",
-                    "trace": result.get("trace")
+                    "answer": "\n".join(answer_lines),
+                    "trace": {
+                        "query_type": "offchain",
+                        "method": "tool",
+                        "tool": "get_offchain_semesters",
+                        "semesters_found": len(semesters)
+                    }
                 }
-            
-            answer_lines = [f"Academic records for {student_id}:\n"]
-            for i, sem in enumerate(semesters, 1):
-                answer_lines.append(f"\nSemester {i}:")
-                if sem.get("gpa"):
-                    answer_lines.append(f"  GPA: {sem['gpa']}")
-                courses = sem.get("courses", [])
-                if courses:
-                    answer_lines.append(f"  Courses:")
-                    for course in courses:
-                        code = course.get("code", "N/A")
-                        name = course.get("name", "Unknown")
-                        grade = course.get("grade", "-")
-                        answer_lines.append(f"    • {code} ({name}): {grade}")
-            
+        except Exception as e:
+            logging.error(f"Error getting semesters: {e}")
             return {
-                "answer": "\n".join(answer_lines),
+                "answer": f"Error retrieving semester information: {str(e)}",
                 "trace": {
                     "query_type": "offchain",
                     "method": "tool",
                     "tool": "get_offchain_semesters",
-                    "semesters_found": len(semesters)
+                    "error": str(e)
                 }
             }
     
@@ -265,29 +321,30 @@ def _handle_onchain_query(question: str, user: Optional[Dict]) -> Dict[str, Any]
     """Handle on-chain queries using blockchain tools"""
     
     import re
-    student_id_match = re.search(r'S\d{5}', question, re.IGNORECASE)
+    student_id_match = re.search(r'S\d{5}|STD\d{3}', question, re.IGNORECASE)
     
     if not student_id_match:
         return {
-            "answer": "Please specify a student ID (e.g., S20841) in your query.",
+            "answer": "Please specify a student ID (e.g., S20841 or STD002) in your query.",
             "trace": {"query_type": "onchain", "error": "No student ID found"}
         }
     
     student_id = student_id_match.group(0).upper()
     
-    student = get_onchain_student(student_id)
-    
-    if not student:
-        return {
-            "answer": f"Student {student_id} not found in the blockchain.",
-            "trace": {"query_type": "onchain", "student_id": student_id, "found": False}
-        }
-    
-    cids = list_semester_cids(student_id)
-    
-    llm = OllamaLLM(model=os.getenv("OLLAMA_MODEL", "llama3"))
-    
-    prompt = f"""Based on this blockchain data for student {student_id}, answer the user's question naturally.
+    try:
+        student = get_onchain_student(student_id)
+        
+        if not student:
+            return {
+                "answer": f"Student {student_id} not found in the blockchain.",
+                "trace": {"query_type": "onchain", "student_id": student_id, "found": False}
+            }
+        
+        cids = list_semester_cids(student_id)
+        
+        llm = OllamaLLM(model=os.getenv("OLLAMA_MODEL", "llama3"))
+        
+        prompt = f"""Based on this blockchain data for student {student_id}, answer the user's question naturally.
 
 Blockchain Data:
 - Name: {student.get('name')}
@@ -300,29 +357,39 @@ Blockchain Data:
 User Question: {question}
 
 Provide a clear, concise answer:"""
-    
-    answer = llm.invoke(prompt)
-    
-    return {
-        "answer": answer,
-        "trace": {
-            "query_type": "onchain",
-            "method": "blockchain_tools",
-            "student_id": student_id,
-            "data_retrieved": {
-                "student_found": True,
-                "semester_records": len(cids)
+        
+        answer = llm.invoke(prompt)
+        
+        return {
+            "answer": answer,
+            "trace": {
+                "query_type": "onchain",
+                "method": "blockchain_tools",
+                "student_id": student_id,
+                "data_retrieved": {
+                    "student_found": True,
+                    "semester_records": len(cids)
+                }
             }
         }
-    }
+    except Exception as e:
+        logging.error(f"On-chain query error: {e}")
+        return {
+            "answer": f"Error querying blockchain data: {str(e)}",
+            "trace": {
+                "query_type": "onchain",
+                "error": str(e)
+            }
+        }
 
 
 def _handle_general_query(question: str, user: Optional[Dict]) -> Dict[str, Any]:
     """Handle general queries that don't fit specific categories"""
     
-    llm = OllamaLLM(model=os.getenv("OLLAMA_MODEL", "llama3"))
-    
-    system_info = """You are an AI assistant for a university blockchain document management system.
+    try:
+        llm = OllamaLLM(model=os.getenv("OLLAMA_MODEL", "llama3"))
+        
+        system_info = """You are an AI assistant for a university blockchain document management system.
 
 Available features:
 - Student registration and academic records on blockchain
@@ -336,21 +403,33 @@ You can help with:
 - Student registration information
 - System usage guidance
 """
-    
-    prompt = f"""{system_info}
+        
+        prompt = f"""{system_info}
 
 User Question: {question}
 
 Provide a helpful response. If the query is about specific data, ask for more details (like student ID or letter ID).
 
 Answer:"""
-    
-    answer = llm.invoke(prompt)
-    
-    return {
-        "answer": answer,
-        "trace": {
-            "query_type": "general",
-            "method": "llm_direct"
+        
+        answer = llm.invoke(prompt)
+        
+        return {
+            "answer": answer,
+            "trace": {
+                "query_type": "general",
+                "method": "llm_direct"
+            }
         }
-    }
+    except Exception as e:
+        logging.error(f"General query error: {e}")
+        return {
+            "answer": "I'm sorry, I encountered an error processing your request. Please try rephrasing your question.",
+            "trace": {
+                "query_type": "general",
+                "method": "llm_direct",
+                "error": str(e)
+            }
+        }
+
+        
