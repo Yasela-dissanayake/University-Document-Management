@@ -1,5 +1,5 @@
 """
-User-Aware RAG Agent with ACL-based access control
+User-Aware RAG Agent with ACL-based access control - FIXED VERSION
 -------------------------------------------------
 Ensures students can only query their own off-chain documents,
 while authorized roles can access documents based on ACL permissions.
@@ -11,10 +11,9 @@ import logging
 from typing import Dict, Any, List, Optional
 
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import OllamaEmbeddings
+from langchain_ollama import OllamaEmbeddings  # FIXED: Use new import
 from langchain_ollama import OllamaLLM
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.chains.retrieval_qa.base import RetrievalQA
 
 from python_backend.ipfs_client import UniversityIPFSClient
 from python_backend.blockchain_client import UniversityBlockchainClient
@@ -70,6 +69,35 @@ class UserAwareRAG:
             traceback.print_exc()
             self.vectorstore = None
 
+    def _get_all_student_ids(self) -> List[str]:
+        """
+        FIXED: Dynamically get all student IDs from blockchain
+        """
+        student_ids = []
+        
+        # Try common student ID patterns
+        patterns = [
+            ("STD", 1, 100),   # STD001 to STD099
+            ("S", 20000, 21000)  # S20000 to S20999
+        ]
+        
+        for prefix, start, end in patterns:
+            for i in range(start, end):
+                if prefix == "STD":
+                    student_id = f"{prefix}{i:03d}"
+                else:
+                    student_id = f"{prefix}{i}"
+                
+                try:
+                    student = self.bc_client.get_student_details(student_id)
+                    if student:
+                        student_ids.append(student_id)
+                        logging.info(f"✅ Found student: {student_id}")
+                except:
+                    continue
+        
+        return student_ids
+
     def _load_all_student_documents(self) -> List[Dict[str, Any]]:
         """
         Load documents from all students for indexing.
@@ -77,9 +105,14 @@ class UserAwareRAG:
         """
         docs = []
         
-        # In production, you'd get all student IDs from blockchain
-        # For now, we'll use a test set
-        student_ids = ["S20841", "S19357", "S20123"]  # Add more as needed
+        # FIXED: Get student IDs dynamically
+        student_ids = self._get_all_student_ids()
+        
+        if not student_ids:
+            logging.warning("⚠️ No students found in blockchain")
+            return []
+        
+        logging.info(f"📊 Found {len(student_ids)} students to index")
         
         for student_id in student_ids:
             try:
@@ -251,13 +284,23 @@ class UserAwareRAG:
         Answer a question with user-aware access control.
         Only returns information from documents the user has permission to access.
         """
+        # FIXED: Always return dict with trace
         if not self.vectorstore:
-            return {"answer": "RAG system not initialized or no documents indexed."}
+            return {
+                "answer": "RAG system not initialized or no documents indexed. Please run the initialization script.",
+                "trace": {
+                    "error": "vectorstore_not_initialized",
+                    "method": "RAG"
+                }
+            }
         
         if not user:
             return {
                 "answer": "Authentication required to access off-chain documents. Please log in.",
-                "trace": {"error": "No user context provided"}
+                "trace": {
+                    "error": "no_user_context",
+                    "method": "RAG"
+                }
             }
 
         try:
@@ -276,12 +319,24 @@ class UserAwareRAG:
                 if role == "STUDENT":
                     return {
                         "answer": "No accessible documents found. You can only access your own academic records.",
-                        "trace": {"filtered_count": len(raw_docs), "accessible_count": 0}
+                        "trace": {
+                            "method": "RAG",
+                            "user": user.get("username"),
+                            "role": role,
+                            "filtered_count": len(raw_docs),
+                            "accessible_count": 0
+                        }
                     }
                 else:
                     return {
                         "answer": "No relevant documents found for your query.",
-                        "trace": {"filtered_count": len(raw_docs), "accessible_count": 0}
+                        "trace": {
+                            "method": "RAG",
+                            "user": user.get("username"),
+                            "role": role,
+                            "filtered_count": len(raw_docs),
+                            "accessible_count": 0
+                        }
                     }
             
             # Build context from accessible documents
@@ -315,7 +370,15 @@ Answer:"""
             logging.error(f"RAG answer generation failed: {e}")
             import traceback
             traceback.print_exc()
-            return {"answer": f"Error: {e}"}
+            # FIXED: Return proper dict with trace even on error
+            return {
+                "answer": f"Error processing your query: {str(e)}",
+                "trace": {
+                    "error": str(e),
+                    "method": "RAG",
+                    "user": user.get("username") if user else None
+                }
+            }
 
 
 # ---------- Singleton Instance ----------
@@ -327,3 +390,19 @@ def rag_answer(question: str, user: Optional[Dict] = None) -> Dict[str, Any]:
     if _rag_instance is None:
         _rag_instance = UserAwareRAG()
     return _rag_instance.answer(question, user)
+
+
+def rebuild_index():
+    """Force rebuild the RAG index - call this manually if needed"""
+    global _rag_instance
+    logging.info("✅ RAG started rebuilt 1111")
+    import shutil
+    if os.path.exists(CHROMA_DIR):
+        shutil.rmtree(CHROMA_DIR)
+        logging.info("🗑️ Removed old RAG store")
+    
+    _rag_instance = None
+    _rag_instance = UserAwareRAG()
+    
+    logging.info("✅ RAG index rebuilt")
+    return _rag_instance.vectorstore is not None
