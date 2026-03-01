@@ -98,7 +98,13 @@ def ask_agent(question: str, user: Optional[Dict[str, Any]] = None) -> Dict[str,
 
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "supersecretkey")
+_secret = os.getenv("FLASK_SECRET_KEY")
+if not _secret:
+    raise RuntimeError(
+        "FLASK_SECRET_KEY environment variable is not set. "
+        "Generate one with: python -c \"import secrets; print(secrets.token_hex(32))\""
+    )
+app.secret_key = _secret
 
 @app.context_processor
 def inject_current_year():
@@ -243,42 +249,7 @@ def register():
 
     return render_template("register.html")
 
-# @app.route("/update", methods=["GET", "POST"])
-#  def update():
-    if request.method == "POST":
-        student_id = _canon_sid(request.form.get("student_id", ""))
-        doc_raw    = request.form.get("document", "").strip()
-
-        if not student_id:
-            flash("Student ID is required.", "error")
-            return redirect(url_for("update"))
-        if not doc_raw:
-            flash("Please generate the Document JSON.", "error")
-            return redirect(url_for("update"))
-
-        try:
-            doc = json.loads(doc_raw)
-            doc["student_id"] = student_id
-            timestamp = _parse_timestamp(doc.get("timestamp"))
-            doc["timestamp"] = timestamp
-
-            # --- NEW: encrypt & store with default ACL principals ---
-            principals = acl.default_principals(student_id)
-            ipfs_hash, content_hash = acl.encrypt_and_store(doc, principals, ipfs)
-
-            tx = bc.add_semester_record(
-                student_id=student_id,
-                documents_ipfs_hash=ipfs_hash,
-                content_hash=content_hash,
-                timestamp=timestamp,
-            )
-            flash(f"Added semester for {student_id}. Tx: {tx}", "success")
-            return redirect(url_for("view", student_id=student_id))
-        except Exception as e:
-            flash(f"Update failed: {e}", "error")
-            return redirect(url_for("update"))
-
-    return render_template("update.html")
+# NOTE: Old commented-out /update route body removed (audit fix - dead code).
 
 @app.route("/update", methods=["GET", "POST"])
 def update():
@@ -436,9 +407,10 @@ def ai_query():
 
 @app.route('/dashboard')
 def dashboard():
-    user = session.get("user")
-    role = user.get("role") if user else None
-    show_validator_link = rbac.is_validator_role(role)
+    # fix: session["user"] is a string (username), session["role"] holds the role.
+    # Previously crashed with AttributeError: 'str' has no attribute 'get'.
+    role = session.get("role")
+    show_validator_link = rbac.is_validator_role(role) if role else False
     return render_template("dashboard.html", show_validator_link=show_validator_link)
 
 # @app.route('/validator')
@@ -623,18 +595,12 @@ def pending_approvals():
     user = _current_user()
     if not user:
         return redirect(url_for("login"))
-    
+
     role = user.get("role")
-        # DEBUG: Add this
-    print(f"DEBUG: User role is: {role}")
-    print(f"DEBUG: User object: {user}")
-    
     pending = get_pending_approvals(role)
-    
-    print(f"DEBUG: Found {len(pending)} pending approvals")
-    
-    return render_template("pending_approvals.html", 
-                         pending=pending, 
+
+    return render_template("pending_approvals.html",
+                         pending=pending,
                          role=role,
                          user=user)
 
@@ -859,4 +825,7 @@ def api_create_letter():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5000")), debug=True)
+    # SECURITY: debug=True exposes an interactive shell over the network.
+    # Use debug=False in production. Set FLASK_DEBUG=1 locally only.
+    _debug = os.getenv("FLASK_DEBUG", "0").strip() == "1"
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5000")), debug=_debug)

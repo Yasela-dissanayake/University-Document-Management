@@ -100,9 +100,7 @@ class UniversityBlockchainClient:
         # Cache normalized input-name lists for functions we care about
         self._register_inputs_norm: List[str] = self._get_fn_inputs_norm("registerStudent")
         self._add_semester_inputs_norm: List[str] = self._get_fn_inputs_norm("addSemesterRecord")
-        # Debug prints (optional):
-        print(f"[ABI] registerStudent inputs: {self._register_inputs_norm}")
-        print(f"[ABI] addSemesterRecord inputs: {self._add_semester_inputs_norm}")
+        # fix: removed ABI debug prints that leaked internal details on every startup
 
     # ---------- ABI helpers ----------
 
@@ -185,8 +183,24 @@ class UniversityBlockchainClient:
                 raise RuntimeError(f"Cannot extract raw tx bytes from SignedTransaction: {e}")
 
         tx_hash = self.w3.eth.send_raw_transaction(raw)
-        # web3 returns HexBytes; normalize to hex string
-        return tx_hash.hex() if hasattr(tx_hash, "hex") else str(tx_hash)
+        tx_hash_hex = tx_hash.hex() if hasattr(tx_hash, "hex") else str(tx_hash)
+
+        # Wait for receipt to confirm the transaction was mined and did not revert.
+        # fix: previously returned immediately; callers had no way to know if tx failed.
+        try:
+            receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash, timeout=120)
+            if receipt.get("status") == 0:
+                raise RuntimeError(
+                    f"Transaction reverted on-chain. Hash: {tx_hash_hex}. "
+                    "Check contract requires/reverts."
+                )
+        except Exception as wait_err:
+            # Re-raise revert errors; timeout just means slow network — still return hash.
+            if "reverted" in str(wait_err).lower():
+                raise
+            print(f"[blockchain_client] Warning: receipt wait error: {wait_err}")
+
+        return tx_hash_hex
 
     # ---------- writes ----------
 
@@ -305,22 +319,23 @@ class UniversityBlockchainClient:
         except Exception:
             return None
 
-    def get_all_semester_hashes(self, student_id: str) -> Optional[List[str]]:
+    def get_all_semester_hashes(self, student_id: str) -> List[str]:
         """
         Returns list of CIDs via getStudentSemesterHashes if available.
+        fix: previously returned None on error; now always returns a list.
         """
         try:
             cids = self.contract.functions.getStudentSemesterHashes(student_id).call()
             return [str(x) for x in cids]
         except Exception:
-            return None
+            return []
 
     # ---------- normalization ----------
 
     def _normalize_student_tuple(self, t: Any) -> Dict[str, Any]:
         """
         Convert tuple returned by contract into a dict with stable keys.
-        Order assumed per your contract's StudentRecord.
+        fix: previously silently swallowed all exceptions making debugging impossible.
         """
         if isinstance(t, dict):
             return t
@@ -332,14 +347,14 @@ class UniversityBlockchainClient:
             d["program"] = t[2]
             d["year"] = int(t[3])
             d["documents_ipfs_hash"] = t[4]
-            # bytes32 -> hex
+            # bytes32 → hex
             d["content_hash"] = t[5].hex() if isinstance(t[5], (bytes, bytearray)) else str(t[5])
             d["timestamp"] = int(t[6])
             d["is_active"] = bool(t[7])
             d["student_wallet"] = t[8] if len(t) > 8 else None
-        except Exception:
-            # best-effort fallback
-            pass
+        except Exception as e:
+            # Log the error instead of silently swallowing it
+            print(f"[blockchain_client] Warning: could not fully parse student tuple: {e}. Partial data: {d}")
         return d
 
     def add_letter_record(

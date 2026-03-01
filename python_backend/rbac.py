@@ -138,9 +138,11 @@ def can_act_on(target_role: str, actor_role: str) -> bool:
 
 
 def has_permission_for_action(username: str, action: str) -> bool:
-    """Alias for has_permission but with new role dictionary."""
-    from python_backend.rbac import get_role
-    role = get_role(username)
+    """Check if a user (by username) has a given permission action."""
+    user = get_user_by_username(username)
+    if not user:
+        return False
+    role = user.get("role", "")
     allowed = ROLE_PERMISSIONS.get(role, [])
     return action in allowed
 
@@ -178,9 +180,16 @@ def next_state(current_state: str, actor_role: str) -> str:
 def is_final_state(state: str) -> bool:
     return state == "FINAL"
 
-def is_validator_role(role):
-    validator_roles = ["HOD", "DEAN", "AR", "DVC","admin"]
-    return role.upper() in validator_roles
+def is_validator_role(role: Optional[str]) -> bool:
+    """
+    Returns True if the role is allowed to act as a document validator.
+    fix: list previously contained lowercase 'admin' mixed with uppercase roles;
+         now all entries are uppercase for clarity.
+    """
+    if not role:
+        return False
+    validator_roles = {"HOD", "DEAN", "AR", "DVC", "ADMIN"}
+    return role.strip().upper() in validator_roles
 
 # ==========================
 # Admin role management area

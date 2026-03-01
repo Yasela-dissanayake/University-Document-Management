@@ -190,11 +190,18 @@ class UniversityIPFSClient:
             raise
 
     def verify_document_integrity(self, ipfs_hash: str, expected_content_hash: str) -> bool:
-        """Verify document integrity using content hash"""
+        """
+        Verify document integrity by comparing content hashes.
+
+        IMPORTANT FIX: The content_hash stored on-chain is computed in acl.py as:
+            sha256(json.dumps(doc, sort_keys=True, separators=(',', ':')))  (compact)
+        This method must use the same serialization to avoid always-False comparisons.
+        """
         try:
             document_data = self.retrieve_academic_document(ipfs_hash)
-            document_json = json.dumps(document_data, indent=2, sort_keys=True)
-            actual_hash = hashlib.sha256(document_json.encode()).hexdigest()
+            # Use compact JSON (no indent) to match acl.py's _canonical_bytes()
+            document_json = json.dumps(document_data, sort_keys=True, separators=(',', ':'))
+            actual_hash = hashlib.sha256(document_json.encode('utf-8')).hexdigest()
             return actual_hash == expected_content_hash
         except Exception as e:
             logging.error(f"Failed to verify document integrity: {e}")

@@ -9,13 +9,16 @@ Features:
 - Order enforcement
 """
 
+import os
 import sqlite3
 import json
 import time
 from typing import Dict, List, Optional
 
-# Database path
-LETTER_DB = "python_backend/letter_workflows.sqlite"
+# fix: was a relative path "python_backend/letter_workflows.sqlite" which broke
+# when the app was started from a directory other than the repo root.
+LETTER_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "letter_workflows.sqlite")
+
 
 # Role hierarchy for letters
 ROLE_LEVELS = {

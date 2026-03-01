@@ -18,3 +18,29 @@ ignition/deployments/chain-31337
 
 *.tar.gz
 /university_venv
+
+# ─── Secret / Key files ─────────────────────────────────────────────────────
+# These MUST NOT be committed to version control.
+# Rotate any key that has already been committed.
+fernet.key
+python_backend/.acl_master_secret
+.acl_master_secret
+
+# SQLite databases (contain real student data – not for version control)
+*.sqlite
+python_backend/*.sqlite
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+
+# Virtual environments
+university_venv/
+venv/
+env/
+
+# OS files
+.DS_Store
+Thumbs.db
