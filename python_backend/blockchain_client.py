@@ -1,4 +1,5 @@
-# python_backend/blockchain_client.py
+# blockchain_client.py
+
 from __future__ import annotations
 
 import json
@@ -9,9 +10,10 @@ from web3 import Web3, HTTPProvider
 from eth_account import Account
 from eth_account.signers.local import LocalAccount
 
-# Try to load .env if available (does nothing if python-dotenv not installed)
+# Try to load .env if available
 try:
     from dotenv import load_dotenv  # type: ignore
+
     load_dotenv()
 except Exception:
     pass
@@ -19,147 +21,364 @@ except Exception:
 
 def _load_env(name: str) -> str:
     val = os.getenv(name)
+
     if not val:
-        raise RuntimeError(f"Missing required environment variable: {name}")
+        raise RuntimeError(
+            f"Missing required environment variable: {name}"
+        )
+
     return val
 
 
 def _load_abi() -> List[Dict[str, Any]]:
     """
-    Find the UniversityRegistry ABI in common locations or via env var.
+    Find the UniversityRegistry ABI in common locations or via
+    ABI_JSON_PATH.
+
     Returns the ABI list directly.
     """
+
     here = os.path.dirname(__file__)
-    repo_root = os.path.abspath(os.path.join(here, ".."))
+    repo_root = os.path.abspath(
+        os.path.join(here, "..")
+    )
+
     candidates = [
-        os.path.join(here, "artifacts", "contracts", "UniversityRegistry.sol", "UniversityRegistry.json"),
-        os.path.join(repo_root, "artifacts", "contracts", "UniversityRegistry.sol", "UniversityRegistry.json"),
+        os.path.join(
+            here,
+            "artifacts",
+            "contracts",
+            "UniversityRegistry.sol",
+            "UniversityRegistry.json",
+        ),
+        os.path.join(
+            repo_root,
+            "artifacts",
+            "contracts",
+            "UniversityRegistry.sol",
+            "UniversityRegistry.json",
+        ),
         os.getenv("ABI_JSON_PATH") or "",
     ]
+
     tried: List[str] = []
-    for p in candidates:
-        if not p:
+
+    for path in candidates:
+        if not path:
             continue
-        p = os.path.abspath(p)
-        tried.append(p)
-        if os.path.exists(p):
-            with open(p, "r", encoding="utf-8") as f:
+
+        path = os.path.abspath(path)
+        tried.append(path)
+
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            # Hardhat artifact JSON has {"abi": [...], "bytecode": "...", ...}
+
+            # Hardhat artifact
             if isinstance(data, dict) and "abi" in data:
                 return data["abi"]  # type: ignore
-            # Some tools export ABI array directly
+
+            # ABI exported directly
             if isinstance(data, list):
                 return data  # type: ignore
-    raise FileNotFoundError("ABI artifact not found. Tried:\n" + "\n".join(tried))
+
+    raise FileNotFoundError(
+        "ABI artifact not found. Tried:\n"
+        + "\n".join(tried)
+    )
 
 
 def _hex_to_bytes32(x: Optional[str]) -> bytes:
-    """Return exactly 32 bytes; empty -> 32 zero bytes."""
+    """
+    Convert a hexadecimal string into exactly 32 bytes.
+
+    Empty input becomes 32 zero bytes.
+    """
+
     if not x:
         return b"\x00" * 32
+
     s = x.strip().lower()
+
     if s.startswith("0x"):
         s = s[2:]
-    b = bytes.fromhex(s) if s else b""
-    if len(b) >= 32:
-        return b[:32]
-    return b + (b"\x00" * (32 - len(b)))
+
+    try:
+        data = bytes.fromhex(s) if s else b""
+    except ValueError as exc:
+        raise ValueError(
+            f"Invalid hexadecimal content hash: {x}"
+        ) from exc
+
+    if len(data) >= 32:
+        return data[:32]
+
+    return data + (b"\x00" * (32 - len(data)))
 
 
-def _norm_name(n: str) -> str:
-    """Normalize ABI input names: strip leading underscores and lowercase."""
-    return n.lstrip("_").lower()
+def _bytes32_to_hex(value: Any) -> str:
+    """
+    Convert bytes/HexBytes/hexadecimal-like values into
+    a normalized 0x-prefixed hexadecimal string.
+    """
+
+    if isinstance(value, (bytes, bytearray)):
+        return "0x" + bytes(value).hex()
+
+    value_str = str(value)
+
+    if value_str.startswith("0x"):
+        return value_str
+
+    return "0x" + value_str
+
+
+def _norm_name(name: str) -> str:
+    """
+    Normalize ABI input names.
+
+    Example:
+        _studentId -> studentid
+        _ipfsHash  -> ipfshash
+    """
+
+    return name.lstrip("_").lower()
 
 
 class UniversityBlockchainClient:
     """
-    Thin helper for your UniversityRegistry contract.
+    Client for the UniversityRegistry smart contract.
 
-    Env:
-      - WEB3_PROVIDER: RPC URL
-      - CONTRACT_ADDRESS: deployed UniversityRegistry
-      - PRIVATE_KEY: service wallet key (gas payer)
-      - (optional) ABI_JSON_PATH: absolute path to UniversityRegistry.json
+    Environment variables:
+
+        WEB3_PROVIDER
+            RPC URL
+
+        CONTRACT_ADDRESS
+            Deployed UniversityRegistry address
+
+        PRIVATE_KEY
+            Backend/service wallet private key
+
+        ABI_JSON_PATH
+            Optional absolute path to the contract ABI artifact.
     """
 
     def __init__(self) -> None:
-        self.rpc_url: str = _load_env("WEB3_PROVIDER")
-        self.contract_address: str = Web3.to_checksum_address(_load_env("CONTRACT_ADDRESS"))
-        pk = _load_env("PRIVATE_KEY")
 
-        self.w3: Web3 = Web3(HTTPProvider(self.rpc_url))
-        self.account: LocalAccount = Account.from_key(pk)
-        self.chain_id: int = self.w3.eth.chain_id
+        self.rpc_url: str = _load_env(
+            "WEB3_PROVIDER"
+        )
+
+        self.contract_address: str = (
+            Web3.to_checksum_address(
+                _load_env("CONTRACT_ADDRESS")
+            )
+        )
+
+        private_key = _load_env(
+            "PRIVATE_KEY"
+        )
+
+        self.w3: Web3 = Web3(
+            HTTPProvider(self.rpc_url)
+        )
+
+        self.account: LocalAccount = (
+            Account.from_key(private_key)
+        )
+
+        self.chain_id: int = (
+            self.w3.eth.chain_id
+        )
 
         abi = _load_abi()
-        self.contract = self.w3.eth.contract(address=self.contract_address, abi=abi)
 
-        print(f"✅ Connected to university blockchain at {self.rpc_url}")
+        self.contract = self.w3.eth.contract(
+            address=self.contract_address,
+            abi=abi,
+        )
 
-        # Cache normalized input-name lists for functions we care about
-        self._register_inputs_norm: List[str] = self._get_fn_inputs_norm("registerStudent")
-        self._add_semester_inputs_norm: List[str] = self._get_fn_inputs_norm("addSemesterRecord")
-        # fix: removed ABI debug prints that leaked internal details on every startup
+        print(
+            "✅ Connected to university blockchain "
+            f"at {self.rpc_url}"
+        )
 
-    # ---------- ABI helpers ----------
+        # --------------------------------------------------------
+        # Cache ABI input names
+        # --------------------------------------------------------
 
-    def _get_fn_inputs_norm(self, fn_name: str) -> List[str]:
+        self._register_inputs_norm = (
+            self._get_fn_inputs_norm(
+                "registerStudent"
+            )
+        )
+
+        self._add_semester_inputs_norm = (
+            self._get_fn_inputs_norm(
+                "addSemesterRecord"
+            )
+        )
+
+        self._create_document_version_inputs_norm = (
+            self._get_fn_inputs_norm(
+                "createDocumentVersion"
+            )
+        )
+
+    # ============================================================
+    # ABI Helpers
+    # ============================================================
+
+    def _get_fn_inputs_norm(
+        self,
+        fn_name: str,
+    ) -> List[str]:
         """
-        Return normalized input names (lowercased, underscore stripped)
-        for the *first* ABI entry with the given function name.
-        If multiple overloads exist, picks the first.
+        Return normalized input names for the first
+        ABI function matching fn_name.
         """
+
         inputs: List[str] = []
+
         try:
-            # Scan ABI directly to avoid get_function_by_name overload issues.
             for item in self.contract.abi:
-                if item.get("type") == "function" and item.get("name") == fn_name:
-                    ins = item.get("inputs", []) or []
-                    inputs = [_norm_name(i.get("name", "")) for i in ins]
+
+                if (
+                    item.get("type") == "function"
+                    and item.get("name") == fn_name
+                ):
+                    abi_inputs = (
+                        item.get("inputs", [])
+                        or []
+                    )
+
+                    inputs = [
+                        _norm_name(
+                            i.get("name", "")
+                        )
+                        for i in abi_inputs
+                    ]
+
                     break
+
         except Exception:
             inputs = []
+
         return inputs
 
-    # ---------- gas helpers ----------
+    # ============================================================
+    # Gas / Transaction Helpers
+    # ============================================================
 
     def _supports_eip1559(self) -> bool:
         try:
-            latest = self.w3.eth.get_block("latest")
-            return "baseFeePerGas" in latest and latest["baseFeePerGas"] is not None
+
+            latest = self.w3.eth.get_block(
+                "latest"
+            )
+
+            return (
+                "baseFeePerGas" in latest
+                and latest["baseFeePerGas"]
+                is not None
+            )
+
         except Exception:
             return False
 
     def _gas_price_fields(self) -> Dict[str, int]:
+
         if self._supports_eip1559():
-            latest = self.w3.eth.get_block("latest")
-            base = int(latest.get("baseFeePerGas", self.w3.to_wei(1, "gwei")))
+
+            latest = self.w3.eth.get_block(
+                "latest"
+            )
+
+            base_fee = int(
+                latest.get(
+                    "baseFeePerGas",
+                    self.w3.to_wei(
+                        1,
+                        "gwei",
+                    ),
+                )
+            )
+
             try:
-                tip = int(self.w3.eth.max_priority_fee)  # type: ignore[attr-defined]
+                priority_fee = int(
+                    self.w3.eth.max_priority_fee
+                )
+
             except Exception:
-                tip = self.w3.to_wei(2, "gwei")
+                priority_fee = self.w3.to_wei(
+                    2,
+                    "gwei",
+                )
+
             return {
-                "maxFeePerGas": int(base * 2 + tip),
-                "maxPriorityFeePerGas": tip,
+                "maxFeePerGas": int(
+                    base_fee * 2
+                    + priority_fee
+                ),
+                "maxPriorityFeePerGas": (
+                    priority_fee
+                ),
             }
-        else:
-            return {"gasPrice": self.w3.eth.gas_price}
 
-    def _estimate_gas(self, fn, tx_from: str, value: int = 0) -> int:
+        return {
+            "gasPrice": self.w3.eth.gas_price
+        }
+
+    def _estimate_gas(
+        self,
+        fn,
+        tx_from: str,
+        value: int = 0,
+    ) -> int:
+
         try:
-            est = fn.estimate_gas({"from": tx_from, "value": value})
+
+            estimated = fn.estimate_gas(
+                {
+                    "from": tx_from,
+                    "value": value,
+                }
+            )
+
         except Exception:
-            est = 600_000
-        return int(est * 1.5)
 
-    def _send_fn(self, fn, value: int = 0) -> str:
+            estimated = 600_000
+
+        return int(
+            estimated * 1.5
+        )
+
+    def _send_fn(
+        self,
+        fn,
+        value: int = 0,
+    ) -> str:
+
         tx_from = self.account.address
-        gas = self._estimate_gas(fn, tx_from, value=value)
-        gas_fields = self._gas_price_fields()
-        nonce = self.w3.eth.get_transaction_count(tx_from)
 
-        tx = fn.build_transaction(
+        gas = self._estimate_gas(
+            fn,
+            tx_from,
+            value=value,
+        )
+
+        gas_fields = (
+            self._gas_price_fields()
+        )
+
+        nonce = (
+            self.w3.eth.get_transaction_count(
+                tx_from
+            )
+        )
+
+        transaction = fn.build_transaction(
             {
                 "from": tx_from,
                 "chainId": self.chain_id,
@@ -169,40 +388,85 @@ class UniversityBlockchainClient:
                 "value": value,
             }
         )
-        signed = self.account.sign_transaction(tx)
 
-        # Support both eth-account variants:
-        raw = getattr(signed, "rawTransaction", None)
+        signed = (
+            self.account.sign_transaction(
+                transaction
+            )
+        )
+
+        raw = getattr(
+            signed,
+            "rawTransaction",
+            None,
+        )
+
         if raw is None:
-            raw = getattr(signed, "raw_transaction", None)
+            raw = getattr(
+                signed,
+                "raw_transaction",
+                None,
+            )
+
         if raw is None:
-            # Very defensive fallback (rarely needed)
+
             try:
-                raw = signed.raw  # type: ignore[attr-defined]
-            except Exception as e:
-                raise RuntimeError(f"Cannot extract raw tx bytes from SignedTransaction: {e}")
+                raw = signed.raw  # type: ignore
 
-        tx_hash = self.w3.eth.send_raw_transaction(raw)
-        tx_hash_hex = tx_hash.hex() if hasattr(tx_hash, "hex") else str(tx_hash)
+            except Exception as exc:
 
-        # Wait for receipt to confirm the transaction was mined and did not revert.
-        # fix: previously returned immediately; callers had no way to know if tx failed.
-        try:
-            receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash, timeout=120)
-            if receipt.get("status") == 0:
                 raise RuntimeError(
-                    f"Transaction reverted on-chain. Hash: {tx_hash_hex}. "
-                    "Check contract requires/reverts."
+                    "Cannot extract raw transaction "
+                    f"bytes from SignedTransaction: {exc}"
                 )
-        except Exception as wait_err:
-            # Re-raise revert errors; timeout just means slow network — still return hash.
-            if "reverted" in str(wait_err).lower():
+
+        tx_hash = (
+            self.w3.eth.send_raw_transaction(
+                raw
+            )
+        )
+
+        tx_hash_hex = (
+            tx_hash.hex()
+            if hasattr(tx_hash, "hex")
+            else str(tx_hash)
+        )
+
+        # Wait for transaction confirmation
+        try:
+
+            receipt = (
+                self.w3.eth.wait_for_transaction_receipt(
+                    tx_hash,
+                    timeout=120,
+                )
+            )
+
+            if receipt.get("status") == 0:
+
+                raise RuntimeError(
+                    "Transaction reverted on-chain. "
+                    f"Hash: {tx_hash_hex}"
+                )
+
+        except Exception as wait_error:
+
+            if (
+                "reverted"
+                in str(wait_error).lower()
+            ):
                 raise
-            print(f"[blockchain_client] Warning: receipt wait error: {wait_err}")
+
+            print(
+                "[blockchain_client] Warning: "
+                f"receipt wait error: {wait_error}"
+            )
 
         return tx_hash_hex
 
-    # ---------- writes ----------
+    # ============================================================
+    # Existing Student Write Functions
+    # ============================================================
 
     def register_student_record(
         self,
@@ -217,44 +481,92 @@ class UniversityBlockchainClient:
         student_wallet: Optional[str] = None,
     ) -> str:
         """
-        Register a new student. Supports contract variants:
-          - id,name,program,year,docCID,bytes32,timestamp
-          - id,name,program,year,docCID,bytes32,studentWallet
-          - id,name,program,year,docCID,bytes32,timestamp,studentWallet
-          - id,name,program,year,docCID,bytes32
-        We build args by ABI input names, normalized (leading '_', case ignored).
-        """
-        names = self._register_inputs_norm or []
+        Register a new student.
 
-        # Prepare values by normalized key (include aliases for CID)
-        cid = documents_ipfs_hash or ""
+        The timestamp parameter is retained for compatibility
+        with the existing Python API.
+
+        The current Solidity contract does not accept a timestamp
+        parameter; the blockchain uses block.timestamp.
+        """
+
+        names = (
+            self._register_inputs_norm
+            or []
+        )
+
+        cid = (
+            documents_ipfs_hash
+            or ""
+        )
+
         values: Dict[str, Any] = {
+
             "studentid": student_id,
+
             "name": name,
+
             "program": program,
+
             "year": int(year),
-            "documentsipfshash": cid,                            # common
-            "ipfshash": cid,                                     # alias
-            "cid": cid,                                          # alias
-            "contenthash": _hex_to_bytes32(content_hash),
-            "timestamp": int(timestamp or 0),
-            "studentwallet": Web3.to_checksum_address(student_wallet or self.account.address),
+
+            "documentsipfshash": cid,
+
+            "ipfshash": cid,
+
+            "cid": cid,
+
+            "contenthash": _hex_to_bytes32(
+                content_hash
+            ),
+
+            "timestamp": int(
+                timestamp or 0
+            ),
+
+            "studentwallet": (
+                Web3.to_checksum_address(
+                    student_wallet
+                    or self.account.address
+                )
+            ),
         }
 
-        # Assemble args in the order defined by the ABI we detected
         args: List[Any] = []
-        for n in names:
-            if n not in values:
-                raise TypeError(f"Unknown ABI input '{n}' for registerStudent")
-            args.append(values[n])
 
-        if len(args) != len(names):
-            raise TypeError(
-                f"registerStudent ABI expects {len(names)} args {names}, but client built {len(args)} args {args}"
+        for name_key in names:
+
+            if name_key not in values:
+
+                raise TypeError(
+                    "Unknown ABI input "
+                    f"'{name_key}' for "
+                    "registerStudent"
+                )
+
+            args.append(
+                values[name_key]
             )
 
-        fn = self.contract.functions.registerStudent(*args)
+        if len(args) != len(names):
+
+            raise TypeError(
+                "registerStudent ABI expects "
+                f"{len(names)} args {names}, "
+                f"but client built "
+                f"{len(args)} args {args}"
+            )
+
+        fn = (
+            self.contract.functions
+            .registerStudent(*args)
+        )
+
         return self._send_fn(fn)
+
+    # ============================================================
+    # Existing Semester Function
+    # ============================================================
 
     def add_semester_record(
         self,
@@ -265,97 +577,763 @@ class UniversityBlockchainClient:
         timestamp: int,
     ) -> str:
         """
-        Append a new semester/version. Supports variants:
-          - addSemesterRecord(id, docCID, bytes32, timestamp)
-          - addSemesterRecord(id, docCID, bytes32)
-        Built by ABI name order. Accepts CID name aliases (_documentsIPFSHash, _ipfsHash, _cid).
+        Append a semester record using the existing
+        addSemesterRecord() contract function.
+
+        The timestamp parameter is retained for compatibility.
+        The current Solidity contract records block.timestamp.
         """
-        names = self._add_semester_inputs_norm or []
+
+        names = (
+            self._add_semester_inputs_norm
+            or []
+        )
 
         cid = documents_ipfs_hash
+
         values: Dict[str, Any] = {
+
             "studentid": student_id,
-            "documentsipfshash": cid,                             # common
-            "ipfshash": cid,                                      # alias
-            "cid": cid,                                           # alias
-            "contenthash": _hex_to_bytes32(content_hash),
-            "timestamp": int(timestamp),
+
+            "documentsipfshash": cid,
+
+            "ipfshash": cid,
+
+            "cid": cid,
+
+            "contenthash": _hex_to_bytes32(
+                content_hash
+            ),
+
+            "timestamp": int(
+                timestamp
+            ),
         }
 
         args: List[Any] = []
-        for n in names:
-            if n not in values:
-                raise TypeError(f"Unknown ABI input '{n}' for addSemesterRecord")
-            args.append(values[n])
 
-        if len(args) != len(names):
-            raise TypeError(
-                f"addSemesterRecord ABI expects {len(names)} args {names}, but client built {len(args)} args {args}"
+        for name_key in names:
+
+            if name_key not in values:
+
+                raise TypeError(
+                    "Unknown ABI input "
+                    f"'{name_key}' for "
+                    "addSemesterRecord"
+                )
+
+            args.append(
+                values[name_key]
             )
 
-        fn = self.contract.functions.addSemesterRecord(*args)
+        if len(args) != len(names):
+
+            raise TypeError(
+                "addSemesterRecord ABI expects "
+                f"{len(names)} args {names}, "
+                f"but client built "
+                f"{len(args)} args {args}"
+            )
+
+        fn = (
+            self.contract.functions
+            .addSemesterRecord(*args)
+        )
+
         return self._send_fn(fn)
 
-    # ---------- reads ----------
+    # ============================================================
+    # NEW DOCUMENT VERSIONING FUNCTIONS
+    # ============================================================
 
-    def get_student_details(self, student_id: str) -> Optional[Dict[str, Any]]:
+    def create_document_version(
+        self,
+        *,
+        document_id: str,
+        student_id: str,
+        document_type: str,
+        ipfs_cid: str,
+        content_hash: str,
+        approval_status: str,
+        approved_by: str,
+    ) -> str:
         """
-        Try helper getters first; fall back to mapping getter.
-        Returns a dict or None if not found.
-        """
-        # Preferred helpers if your contract exposes them
-        for view_name in ("getStudent", "getStudentDetails"):
-            try:
-                fn = getattr(self.contract.functions, view_name)
-                data = fn(student_id).call()
-                return self._normalize_student_tuple(data)
-            except Exception:
-                pass
+        Create a new immutable document version.
 
-        # Fallback to public mapping getter
+        The Solidity contract automatically determines:
+
+            Version 1:
+                previousVersion = 0
+
+            Version 2:
+                previousVersion = 1
+
+            Version 3:
+                previousVersion = 2
+
+        The Python client does NOT determine the version number.
+        The blockchain is the authoritative source.
+        """
+
+        if not document_id.strip():
+            raise ValueError(
+                "document_id cannot be empty"
+            )
+
+        if not student_id.strip():
+            raise ValueError(
+                "student_id cannot be empty"
+            )
+
+        if not document_type.strip():
+            raise ValueError(
+                "document_type cannot be empty"
+            )
+
+        if not ipfs_cid.strip():
+            raise ValueError(
+                "ipfs_cid cannot be empty"
+            )
+
+        if not approval_status.strip():
+            raise ValueError(
+                "approval_status cannot be empty"
+            )
+
+        names = (
+            self._create_document_version_inputs_norm
+            or []
+        )
+
+        values: Dict[str, Any] = {
+
+            "documentid": document_id,
+
+            "studentid": student_id,
+
+            "documenttype": document_type,
+
+            "ipfscid": ipfs_cid,
+
+            "ipfshash": ipfs_cid,
+
+            "cid": ipfs_cid,
+
+            "contenthash": _hex_to_bytes32(
+                content_hash
+            ),
+
+            "approvalstatus": approval_status,
+
+            "approvedby": approved_by,
+        }
+
+        args: List[Any] = []
+
+        for name_key in names:
+
+            if name_key not in values:
+
+                raise TypeError(
+                    "Unknown ABI input "
+                    f"'{name_key}' for "
+                    "createDocumentVersion"
+                )
+
+            args.append(
+                values[name_key]
+            )
+
+        if len(args) != len(names):
+
+            raise TypeError(
+                "createDocumentVersion ABI expects "
+                f"{len(names)} args {names}, "
+                f"but client built "
+                f"{len(args)} args {args}"
+            )
+
+        fn = (
+            self.contract.functions
+            .createDocumentVersion(*args)
+        )
+
+        return self._send_fn(fn)
+
+    # ============================================================
+    # Document Existence
+    # ============================================================
+
+    def document_exists(
+        self,
+        document_id: str,
+    ) -> bool:
+        """
+        Check whether a logical document exists
+        on the blockchain.
+        """
+
         try:
-            data = self.contract.functions.students(student_id).call()
-            return self._normalize_student_tuple(data)
+
+            return bool(
+                self.contract.functions
+                .documentExists(
+                    document_id
+                )
+                .call()
+            )
+
+        except Exception as exc:
+
+            raise RuntimeError(
+                "Failed to check document existence "
+                f"for '{document_id}': {exc}"
+            ) from exc
+
+    # ============================================================
+    # Document Details
+    # ============================================================
+
+    def get_document_details(
+        self,
+        document_id: str,
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Retrieve logical document metadata.
+
+        Returns:
+
+            {
+                "document_id": ...,
+                "student_id": ...,
+                "document_type": ...,
+                "latest_version": ...,
+                "exists": ...
+            }
+
+        Returns None when the document does not exist.
+        """
+
+        try:
+
+            data = (
+                self.contract.functions
+                .getDocumentDetails(
+                    document_id
+                )
+                .call()
+            )
+
         except Exception:
             return None
 
-    def get_all_semester_hashes(self, student_id: str) -> List[str]:
-        """
-        Returns list of CIDs via getStudentSemesterHashes if available.
-        fix: previously returned None on error; now always returns a list.
-        """
+        if isinstance(data, dict):
+
+            return {
+                "document_id": data.get(
+                    "documentId",
+                    data.get(
+                        "document_id"
+                    ),
+                ),
+                "student_id": data.get(
+                    "studentId",
+                    data.get(
+                        "student_id"
+                    ),
+                ),
+                "document_type": data.get(
+                    "documentType",
+                    data.get(
+                        "document_type"
+                    ),
+                ),
+                "latest_version": int(
+                    data.get(
+                        "latestVersion",
+                        data.get(
+                            "latest_version",
+                            0,
+                        ),
+                    )
+                ),
+                "exists": bool(
+                    data.get(
+                        "exists",
+                        False,
+                    )
+                ),
+            }
+
         try:
-            cids = self.contract.functions.getStudentSemesterHashes(student_id).call()
-            return [str(x) for x in cids]
+
+            return {
+                "document_id": data[0],
+                "student_id": data[1],
+                "document_type": data[2],
+                "latest_version": int(
+                    data[3]
+                ),
+                "exists": bool(
+                    data[4]
+                ),
+            }
+
+        except Exception as exc:
+
+            raise RuntimeError(
+                "Could not parse document details: "
+                f"{exc}"
+            ) from exc
+
+    # ============================================================
+    # Specific Document Version
+    # ============================================================
+
+    def get_document_version(
+        self,
+        document_id: str,
+        version: int,
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Retrieve a specific immutable document version.
+        """
+
+        if version <= 0:
+            raise ValueError(
+                "version must be greater than 0"
+            )
+
+        try:
+
+            data = (
+                self.contract.functions
+                .getDocumentVersion(
+                    document_id,
+                    int(version),
+                )
+                .call()
+            )
+
         except Exception:
+            return None
+
+        return self._normalize_document_version(
+            data
+        )
+
+    # ============================================================
+    # Latest Document Version
+    # ============================================================
+
+    def get_latest_document_version(
+        self,
+        document_id: str,
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Retrieve the latest recorded version.
+
+        Note:
+            This may be an unapproved version.
+
+        Use get_latest_approved_document_version()
+        when only an approved version should be returned.
+        """
+
+        try:
+
+            data = (
+                self.contract.functions
+                .getLatestDocumentVersion(
+                    document_id
+                )
+                .call()
+            )
+
+        except Exception:
+            return None
+
+        return self._normalize_document_version(
+            data
+        )
+
+    # ============================================================
+    # Latest Approved Document Version
+    # ============================================================
+
+    def get_latest_approved_document_version(
+        self,
+        document_id: str,
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Retrieve the most recent approved document version.
+
+        The Solidity contract searches backwards from the
+        latest version until it finds:
+
+            approvalStatus == "APPROVED"
+        """
+
+        try:
+
+            data = (
+                self.contract.functions
+                .getLatestApprovedDocumentVersion(
+                    document_id
+                )
+                .call()
+            )
+
+        except Exception:
+            return None
+
+        return self._normalize_document_version(
+            data
+        )
+
+    # ============================================================
+    # Complete Document History
+    # ============================================================
+
+    def get_document_history(
+        self,
+        document_id: str,
+    ) -> List[Dict[str, Any]]:
+        """
+        Retrieve all immutable versions of a document.
+
+        Example:
+
+            [
+                {
+                    "version": 1,
+                    "previous_version": 0,
+                    ...
+                },
+                {
+                    "version": 2,
+                    "previous_version": 1,
+                    ...
+                },
+                {
+                    "version": 3,
+                    "previous_version": 2,
+                    ...
+                }
+            ]
+        """
+
+        try:
+
+            history = (
+                self.contract.functions
+                .getDocumentHistory(
+                    document_id
+                )
+                .call()
+            )
+
+        except Exception as exc:
+
+            raise RuntimeError(
+                "Failed to retrieve document history "
+                f"for '{document_id}': {exc}"
+            ) from exc
+
+        result: List[
+            Dict[str, Any]
+        ] = []
+
+        for version_data in history:
+
+            result.append(
+                self._normalize_document_version(
+                    version_data
+                )
+            )
+
+        return result
+
+    # ============================================================
+    # Document Version Normalization
+    # ============================================================
+
+    def _normalize_document_version(
+        self,
+        data: Any,
+    ) -> Dict[str, Any]:
+        """
+        Normalize a DocumentVersion tuple returned by Web3.
+
+        Solidity return order:
+
+            version
+            previousVersion
+            ipfsCID
+            contentHash
+            approvalStatus
+            approvedBy
+            timestamp
+        """
+
+        if isinstance(data, dict):
+
+            version = data.get(
+                "version",
+                0,
+            )
+
+            previous_version = data.get(
+                "previousVersion",
+                data.get(
+                    "previous_version",
+                    0,
+                ),
+            )
+
+            ipfs_cid = data.get(
+                "ipfsCID",
+                data.get(
+                    "ipfs_cid",
+                    "",
+                ),
+            )
+
+            content_hash = data.get(
+                "contentHash",
+                data.get(
+                    "content_hash",
+                    b"",
+                ),
+            )
+
+            approval_status = data.get(
+                "approvalStatus",
+                data.get(
+                    "approval_status",
+                    "",
+                ),
+            )
+
+            approved_by = data.get(
+                "approvedBy",
+                data.get(
+                    "approved_by",
+                    "",
+                ),
+            )
+
+            timestamp = data.get(
+                "timestamp",
+                0,
+            )
+
+        else:
+
+            try:
+
+                version = data[0]
+
+                previous_version = data[1]
+
+                ipfs_cid = data[2]
+
+                content_hash = data[3]
+
+                approval_status = data[4]
+
+                approved_by = data[5]
+
+                timestamp = data[6]
+
+            except Exception as exc:
+
+                raise RuntimeError(
+                    "Could not parse document version "
+                    f"tuple: {exc}"
+                ) from exc
+
+        return {
+            "version": int(version),
+
+            "previous_version": int(
+                previous_version
+            ),
+
+            "ipfs_cid": str(
+                ipfs_cid
+            ),
+
+            "content_hash": (
+                _bytes32_to_hex(
+                    content_hash
+                )
+            ),
+
+            "approval_status": str(
+                approval_status
+            ),
+
+            "approved_by": str(
+                approved_by
+            ),
+
+            "timestamp": int(
+                timestamp
+            ),
+        }
+
+    # ============================================================
+    # Existing Student Reads
+    # ============================================================
+
+    def get_student_details(
+        self,
+        student_id: str,
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Retrieve student details.
+
+        Tries the explicit getter first, then the public
+        students mapping.
+        """
+
+        for view_name in (
+            "getStudent",
+            "getStudentDetails",
+        ):
+
+            try:
+
+                fn = getattr(
+                    self.contract.functions,
+                    view_name,
+                )
+
+                data = fn(
+                    student_id
+                ).call()
+
+                return (
+                    self._normalize_student_tuple(
+                        data
+                    )
+                )
+
+            except Exception:
+                pass
+
+        try:
+
+            data = (
+                self.contract.functions
+                .students(
+                    student_id
+                )
+                .call()
+            )
+
+            return (
+                self._normalize_student_tuple(
+                    data
+                )
+            )
+
+        except Exception:
+
+            return None
+
+    def get_all_semester_hashes(
+        self,
+        student_id: str,
+    ) -> List[str]:
+        """
+        Return all historical semester IPFS CIDs
+        for a student.
+        """
+
+        try:
+
+            cids = (
+                self.contract.functions
+                .getStudentSemesterHashes(
+                    student_id
+                )
+                .call()
+            )
+
+            return [
+                str(cid)
+                for cid in cids
+            ]
+
+        except Exception:
+
             return []
 
-    # ---------- normalization ----------
+    # ============================================================
+    # Student Tuple Normalization
+    # ============================================================
 
-    def _normalize_student_tuple(self, t: Any) -> Dict[str, Any]:
-        """
-        Convert tuple returned by contract into a dict with stable keys.
-        fix: previously silently swallowed all exceptions making debugging impossible.
-        """
-        if isinstance(t, dict):
-            return t
+    def _normalize_student_tuple(
+        self,
+        data: Any,
+    ) -> Dict[str, Any]:
 
-        d: Dict[str, Any] = {}
+        if isinstance(data, dict):
+            return data
+
+        result: Dict[str, Any] = {}
+
         try:
-            d["student_id"] = t[0]
-            d["name"] = t[1]
-            d["program"] = t[2]
-            d["year"] = int(t[3])
-            d["documents_ipfs_hash"] = t[4]
-            # bytes32 → hex
-            d["content_hash"] = t[5].hex() if isinstance(t[5], (bytes, bytearray)) else str(t[5])
-            d["timestamp"] = int(t[6])
-            d["is_active"] = bool(t[7])
-            d["student_wallet"] = t[8] if len(t) > 8 else None
-        except Exception as e:
-            # Log the error instead of silently swallowing it
-            print(f"[blockchain_client] Warning: could not fully parse student tuple: {e}. Partial data: {d}")
-        return d
+
+            result["student_id"] = data[0]
+
+            result["name"] = data[1]
+
+            result["program"] = data[2]
+
+            result["year"] = int(
+                data[3]
+            )
+
+            result[
+                "documents_ipfs_hash"
+            ] = data[4]
+
+            result[
+                "content_hash"
+            ] = _bytes32_to_hex(
+                data[5]
+            )
+
+            result["timestamp"] = int(
+                data[6]
+            )
+
+            result["is_active"] = bool(
+                data[7]
+            )
+
+            result["student_wallet"] = (
+                data[8]
+                if len(data) > 8
+                else None
+            )
+
+        except Exception as exc:
+
+            print(
+                "[blockchain_client] Warning: "
+                "could not fully parse student tuple: "
+                f"{exc}. Partial data: {result}"
+            )
+
+        return result
+
+    # ============================================================
+    # Existing Letter Function
+    # ============================================================
 
     def add_letter_record(
         self,
@@ -366,14 +1344,22 @@ class UniversityBlockchainClient:
         timestamp: int,
     ) -> str:
         """
-        Reuse addSemesterRecord() to store letter documents.
-        This creates a new document version on-chain tagged as a 'letter'.
+        Existing compatibility method.
+
+        Currently stores the letter using addSemesterRecord().
         """
-        print(f"📝 Adding letter record for {student_id} via addSemesterRecord()")
+
+        print(
+            "📝 Adding letter record for "
+            f"{student_id} via addSemesterRecord()"
+        )
+
         return self.add_semester_record(
             student_id=student_id,
             documents_ipfs_hash=documents_ipfs_hash,
             content_hash=content_hash,
             timestamp=timestamp,
         )
+
+
 # End of python_backend/blockchain_client.py
