@@ -88,6 +88,110 @@ def _load_abi() -> List[Dict[str, Any]]:
     )
 
 
+# ABI entries required by the Phase 3 document-version workflow.
+# These are merged into the loaded artifact so an older local Hardhat ABI
+# cannot silently break read-only document resolution.
+PHASE3_DOCUMENT_ABI: List[Dict[str, Any]] = [
+    {
+        "inputs": [{"internalType": "string", "name": "_documentId", "type": "string"}],
+        "name": "documentExists",
+        "outputs": [{"internalType": "bool", "name": "", "type": "bool"}],
+        "stateMutability": "view",
+        "type": "function",
+    },
+    {
+        "inputs": [{"internalType": "string", "name": "_documentId", "type": "string"}],
+        "name": "getDocumentDetails",
+        "outputs": [
+            {"internalType": "string", "name": "documentId", "type": "string"},
+            {"internalType": "string", "name": "studentId", "type": "string"},
+            {"internalType": "string", "name": "documentType", "type": "string"},
+            {"internalType": "uint256", "name": "latestVersion", "type": "uint256"},
+            {"internalType": "bool", "name": "exists", "type": "bool"},
+        ],
+        "stateMutability": "view",
+        "type": "function",
+    },
+    {
+        "inputs": [
+            {"internalType": "string", "name": "_documentId", "type": "string"},
+            {"internalType": "uint256", "name": "_version", "type": "uint256"},
+        ],
+        "name": "getDocumentVersion",
+        "outputs": [
+            {"internalType": "uint256", "name": "version", "type": "uint256"},
+            {"internalType": "uint256", "name": "previousVersion", "type": "uint256"},
+            {"internalType": "string", "name": "ipfsCID", "type": "string"},
+            {"internalType": "bytes32", "name": "contentHash", "type": "bytes32"},
+            {"internalType": "string", "name": "approvalStatus", "type": "string"},
+            {"internalType": "string", "name": "approvedBy", "type": "string"},
+            {"internalType": "uint256", "name": "timestamp", "type": "uint256"},
+        ],
+        "stateMutability": "view",
+        "type": "function",
+    },
+    {
+        "inputs": [{"internalType": "string", "name": "_documentId", "type": "string"}],
+        "name": "getLatestDocumentVersion",
+        "outputs": [
+            {"internalType": "uint256", "name": "version", "type": "uint256"},
+            {"internalType": "uint256", "name": "previousVersion", "type": "uint256"},
+            {"internalType": "string", "name": "ipfsCID", "type": "string"},
+            {"internalType": "bytes32", "name": "contentHash", "type": "bytes32"},
+            {"internalType": "string", "name": "approvalStatus", "type": "string"},
+            {"internalType": "string", "name": "approvedBy", "type": "string"},
+            {"internalType": "uint256", "name": "timestamp", "type": "uint256"},
+        ],
+        "stateMutability": "view",
+        "type": "function",
+    },
+    {
+        "inputs": [{"internalType": "string", "name": "_documentId", "type": "string"}],
+        "name": "getLatestApprovedDocumentVersion",
+        "outputs": [
+            {"internalType": "uint256", "name": "version", "type": "uint256"},
+            {"internalType": "uint256", "name": "previousVersion", "type": "uint256"},
+            {"internalType": "string", "name": "ipfsCID", "type": "string"},
+            {"internalType": "bytes32", "name": "contentHash", "type": "bytes32"},
+            {"internalType": "string", "name": "approvalStatus", "type": "string"},
+            {"internalType": "string", "name": "approvedBy", "type": "string"},
+            {"internalType": "uint256", "name": "timestamp", "type": "uint256"},
+        ],
+        "stateMutability": "view",
+        "type": "function",
+    },
+    {
+        "inputs": [{"internalType": "string", "name": "_documentId", "type": "string"}],
+        "name": "getDocumentHistory",
+        "outputs": [{
+            "components": [
+                {"internalType": "uint256", "name": "version", "type": "uint256"},
+                {"internalType": "uint256", "name": "previousVersion", "type": "uint256"},
+                {"internalType": "string", "name": "ipfsCID", "type": "string"},
+                {"internalType": "bytes32", "name": "contentHash", "type": "bytes32"},
+                {"internalType": "string", "name": "approvalStatus", "type": "string"},
+                {"internalType": "string", "name": "approvedBy", "type": "string"},
+                {"internalType": "uint256", "name": "timestamp", "type": "uint256"},
+            ],
+            "internalType": "struct UniversityRegistry.DocumentVersion[]",
+            "name": "",
+            "type": "tuple[]",
+        }],
+        "stateMutability": "view",
+        "type": "function",
+    },
+]
+
+def _merge_phase3_abi(abi: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Ensure required Phase 3 read functions exist in the local ABI."""
+    merged = list(abi)
+    existing = {item.get("name") for item in merged if isinstance(item, dict)}
+    for entry in PHASE3_DOCUMENT_ABI:
+        if entry["name"] not in existing:
+            merged.append(entry)
+    return merged
+
+
 def _hex_to_bytes32(x: Optional[str]) -> bytes:
     """
     Convert a hexadecimal string into exactly 32 bytes.
@@ -192,7 +296,7 @@ class UniversityBlockchainClient:
             self.w3.eth.chain_id
         )
 
-        abi = _load_abi()
+        abi = _merge_phase3_abi(_load_abi())
 
         self.contract = self.w3.eth.contract(
             address=self.contract_address,
@@ -824,8 +928,11 @@ class UniversityBlockchainClient:
                 .call()
             )
 
-        except Exception:
-            return None
+        except Exception as exc:
+            raise RuntimeError(
+                "Failed to read document details for "
+                f"'{document_id}' from blockchain: {exc}"
+            ) from exc
 
         if isinstance(data, dict):
 
@@ -887,6 +994,118 @@ class UniversityBlockchainClient:
             ) from exc
 
     # ============================================================
+    # Authoritative Document Resolution
+    # ============================================================
+
+    def resolve_authoritative_document(
+        self,
+        document_id: str,
+        *,
+        expected_student_id: Optional[str] = None,
+        expected_document_type: Optional[str] = None,
+        approved_only: bool = True,
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Resolve the authoritative immutable document version.
+
+        The blockchain is the sole source of truth for the logical
+        document identity, version, CID, content hash, approval state,
+        and provenance metadata. Repository metadata is never consulted.
+
+        When ``approved_only`` is True, the most recent blockchain
+        version whose approval status is exactly ``APPROVED`` is used.
+        """
+
+        normalized_id = str(document_id or "").strip()
+        if not normalized_id:
+            raise ValueError("document_id cannot be empty")
+
+        details = self.get_document_details(normalized_id)
+        if not details or not details.get("exists", False):
+            return None
+
+        blockchain_student_id = str(
+            details.get("student_id", "") or ""
+        ).strip()
+        blockchain_document_type = str(
+            details.get("document_type", "") or ""
+        ).strip()
+
+        if expected_student_id:
+            expected_sid = str(expected_student_id).strip()
+            if (
+                blockchain_student_id
+                and blockchain_student_id.upper() != expected_sid.upper()
+            ):
+                raise PermissionError(
+                    "Blockchain document belongs to student "
+                    f"{blockchain_student_id}, not {expected_sid}."
+                )
+
+        if expected_document_type:
+            expected_type = str(expected_document_type).strip()
+            if (
+                blockchain_document_type
+                and blockchain_document_type.casefold()
+                != expected_type.casefold()
+            ):
+                raise ValueError(
+                    "Blockchain document type is "
+                    f"'{blockchain_document_type}', not '{expected_type}'."
+                )
+
+        # Prefer the dedicated Solidity view when available.  Some local ABI
+        # artifacts can lag behind the deployed contract, so fall back to the
+        # already-supported latest/history views instead of silently returning
+        # None.
+        if approved_only:
+            version_data = self.get_latest_approved_document_version(
+                normalized_id
+            )
+
+            if not version_data:
+                latest = self.get_latest_document_version(normalized_id)
+                if latest and str(latest.get("approval_status", "")).strip().upper() == "APPROVED":
+                    version_data = latest
+
+            if not version_data:
+                try:
+                    history = self.get_document_history(normalized_id)
+                except Exception:
+                    history = []
+
+                for candidate in reversed(history):
+                    if str(candidate.get("approval_status", "")).strip().upper() == "APPROVED":
+                        version_data = candidate
+                        break
+        else:
+            version_data = self.get_latest_document_version(
+                normalized_id
+            )
+
+            if not version_data:
+                try:
+                    history = self.get_document_history(normalized_id)
+                except Exception:
+                    history = []
+                if history:
+                    version_data = history[-1]
+
+        if not version_data:
+            return None
+
+        # Normalize the client-facing schema once, at the blockchain boundary.
+        resolved = dict(version_data)
+        resolved["document_id"] = normalized_id
+        resolved["student_id"] = blockchain_student_id
+        resolved["document_type"] = blockchain_document_type
+        resolved["resolved_version"] = int(
+            resolved.get("version", 0)
+        )
+
+        return resolved
+
+    # ============================================================
     # Specific Document Version
     # ============================================================
 
@@ -915,8 +1134,11 @@ class UniversityBlockchainClient:
                 .call()
             )
 
-        except Exception:
-            return None
+        except Exception as exc:
+            raise RuntimeError(
+                "Failed to read blockchain document version for "
+                f"'{document_id}' using get_document_version(): {exc}"
+            ) from exc
 
         return self._normalize_document_version(
             data
@@ -950,8 +1172,11 @@ class UniversityBlockchainClient:
                 .call()
             )
 
-        except Exception:
-            return None
+        except Exception as exc:
+            raise RuntimeError(
+                "Failed to read blockchain document version for "
+                f"'{document_id}' using get_latest_document_version(): {exc}"
+            ) from exc
 
         return self._normalize_document_version(
             data
@@ -984,8 +1209,11 @@ class UniversityBlockchainClient:
                 .call()
             )
 
-        except Exception:
-            return None
+        except Exception as exc:
+            raise RuntimeError(
+                "Failed to read blockchain document version for "
+                f"'{document_id}' using get_latest_approved_document_version(): {exc}"
+            ) from exc
 
         return self._normalize_document_version(
             data
