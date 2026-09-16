@@ -4,22 +4,13 @@ from typing import Any, Dict, List, Optional, TypedDict
 
 
 class AgentState(TypedDict, total=False):
-    """Shared state carried through the Phase 3 LangGraph workflow.
+    """Shared state for the Phase 3 + Phase 4 LangGraph workflow."""
 
-    Phase 3 explicitly includes the authorization, authoritative blockchain
-    resolution, IPFS retrieval, decryption, and integrity fields so LangGraph
-    preserves them in the final state returned by ``compiled_graph.invoke``.
-    """
-
-    # ------------------------------------------------------------------
     # User request / identity
-    # ------------------------------------------------------------------
     question: str
     user: Optional[Dict[str, Any]]
 
-    # ------------------------------------------------------------------
     # Query analysis / routing
-    # ------------------------------------------------------------------
     intent: str
     student_id: Optional[str]
     course_code: Optional[str]
@@ -31,23 +22,15 @@ class AgentState(TypedDict, total=False):
     repositories: List[str]
     requires_confidential_access: bool
 
-    # ------------------------------------------------------------------
     # Authorization
-    # ------------------------------------------------------------------
     authorization: Dict[str, Any]
     authorized: bool
 
-    # ------------------------------------------------------------------
-    # Repository metadata RAG
-    # RAG is discovery-only and must never be treated as authoritative
-    # document content/version/CID information.
-    # ------------------------------------------------------------------
+    # Metadata-only repository RAG
     metadata_results: List[Dict[str, Any]]
     metadata_search: Dict[str, Any]
 
-    # ------------------------------------------------------------------
     # Authoritative blockchain resolution
-    # ------------------------------------------------------------------
     blockchain_metadata: Dict[str, Any]
     document_version: Optional[int]
     version: Optional[int]
@@ -60,17 +43,20 @@ class AgentState(TypedDict, total=False):
     approved_by: Optional[str]
     blockchain_timestamp: Optional[int]
 
-    # ------------------------------------------------------------------
-    # Confidential document / IPFS / decryption
-    # ------------------------------------------------------------------
+    # Confidential document / IPFS / decryption / integrity
     document: Optional[Dict[str, Any]]
     ipfs_retrieval: Dict[str, Any]
     decryption: Dict[str, Any]
     integrity_verified: bool
 
-    # ------------------------------------------------------------------
+    # Phase 4 LLM Q&A
+    llm_answer: Optional[str]
+    llm_invoked: bool
+    llm_model: Optional[str]
+    llm_context_authorized: bool
+    llm_error: Optional[str]
+
     # Response / diagnostics
-    # ------------------------------------------------------------------
     answer: str
     error: Optional[str]
     trace: Dict[str, Any]

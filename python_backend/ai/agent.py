@@ -42,6 +42,7 @@ from python_backend.ai.graph_state import AgentState
 from python_backend.ai.repository_metadata import REPOSITORY_DISPLAY_NAMES
 from python_backend.ai.repository_rag import RepositoryMetadataRAG
 from python_backend.ai import tools
+from python_backend.ai import llm_service
 
 logger = logging.getLogger(__name__)
 
@@ -339,7 +340,7 @@ def _requires_confidential_access(
 
 def _initial_trace(question: str) -> Dict[str, Any]:
     return {
-        "phase": 3,
+        "phase": 4,
         "graph": "university_document_agent",
         "nodes": [],
         "question": question,
@@ -422,7 +423,28 @@ def analyze_query(state: AgentState) -> Dict[str, Any]:
         }
 
     lowered = question.lower()
-    student_id = _extract_student_id(question)
+
+    # Prefer an explicitly supplied student ID in the question. If the
+    # question does not contain one, fall back to the authenticated user's
+    # student_id from user_context. This keeps the existing authorization
+    # boundary intact: the resulting student_id is still checked by
+    # authorize_query() through rbac.can_view_offchain().
+    question_student_id = _extract_student_id(question)
+    user_context = state.get("user") or {}
+    context_student_id = None
+
+    if isinstance(user_context, dict):
+        raw_context_student_id = user_context.get("student_id")
+        if raw_context_student_id:
+            context_student_id = str(raw_context_student_id).strip().upper()
+
+    student_id = question_student_id or context_student_id
+    student_id_source = (
+        "question"
+        if question_student_id
+        else ("user_context" if context_student_id else None)
+    )
+
     course_code = _extract_course_code(question, student_id)
     document_id = _extract_document_id(question)
     workflow = _detect_workflow(lowered)
@@ -505,6 +527,7 @@ def analyze_query(state: AgentState) -> Dict[str, Any]:
         {
             "intent": intent,
             "student_id_detected": bool(student_id),
+            "student_id_source": student_id_source,
             "course_code_detected": bool(course_code),
             "document_id_detected": bool(document_id),
             "document_retrieval": document_retrieval,
@@ -1195,7 +1218,7 @@ def phase3_response(state: AgentState) -> Dict[str, Any]:
                 "The metadata repository did not identify a matching document. "
                 "No confidential document content was retrieved."
             )
-        elif document is None:
+        elif document is None or state.get("error") is not None:
             error = state.get("error")
             reason = {
                 "forbidden": "access was denied",
@@ -1248,6 +1271,154 @@ def phase3_response(state: AgentState) -> Dict[str, Any]:
     return {"answer": answer, "trace": trace}
 
 
+
+def document_qa(state: AgentState) -> Dict[str, Any]:
+    """Phase 4: answer the question using only the authorized document.
+
+    This node is intentionally downstream of ``retrieve_authorized_document``.
+    It refuses to invoke the LLM unless authorization succeeded, a document is
+    present, and plaintext integrity has been verified.
+    """
+    document = state.get("document")
+    authorization = dict(state.get("authorization") or {})
+    authorized = bool(state.get("authorized", False))
+    authorization_allowed = bool(authorization.get("allowed", False))
+    integrity_verified = bool(state.get("integrity_verified", False))
+    retrieval_error = state.get("error")
+    question = state.get("question", "")
+
+    security_ready = (
+        authorized
+        and authorization_allowed
+        and isinstance(document, dict)
+        and bool(document)
+        and integrity_verified
+        and retrieval_error is None
+    )
+
+    if not security_ready:
+        reason = "security_boundary_not_satisfied"
+        if not authorized or not authorization_allowed:
+            reason = "authorization_not_satisfied"
+        elif document is None:
+            reason = "authorized_document_not_available"
+        elif not integrity_verified:
+            reason = "document_integrity_not_verified"
+        elif retrieval_error:
+            reason = f"document_retrieval_error:{retrieval_error}"
+
+        trace = _add_trace_node(
+            state.get("trace", {}),
+            "document_qa",
+            {
+                "llm_invoked": False,
+                "reason": reason,
+                "authorization_satisfied": authorized and authorization_allowed,
+                "document_available": isinstance(document, dict) and bool(document),
+                "integrity_verified": integrity_verified,
+                "content_exposed_to_trace": False,
+            },
+        )
+        return {
+            "llm_answer": None,
+            "llm_invoked": False,
+            "llm_context_authorized": False,
+            "llm_error": reason,
+            "trace": trace,
+        }
+
+    try:
+        # The document is passed directly to the LLM service only after the
+        # complete Phase 3 security boundary has succeeded. No document
+        # content is copied into the LangGraph trace.
+        answer = llm_service.answer_document_question(
+            question=question,
+            document=document,
+        )
+        model = getattr(llm_service, "OLLAMA_MODEL", None)
+        trace = _add_trace_node(
+            state.get("trace", {}),
+            "document_qa",
+            {
+                "llm_invoked": True,
+                "llm_model": model,
+                "authorization_satisfied": True,
+                "document_available": True,
+                "integrity_verified": True,
+                "context_source": "authorized_decrypted_document",
+                "content_exposed_to_trace": False,
+            },
+        )
+        return {
+            "llm_answer": answer,
+            "llm_invoked": True,
+            "llm_model": model,
+            "llm_context_authorized": True,
+            "llm_error": None,
+            "trace": trace,
+        }
+    except Exception as exc:
+        logger.exception("Phase 4 document Q&A failed")
+        trace = _add_trace_node(
+            state.get("trace", {}),
+            "document_qa",
+            {
+                "llm_invoked": True,
+                "llm_model": getattr(llm_service, "OLLAMA_MODEL", None),
+                "authorization_satisfied": True,
+                "document_available": True,
+                "integrity_verified": True,
+                "error_type": type(exc).__name__,
+                "content_exposed_to_trace": False,
+            },
+        )
+        return {
+            "llm_answer": None,
+            "llm_invoked": True,
+            "llm_model": getattr(llm_service, "OLLAMA_MODEL", None),
+            "llm_context_authorized": True,
+            "llm_error": str(exc),
+            "trace": trace,
+            "error": "llm_error",
+        }
+
+
+def phase4_response(state: AgentState) -> Dict[str, Any]:
+    """Finalize a grounded Phase 4 answer without exposing document content."""
+    llm_answer = state.get("llm_answer")
+    document_id = state.get("document_id")
+    llm_error = state.get("llm_error")
+
+    if llm_answer:
+        answer = str(llm_answer).strip()
+    elif llm_error == "authorization_not_satisfied":
+        answer = "The document cannot be sent to the AI model because authorization was not satisfied."
+    elif llm_error == "document_integrity_not_verified":
+        answer = "The document cannot be sent to the AI model because its integrity has not been verified."
+    elif state.get("error") == "llm_error":
+        answer = (
+            f"The authorized document {document_id or ''} was retrieved securely, "
+            "but the document Q&A model could not generate an answer."
+        ).strip()
+    else:
+        # Preserve the safe Phase 3 retrieval response when Q&A was not
+        # applicable or the security boundary did not permit an LLM call.
+        answer = state.get("answer") or "No AI-generated answer was produced."
+
+    trace = _add_trace_node(
+        state.get("trace", {}),
+        "phase4_response",
+        {
+            "document_id": document_id,
+            "llm_invoked": bool(state.get("llm_invoked", False)),
+            "llm_context_authorized": bool(state.get("llm_context_authorized", False)),
+            "grounded_answer_generated": bool(llm_answer),
+            "content_exposed_to_trace": False,
+        },
+    )
+    return {"answer": answer, "trace": trace}
+
+
 def denied_response(state: AgentState) -> Dict[str, Any]:
     """Terminal node for authorization failures."""
     reason = state.get("authorization", {}).get("reason", "forbidden")
@@ -1284,6 +1455,14 @@ def denied_response(state: AgentState) -> Dict[str, Any]:
     return {
         "answer": answer,
         "error": "forbidden",
+        # Explicitly expose the authorization outcome at the top level.
+        # This is important for downstream security checks and tests: a
+        # request denied at the authorization gate must never appear as an
+        # authorized document request.
+        "authorized": False,
+        "llm_invoked": False,
+        "llm_context_authorized": False,
+        "document": None,
         "trace": trace,
     }
 
@@ -1357,6 +1536,8 @@ def build_graph():
     graph.add_node("denied_response", denied_response)
     graph.add_node("phase2_metadata_response", phase2_metadata_response)
     graph.add_node("phase3_response", phase3_response)
+    graph.add_node("document_qa", document_qa)
+    graph.add_node("phase4_response", phase4_response)
 
     graph.add_edge(START, "analyze_query")
     graph.add_edge("analyze_query", "authorize_query")
@@ -1446,7 +1627,40 @@ def build_graph():
     graph.add_edge("retrieve_onchain_metadata", "phase3_response")
     graph.add_edge("denied_response", END)
     graph.add_edge("phase2_metadata_response", END)
-    graph.add_edge("phase3_response", END)
+
+    def phase4_router(state: AgentState) -> str:
+        # Only a successfully retrieved, authorized and integrity-verified
+        # confidential document enters the LLM stage. Public on-chain and
+        # failed-retrieval responses remain terminal Phase 3 responses.
+        intent = state.get("intent", "general")
+        return (
+            "document_qa"
+            if (
+                intent in {
+                    "academic_document",
+                    "repository_document",
+                    "document_history",
+                    "document_retrieval",
+                }
+                and state.get("document") is not None
+                and bool(state.get("authorized", False))
+                and bool(state.get("authorization", {}).get("allowed", False))
+                and bool(state.get("integrity_verified", False))
+                and state.get("error") is None
+            )
+            else "end"
+        )
+
+    graph.add_conditional_edges(
+        "phase3_response",
+        phase4_router,
+        {
+            "document_qa": "document_qa",
+            "end": END,
+        },
+    )
+    graph.add_edge("document_qa", "phase4_response")
+    graph.add_edge("phase4_response", END)
 
     return graph.compile()
 
@@ -1466,7 +1680,7 @@ def answer_question(
             "answer": "Please enter a question.",
             "error": "empty_question",
             "trace": {
-                "phase": 3,
+                "phase": 4,
                 "graph": "university_document_agent",
                 "nodes": [],
             },
@@ -1500,7 +1714,7 @@ def answer_question(
             ),
             "error": str(exc),
             "trace": {
-                "phase": 3,
+                "phase": 4,
                 "graph": "university_document_agent",
                 "failed": True,
                 "error_type": type(exc).__name__,

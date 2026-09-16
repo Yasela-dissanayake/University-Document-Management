@@ -57,13 +57,12 @@ REPOSITORY_DISPLAY_NAMES = {
 DEMO_METADATA: List[Dict[str, Any]] = [
     {
         "document_id": "TX-98765",
-        "student_id": "S19357",
+        "student_id": "STD001",
         "document_type": "Transcript",
         "semester": "Semester 5",
         "course_codes": [
             "CO521",
             "CO523",
-            "CO525",
         ],
         "keywords": [
             "transcript",
@@ -72,8 +71,8 @@ DEMO_METADATA: List[Dict[str, Any]] = [
             "academic",
         ],
         "repository": "academic",
-        "latest_version": 3,
-        "latest_approved_cid": "bafy-demo-academic-s19357-v3",
+        "latest_version": 4,
+        "latest_approved_cid": "QmP2pwTUWYqzVEp3HQoBWHsZ99xUmgpWdJMYZDNKe9WUiF",
     },
     {
         "document_id": "REG-19357-01",

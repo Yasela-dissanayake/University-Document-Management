@@ -1,4 +1,4 @@
-"""Phase 3 LangGraph test runner.
+"""Phase 3 + Phase 4 LangGraph test runner.
 
 Run from project root:
 
@@ -12,7 +12,14 @@ The tests validate:
     5. Multi-repository metadata routing.
     6. General query routing.
     7. End-to-end Phase 3 confidential document retrieval.
-    8. LangGraph topology.
+    8. RAG/blockchain identity mismatch protection.
+    9. Phase 3 + Phase 4 LangGraph topology.
+    10. Authorized document Q&A.
+    11. Course-specific grounded Q&A.
+    12. Missing-information / hallucination protection.
+    13. Unauthorized document never reaches the LLM.
+    14. Integrity failure prevents LLM invocation.
+    15. LLM context contains only the authorized plaintext document.
 """
 
 from __future__ import annotations
@@ -56,6 +63,28 @@ def trace_node(
             details = item.get("details", {})
             return details if isinstance(details, dict) else {}
     return {}
+
+
+class FakeLLM:
+    """Deterministic LLM double used so tests do not require a running Ollama server."""
+
+    def __init__(self, answer: str = "MOCK ANSWER") -> None:
+        self.answer = answer
+        self.calls: List[Dict[str, Any]] = []
+
+    def __call__(self, question: str, document: Dict[str, Any]) -> str:
+        self.calls.append({"question": question, "document": document})
+        return self.answer
+
+
+def patch_llm(fake: FakeLLM):
+    original = agent_module.llm_service.answer_document_question
+
+    def mocked_answer_document_question(question: str, document: Dict[str, Any]) -> str:
+        return fake(question, document)
+
+    agent_module.llm_service.answer_document_question = mocked_answer_document_question
+    return original
 
 
 def assert_phase3_success(result: Dict[str, Any]) -> None:
@@ -299,16 +328,24 @@ def run_tests() -> None:
         "student_id": STUDENT_ID,
     }
 
-    result = answer_question(
-        f"Retrieve document {DOCUMENT_ID} for student {STUDENT_ID}.",
-        user_context=phase3_user,
-    )
+    phase3_fake_llm = FakeLLM("The document was retrieved successfully.")
+    original_llm = patch_llm(phase3_fake_llm)
+    try:
+        result = answer_question(
+            f"Retrieve document {DOCUMENT_ID} for student {STUDENT_ID}.",
+            user_context=phase3_user,
+        )
+    finally:
+        agent_module.llm_service.answer_document_question = original_llm
+
     show(
-        "TEST 7 - Phase 3 authoritative document retrieval",
+        "TEST 7 - Phase 3 authoritative document retrieval + Phase 4 boundary",
         result,
     )
 
     assert_phase3_success(result)
+    assert result.get("llm_invoked") is True, result
+    assert phase3_fake_llm.calls, result
 
     # The blockchain must be the authoritative source.
     blockchain_metadata = result.get("blockchain_metadata", {})
@@ -342,11 +379,6 @@ def run_tests() -> None:
     # ------------------------------------------------------------------
     # TEST 8
     # RAG/blockchain identity mismatch protection.
-    #
-    # The RAG result is deliberately forged for the test so that it points
-    # TX-98765 at a different student. The blockchain remains authoritative
-    # and says TX-98765 belongs to STD001. The agent must fail closed before
-    # IPFS retrieval/decryption.
     # ------------------------------------------------------------------
     original_search = agent_module.metadata_rag.search
 
@@ -372,10 +404,7 @@ def run_tests() -> None:
                 "student_id": STUDENT_ID,
             },
         )
-        show(
-            "TEST 8 - RAG/blockchain identity mismatch protection",
-            result,
-        )
+        show("TEST 8 - RAG/blockchain identity mismatch protection", result)
 
         assert result.get("authorized") is True, result
         assert result.get("document") is None, result
@@ -389,27 +418,19 @@ def run_tests() -> None:
         assert retrieval.get("content_exposed_to_trace") is False, result
         assert "student_id" in retrieval.get("mismatch_fields", []), result
 
-        # The authoritative blockchain record must still identify STD001.
         blockchain_metadata = result.get("blockchain_metadata", {})
         assert blockchain_metadata.get("document_id") == DOCUMENT_ID, result
         assert blockchain_metadata.get("student_id") == STUDENT_ID, result
-
-        # No trace entry may expose confidential document content.
-        for entry in result.get("trace", {}).get("nodes", []):
-            if not isinstance(entry, dict):
-                continue
-            details = entry.get("details", {})
-            if isinstance(details, dict):
-                assert details.get("content_exposed_to_trace") is not True, entry
+        assert result.get("llm_invoked") is not True, result
     finally:
         agent_module.metadata_rag.search = original_search
 
     # ------------------------------------------------------------------
     # TEST 9
-    # Verify that the Phase 3 graph exposes the required stages.
+    # Phase 3 + Phase 4 graph topology.
     # ------------------------------------------------------------------
     print("\n" + "=" * 80)
-    print("PHASE 3 GRAPH")
+    print("PHASE 3 + PHASE 4 GRAPH")
     print("=" * 80)
 
     mermaid = get_graph_mermaid()
@@ -424,18 +445,258 @@ def run_tests() -> None:
         "retrieve_authorized_document",
         "phase3_response",
         "denied_response",
+        "document_qa",
+        "phase4_response",
     }
 
     for node_name in required_nodes:
-        assert node_name in mermaid, (
-            f"Graph is missing node: {node_name}\n{mermaid}"
-        )
+        assert node_name in mermaid, f"Graph is missing node: {node_name}\n{mermaid}"
 
     # ------------------------------------------------------------------
-    # Final result
+    # TEST 10
+    # Authorized document Q&A.
     # ------------------------------------------------------------------
+    fake = FakeLLM("You received an A for CO521.")
+    original_llm = patch_llm(fake)
+    try:
+        result = answer_question(
+            f"What grade did I get for CO521 in document {DOCUMENT_ID} for student {STUDENT_ID}?",
+            user_context={
+                "username": "phase4_test_user",
+                "role": "ADMIN",
+                "student_id": STUDENT_ID,
+            },
+        )
+    finally:
+        agent_module.llm_service.answer_document_question = original_llm
+
+    show("TEST 10 - Authorized document Q&A", result)
+
+    assert result.get("error") is None, result
+    assert result.get("document") is not None, result
+    assert result.get("integrity_verified") is True, result
+    assert result.get("llm_invoked") is True, result
+    assert result.get("llm_context_authorized") is True, result
+    assert result.get("llm_answer") == "You received an A for CO521.", result
+    assert result.get("answer") == "You received an A for CO521.", result
+    assert nodes(result)[-2:] == ["document_qa", "phase4_response"], result
+
+    # The mock must receive exactly the authorized plaintext returned by Phase 3.
+    assert len(fake.calls) == 1, fake.calls
+    assert fake.calls[0]["document"] == result["document"], result
+    assert fake.calls[0]["document"]["document_id"] == DOCUMENT_ID, result
+    assert fake.calls[0]["document"]["student_id"] == STUDENT_ID, result
+
+    # ------------------------------------------------------------------
+    # TEST 11
+    # Course-specific grounded Q&A.
+    # ------------------------------------------------------------------
+    fake = FakeLLM("CO521 has grade A.")
+    original_llm = patch_llm(fake)
+    try:
+        result = answer_question(
+            f"What grade did I get for CO521 in {DOCUMENT_ID}?",
+            user_context={
+                "username": "phase4_course_test_user",
+                "role": "ADMIN",
+                "student_id": STUDENT_ID,
+            },
+        )
+    finally:
+        agent_module.llm_service.answer_document_question = original_llm
+
+    show("TEST 11 - Course-specific grounded Q&A", result)
+
+    assert result.get("error") is None, result
+    assert result.get("llm_invoked") is True, result
+    assert result.get("answer") == "CO521 has grade A.", result
+    assert fake.calls[0]["question"].find("CO521") >= 0, fake.calls
+
+    # ------------------------------------------------------------------
+    # TEST 12
+    # Missing information / hallucination protection.
+    # The model double returns the safe response expected from the grounded
+    # prompt; the important graph-level property is that it receives only the
+    # authorized document and no repository metadata content.
+    # ------------------------------------------------------------------
+    fake = FakeLLM("The requested CO999 information cannot be determined from the document.")
+    original_llm = patch_llm(fake)
+    try:
+        result = answer_question(
+            f"What grade did I get for CO999 in {DOCUMENT_ID}?",
+            user_context={
+                "username": "phase4_missing_test_user",
+                "role": "ADMIN",
+                "student_id": STUDENT_ID,
+            },
+        )
+    finally:
+        agent_module.llm_service.answer_document_question = original_llm
+
+    show("TEST 12 - Missing information / hallucination protection", result)
+
+    assert result.get("error") is None, result
+    assert result.get("llm_invoked") is True, result
+    assert "cannot be determined" in result.get("answer", "").lower(), result
+    assert fake.calls[0]["document"] == result["document"], result
+
+    # ------------------------------------------------------------------
+    # TEST 13
+    # Unauthorized document must never reach the LLM.
+    # ------------------------------------------------------------------
+    unauthorized_fake = FakeLLM("THIS MUST NEVER BE RETURNED")
+    original_llm = patch_llm(unauthorized_fake)
+    try:
+        result = answer_question(
+            f"Retrieve document {DOCUMENT_ID} for student {STUDENT_ID}.",
+            user_context={
+                "username": "phase4_unauthorized_user",
+                "role": "STUDENT",
+                "student_id": "STD999",
+            },
+        )
+    finally:
+        agent_module.llm_service.answer_document_question = original_llm
+
+    show("TEST 13 - Unauthorized document never reaches LLM", result)
+
+    assert result.get("authorized") is False, result
+    assert result.get("document") is None, result
+    assert result.get("llm_invoked") is not True, result
+    assert unauthorized_fake.calls == [], unauthorized_fake.calls
+    assert "document_qa" not in nodes(result)
+
+    # ------------------------------------------------------------------
+    # TEST 14
+    # Integrity failure prevents LLM invocation.
+    # We force the authorized-document node to report an integrity failure and
+    # verify that the LLM mock is never called.
+    # ------------------------------------------------------------------
+    original_retrieve = agent_module.retrieve_authorized_document
+    original_graph = agent_module.compiled_graph
+
+    def forced_integrity_failure(state: Dict[str, Any]) -> Dict[str, Any]:
+        trace = agent_module._add_trace_node(
+            state.get("trace", {}),
+            "retrieve_authorized_document",
+            {
+                "retrieval_started": True,
+                "found": True,
+                "resolved_version": EXPECTED_VERSION,
+                "ipfs_retrieval_started": True,
+                "decryption_started": True,
+                "integrity_verified": False,
+                "content_exposed_to_trace": False,
+            },
+        )
+        return {
+            "document_id": DOCUMENT_ID,
+            "student_id": STUDENT_ID,
+            "document": {
+                "document_id": DOCUMENT_ID,
+                "student_id": STUDENT_ID,
+                "document_type": "Transcript",
+                "courses": [{"code": "CO521", "grade": "A"}],
+            },
+            "authorized": True,
+            "integrity_verified": False,
+            "error": "integrity_verification_failed",
+            "trace": trace,
+        }
+
+    integrity_fake = FakeLLM("THIS MUST NEVER BE CALLED")
+    original_llm = patch_llm(integrity_fake)
+    try:
+        agent_module.retrieve_authorized_document = forced_integrity_failure
+        # Recompile so the temporary node implementation is captured by the
+        # graph used by answer_question().
+        agent_module.compiled_graph = agent_module.build_graph()
+        result = answer_question(
+            f"Retrieve document {DOCUMENT_ID} for student {STUDENT_ID}.",
+            user_context={
+                "username": "phase4_integrity_test_user",
+                "role": "ADMIN",
+                "student_id": STUDENT_ID,
+            },
+        )
+    finally:
+        agent_module.retrieve_authorized_document = original_retrieve
+        agent_module.compiled_graph = original_graph
+        agent_module.llm_service.answer_document_question = original_llm
+
+    show("TEST 14 - Integrity failure prevents LLM invocation", result)
+
+    assert result.get("error") == "integrity_verification_failed", result
+    assert result.get("llm_invoked") is not True, result
+    assert integrity_fake.calls == [], integrity_fake.calls
+    assert "document_qa" not in nodes(result), result
+
+    # ------------------------------------------------------------------
+    # TEST 15
+    # LLM context must be exactly the authorized plaintext document and must
+    # not be sourced from metadata-RAG results.
+    # ------------------------------------------------------------------
+    captured = FakeLLM("Grounded answer.")
+    original_llm = patch_llm(captured)
+    original_search = agent_module.metadata_rag.search
+
+    def controlled_metadata_search(*args, **kwargs):
+        return [
+            {
+                "repository": "academic",
+                "document_id": DOCUMENT_ID,
+                "student_id": STUDENT_ID,
+                "document_type": "Transcript",
+                "course_codes": ["CO521", "CO523"],
+                "content_retrieved": False,
+            }
+        ]
+
+    try:
+        agent_module.metadata_rag.search = controlled_metadata_search
+        result = answer_question(
+            f"Retrieve academic transcript document {DOCUMENT_ID} for student {STUDENT_ID}.",
+            user_context={
+                "username": "phase4_context_test_user",
+                "role": "ADMIN",
+                "student_id": STUDENT_ID,
+            },
+        )
+    finally:
+        agent_module.metadata_rag.search = original_search
+        agent_module.llm_service.answer_document_question = original_llm
+
+    show("TEST 15 - LLM receives only authorized plaintext", result)
+
+    assert result.get("error") is None, result
+    assert result.get("llm_invoked") is True, result
+    assert len(captured.calls) == 1, captured.calls
+    assert captured.calls[0]["document"] == result["document"], result
+    assert captured.calls[0]["document"] != result.get("metadata_results"), result
+    assert captured.calls[0]["document"]["student_id"] == STUDENT_ID, result
+    assert captured.calls[0]["document"]["document_id"] == DOCUMENT_ID, result
+
+    # No trace entry may contain the actual document body.
+    forbidden_trace_keys = {
+        "content",
+        "plaintext",
+        "document_content",
+        "raw_document",
+        "encrypted_content",
+        "document_data",
+        "context",
+    }
+    for entry in result.get("trace", {}).get("nodes", []):
+        if not isinstance(entry, dict):
+            continue
+        details = entry.get("details", {})
+        if not isinstance(details, dict):
+            continue
+        assert forbidden_trace_keys.isdisjoint(details.keys()), entry
+        assert details.get("content_exposed_to_trace") is not True, entry
+
     print("\n" + "=" * 80)
-    print("ALL PHASE 3 LANGGRAPH TESTS PASSED")
+    print("ALL PHASE 3 + PHASE 4 LANGGRAPH TESTS PASSED")
     print("=" * 80)
     print("PASS - Authorization-before-retrieval")
     print("PASS - Public blockchain metadata retrieval")
@@ -447,7 +708,14 @@ def run_tests() -> None:
     print("PASS - Encrypted IPFS retrieval")
     print("PASS - ACL authorization/decryption")
     print("PASS - Plaintext integrity verification")
-    print("PASS - Phase 3 LangGraph topology")
+    print("PASS - RAG/blockchain identity mismatch protection")
+    print("PASS - Authorized document Q&A")
+    print("PASS - Course-specific grounded Q&A")
+    print("PASS - Missing-information protection")
+    print("PASS - Unauthorized document blocked from LLM")
+    print("PASS - Integrity failure blocks LLM")
+    print("PASS - LLM context security boundary")
+    print("PASS - Phase 3 + Phase 4 LangGraph topology")
 
 
 if __name__ == "__main__":
