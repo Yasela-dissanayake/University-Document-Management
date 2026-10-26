@@ -1,0 +1,862 @@
+[
+  {
+    "id": "Q-STD001-001",
+    "category": "direct_retrieval",
+    "student_id": "STD001",
+    "document_id": "TX-STD001-001",
+    "question": "Retrieve document TX-STD001-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD001-002",
+    "category": "course_specific",
+    "student_id": "STD001",
+    "document_id": "TX-STD001-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "A+"
+  },
+  {
+    "id": "Q-STD001-003",
+    "category": "multi_course",
+    "student_id": "STD001",
+    "document_id": "TX-STD001-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "A+",
+      "CSC3103": "A"
+    }
+  },
+  {
+    "id": "Q-STD001-004",
+    "category": "missing_information",
+    "student_id": "STD001",
+    "document_id": "TX-STD001-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD001-005",
+    "category": "unsupported_information",
+    "student_id": "STD001",
+    "document_id": "TX-STD001-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD002-001",
+    "category": "direct_retrieval",
+    "student_id": "STD002",
+    "document_id": "TX-STD002-001",
+    "question": "Retrieve document TX-STD002-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD002-002",
+    "category": "course_specific",
+    "student_id": "STD002",
+    "document_id": "TX-STD002-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "A"
+  },
+  {
+    "id": "Q-STD002-003",
+    "category": "multi_course",
+    "student_id": "STD002",
+    "document_id": "TX-STD002-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "A",
+      "CSC3103": "A-"
+    }
+  },
+  {
+    "id": "Q-STD002-004",
+    "category": "missing_information",
+    "student_id": "STD002",
+    "document_id": "TX-STD002-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD002-005",
+    "category": "unsupported_information",
+    "student_id": "STD002",
+    "document_id": "TX-STD002-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD003-001",
+    "category": "direct_retrieval",
+    "student_id": "STD003",
+    "document_id": "TX-STD003-001",
+    "question": "Retrieve document TX-STD003-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD003-002",
+    "category": "course_specific",
+    "student_id": "STD003",
+    "document_id": "TX-STD003-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "B+"
+  },
+  {
+    "id": "Q-STD003-003",
+    "category": "multi_course",
+    "student_id": "STD003",
+    "document_id": "TX-STD003-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "B+",
+      "CSC3103": "B"
+    }
+  },
+  {
+    "id": "Q-STD003-004",
+    "category": "missing_information",
+    "student_id": "STD003",
+    "document_id": "TX-STD003-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD003-005",
+    "category": "unsupported_information",
+    "student_id": "STD003",
+    "document_id": "TX-STD003-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD004-001",
+    "category": "direct_retrieval",
+    "student_id": "STD004",
+    "document_id": "TX-STD004-001",
+    "question": "Retrieve document TX-STD004-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD004-002",
+    "category": "course_specific",
+    "student_id": "STD004",
+    "document_id": "TX-STD004-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "A-"
+  },
+  {
+    "id": "Q-STD004-003",
+    "category": "multi_course",
+    "student_id": "STD004",
+    "document_id": "TX-STD004-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "A-",
+      "CSC3103": "B+"
+    }
+  },
+  {
+    "id": "Q-STD004-004",
+    "category": "missing_information",
+    "student_id": "STD004",
+    "document_id": "TX-STD004-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD004-005",
+    "category": "unsupported_information",
+    "student_id": "STD004",
+    "document_id": "TX-STD004-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD005-001",
+    "category": "direct_retrieval",
+    "student_id": "STD005",
+    "document_id": "TX-STD005-001",
+    "question": "Retrieve document TX-STD005-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD005-002",
+    "category": "course_specific",
+    "student_id": "STD005",
+    "document_id": "TX-STD005-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "A+"
+  },
+  {
+    "id": "Q-STD005-003",
+    "category": "multi_course",
+    "student_id": "STD005",
+    "document_id": "TX-STD005-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "A+",
+      "CSC3103": "A"
+    }
+  },
+  {
+    "id": "Q-STD005-004",
+    "category": "missing_information",
+    "student_id": "STD005",
+    "document_id": "TX-STD005-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD005-005",
+    "category": "unsupported_information",
+    "student_id": "STD005",
+    "document_id": "TX-STD005-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD006-001",
+    "category": "direct_retrieval",
+    "student_id": "STD006",
+    "document_id": "TX-STD006-001",
+    "question": "Retrieve document TX-STD006-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD006-002",
+    "category": "course_specific",
+    "student_id": "STD006",
+    "document_id": "TX-STD006-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "B"
+  },
+  {
+    "id": "Q-STD006-003",
+    "category": "multi_course",
+    "student_id": "STD006",
+    "document_id": "TX-STD006-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "B",
+      "CSC3103": "B+"
+    }
+  },
+  {
+    "id": "Q-STD006-004",
+    "category": "missing_information",
+    "student_id": "STD006",
+    "document_id": "TX-STD006-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD006-005",
+    "category": "unsupported_information",
+    "student_id": "STD006",
+    "document_id": "TX-STD006-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD007-001",
+    "category": "direct_retrieval",
+    "student_id": "STD007",
+    "document_id": "TX-STD007-001",
+    "question": "Retrieve document TX-STD007-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD007-002",
+    "category": "course_specific",
+    "student_id": "STD007",
+    "document_id": "TX-STD007-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "A"
+  },
+  {
+    "id": "Q-STD007-003",
+    "category": "multi_course",
+    "student_id": "STD007",
+    "document_id": "TX-STD007-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "A",
+      "CSC3103": "A"
+    }
+  },
+  {
+    "id": "Q-STD007-004",
+    "category": "missing_information",
+    "student_id": "STD007",
+    "document_id": "TX-STD007-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD007-005",
+    "category": "unsupported_information",
+    "student_id": "STD007",
+    "document_id": "TX-STD007-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD008-001",
+    "category": "direct_retrieval",
+    "student_id": "STD008",
+    "document_id": "TX-STD008-001",
+    "question": "Retrieve document TX-STD008-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD008-002",
+    "category": "course_specific",
+    "student_id": "STD008",
+    "document_id": "TX-STD008-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "C+"
+  },
+  {
+    "id": "Q-STD008-003",
+    "category": "multi_course",
+    "student_id": "STD008",
+    "document_id": "TX-STD008-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "C+",
+      "CSC3103": "B"
+    }
+  },
+  {
+    "id": "Q-STD008-004",
+    "category": "missing_information",
+    "student_id": "STD008",
+    "document_id": "TX-STD008-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD008-005",
+    "category": "unsupported_information",
+    "student_id": "STD008",
+    "document_id": "TX-STD008-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD009-001",
+    "category": "direct_retrieval",
+    "student_id": "STD009",
+    "document_id": "TX-STD009-001",
+    "question": "Retrieve document TX-STD009-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD009-002",
+    "category": "course_specific",
+    "student_id": "STD009",
+    "document_id": "TX-STD009-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "A-"
+  },
+  {
+    "id": "Q-STD009-003",
+    "category": "multi_course",
+    "student_id": "STD009",
+    "document_id": "TX-STD009-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "A-",
+      "CSC3103": "A"
+    }
+  },
+  {
+    "id": "Q-STD009-004",
+    "category": "missing_information",
+    "student_id": "STD009",
+    "document_id": "TX-STD009-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD009-005",
+    "category": "unsupported_information",
+    "student_id": "STD009",
+    "document_id": "TX-STD009-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD010-001",
+    "category": "direct_retrieval",
+    "student_id": "STD010",
+    "document_id": "TX-STD010-001",
+    "question": "Retrieve document TX-STD010-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD010-002",
+    "category": "course_specific",
+    "student_id": "STD010",
+    "document_id": "TX-STD010-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "B+"
+  },
+  {
+    "id": "Q-STD010-003",
+    "category": "multi_course",
+    "student_id": "STD010",
+    "document_id": "TX-STD010-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "B+",
+      "CSC3103": "A-"
+    }
+  },
+  {
+    "id": "Q-STD010-004",
+    "category": "missing_information",
+    "student_id": "STD010",
+    "document_id": "TX-STD010-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD010-005",
+    "category": "unsupported_information",
+    "student_id": "STD010",
+    "document_id": "TX-STD010-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD011-001",
+    "category": "direct_retrieval",
+    "student_id": "STD011",
+    "document_id": "TX-STD011-001",
+    "question": "Retrieve document TX-STD011-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD011-002",
+    "category": "course_specific",
+    "student_id": "STD011",
+    "document_id": "TX-STD011-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "A+"
+  },
+  {
+    "id": "Q-STD011-003",
+    "category": "multi_course",
+    "student_id": "STD011",
+    "document_id": "TX-STD011-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "A+",
+      "CSC3103": "A"
+    }
+  },
+  {
+    "id": "Q-STD011-004",
+    "category": "missing_information",
+    "student_id": "STD011",
+    "document_id": "TX-STD011-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD011-005",
+    "category": "unsupported_information",
+    "student_id": "STD011",
+    "document_id": "TX-STD011-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD012-001",
+    "category": "direct_retrieval",
+    "student_id": "STD012",
+    "document_id": "TX-STD012-001",
+    "question": "Retrieve document TX-STD012-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD012-002",
+    "category": "course_specific",
+    "student_id": "STD012",
+    "document_id": "TX-STD012-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "A"
+  },
+  {
+    "id": "Q-STD012-003",
+    "category": "multi_course",
+    "student_id": "STD012",
+    "document_id": "TX-STD012-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "A",
+      "CSC3103": "A-"
+    }
+  },
+  {
+    "id": "Q-STD012-004",
+    "category": "missing_information",
+    "student_id": "STD012",
+    "document_id": "TX-STD012-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD012-005",
+    "category": "unsupported_information",
+    "student_id": "STD012",
+    "document_id": "TX-STD012-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD013-001",
+    "category": "direct_retrieval",
+    "student_id": "STD013",
+    "document_id": "TX-STD013-001",
+    "question": "Retrieve document TX-STD013-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD013-002",
+    "category": "course_specific",
+    "student_id": "STD013",
+    "document_id": "TX-STD013-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "B+"
+  },
+  {
+    "id": "Q-STD013-003",
+    "category": "multi_course",
+    "student_id": "STD013",
+    "document_id": "TX-STD013-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "B+",
+      "CSC3103": "B"
+    }
+  },
+  {
+    "id": "Q-STD013-004",
+    "category": "missing_information",
+    "student_id": "STD013",
+    "document_id": "TX-STD013-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD013-005",
+    "category": "unsupported_information",
+    "student_id": "STD013",
+    "document_id": "TX-STD013-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD014-001",
+    "category": "direct_retrieval",
+    "student_id": "STD014",
+    "document_id": "TX-STD014-001",
+    "question": "Retrieve document TX-STD014-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD014-002",
+    "category": "course_specific",
+    "student_id": "STD014",
+    "document_id": "TX-STD014-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "A-"
+  },
+  {
+    "id": "Q-STD014-003",
+    "category": "multi_course",
+    "student_id": "STD014",
+    "document_id": "TX-STD014-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "A-",
+      "CSC3103": "B+"
+    }
+  },
+  {
+    "id": "Q-STD014-004",
+    "category": "missing_information",
+    "student_id": "STD014",
+    "document_id": "TX-STD014-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD014-005",
+    "category": "unsupported_information",
+    "student_id": "STD014",
+    "document_id": "TX-STD014-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD015-001",
+    "category": "direct_retrieval",
+    "student_id": "STD015",
+    "document_id": "TX-STD015-001",
+    "question": "Retrieve document TX-STD015-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD015-002",
+    "category": "course_specific",
+    "student_id": "STD015",
+    "document_id": "TX-STD015-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "A+"
+  },
+  {
+    "id": "Q-STD015-003",
+    "category": "multi_course",
+    "student_id": "STD015",
+    "document_id": "TX-STD015-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "A+",
+      "CSC3103": "A"
+    }
+  },
+  {
+    "id": "Q-STD015-004",
+    "category": "missing_information",
+    "student_id": "STD015",
+    "document_id": "TX-STD015-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD015-005",
+    "category": "unsupported_information",
+    "student_id": "STD015",
+    "document_id": "TX-STD015-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD016-001",
+    "category": "direct_retrieval",
+    "student_id": "STD016",
+    "document_id": "TX-STD016-001",
+    "question": "Retrieve document TX-STD016-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD016-002",
+    "category": "course_specific",
+    "student_id": "STD016",
+    "document_id": "TX-STD016-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "B"
+  },
+  {
+    "id": "Q-STD016-003",
+    "category": "multi_course",
+    "student_id": "STD016",
+    "document_id": "TX-STD016-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "B",
+      "CSC3103": "B+"
+    }
+  },
+  {
+    "id": "Q-STD016-004",
+    "category": "missing_information",
+    "student_id": "STD016",
+    "document_id": "TX-STD016-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD016-005",
+    "category": "unsupported_information",
+    "student_id": "STD016",
+    "document_id": "TX-STD016-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD017-001",
+    "category": "direct_retrieval",
+    "student_id": "STD017",
+    "document_id": "TX-STD017-001",
+    "question": "Retrieve document TX-STD017-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD017-002",
+    "category": "course_specific",
+    "student_id": "STD017",
+    "document_id": "TX-STD017-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "A"
+  },
+  {
+    "id": "Q-STD017-003",
+    "category": "multi_course",
+    "student_id": "STD017",
+    "document_id": "TX-STD017-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "A",
+      "CSC3103": "A"
+    }
+  },
+  {
+    "id": "Q-STD017-004",
+    "category": "missing_information",
+    "student_id": "STD017",
+    "document_id": "TX-STD017-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD017-005",
+    "category": "unsupported_information",
+    "student_id": "STD017",
+    "document_id": "TX-STD017-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD018-001",
+    "category": "direct_retrieval",
+    "student_id": "STD018",
+    "document_id": "TX-STD018-001",
+    "question": "Retrieve document TX-STD018-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD018-002",
+    "category": "course_specific",
+    "student_id": "STD018",
+    "document_id": "TX-STD018-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "C+"
+  },
+  {
+    "id": "Q-STD018-003",
+    "category": "multi_course",
+    "student_id": "STD018",
+    "document_id": "TX-STD018-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "C+",
+      "CSC3103": "B"
+    }
+  },
+  {
+    "id": "Q-STD018-004",
+    "category": "missing_information",
+    "student_id": "STD018",
+    "document_id": "TX-STD018-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD018-005",
+    "category": "unsupported_information",
+    "student_id": "STD018",
+    "document_id": "TX-STD018-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD019-001",
+    "category": "direct_retrieval",
+    "student_id": "STD019",
+    "document_id": "TX-STD019-001",
+    "question": "Retrieve document TX-STD019-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD019-002",
+    "category": "course_specific",
+    "student_id": "STD019",
+    "document_id": "TX-STD019-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "A-"
+  },
+  {
+    "id": "Q-STD019-003",
+    "category": "multi_course",
+    "student_id": "STD019",
+    "document_id": "TX-STD019-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "A-",
+      "CSC3103": "A"
+    }
+  },
+  {
+    "id": "Q-STD019-004",
+    "category": "missing_information",
+    "student_id": "STD019",
+    "document_id": "TX-STD019-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD019-005",
+    "category": "unsupported_information",
+    "student_id": "STD019",
+    "document_id": "TX-STD019-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  },
+  {
+    "id": "Q-STD020-001",
+    "category": "direct_retrieval",
+    "student_id": "STD020",
+    "document_id": "TX-STD020-001",
+    "question": "Retrieve document TX-STD020-001.",
+    "expected": "document_retrieved"
+  },
+  {
+    "id": "Q-STD020-002",
+    "category": "course_specific",
+    "student_id": "STD020",
+    "document_id": "TX-STD020-001",
+    "question": "What grade did I get for CSC3093?",
+    "expected": "B+"
+  },
+  {
+    "id": "Q-STD020-003",
+    "category": "multi_course",
+    "student_id": "STD020",
+    "document_id": "TX-STD020-001",
+    "question": "What grades did I receive for CSC3093 and CSC3103?",
+    "expected": {
+      "CSC3093": "B+",
+      "CSC3103": "A-"
+    }
+  },
+  {
+    "id": "Q-STD020-004",
+    "category": "missing_information",
+    "student_id": "STD020",
+    "document_id": "TX-STD020-001",
+    "question": "What grade did I get for CSC9999?",
+    "expected": "not_present"
+  },
+  {
+    "id": "Q-STD020-005",
+    "category": "unsupported_information",
+    "student_id": "STD020",
+    "document_id": "TX-STD020-001",
+    "question": "What was my attendance percentage?",
+    "expected": "not_determinable"
+  }
+]

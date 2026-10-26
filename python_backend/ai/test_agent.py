@@ -2,7 +2,7 @@
 
 Run from project root:
 
-    python python_backend/ai/test_agent.py
+    python -m python_backend.ai.test_agent
 
 The tests validate:
     1. Authorization-before-retrieval security.
@@ -31,9 +31,9 @@ from python_backend.ai.agent import answer_question, get_graph_mermaid
 from python_backend.ai import agent as agent_module
 
 
-DOCUMENT_ID = "TX-98765"
+DOCUMENT_ID = "TX-STD001-001"
 STUDENT_ID = "STD001"
-EXPECTED_VERSION = 4
+EXPECTED_VERSION = 2
 
 
 def show(title: str, result: Dict[str, Any]) -> None:
@@ -307,10 +307,10 @@ def run_tests() -> None:
     # TEST 7
     # End-to-end Phase 3 authoritative document retrieval.
     #
-    # Current seeded test document:
-    #     Document : TX-98765
+    # Existing document on the currently configured blockchain deployment:
+    #     Document : TX-STD001-001
     #     Student  : STD001
-    #     Approved : V4
+    #     Latest approved version : V2 (V3 is pending)
     #
     # The expected flow is:
     #
@@ -704,7 +704,7 @@ def run_tests() -> None:
     print("PASS - Course-specific metadata discovery")
     print("PASS - Multi-repository metadata routing")
     print("PASS - General query routing")
-    print("PASS - Blockchain authoritative V4 resolution")
+    print("PASS - Blockchain authoritative latest-approved-version resolution")
     print("PASS - Encrypted IPFS retrieval")
     print("PASS - ACL authorization/decryption")
     print("PASS - Plaintext integrity verification")

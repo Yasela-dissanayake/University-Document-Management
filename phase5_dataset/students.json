@@ -1,0 +1,142 @@
+[
+  {
+    "student_id": "STD001",
+    "name": "Test Student 001",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD002",
+    "name": "Test Student 002",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD003",
+    "name": "Test Student 003",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD004",
+    "name": "Test Student 004",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD005",
+    "name": "Test Student 005",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD006",
+    "name": "Test Student 006",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD007",
+    "name": "Test Student 007",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD008",
+    "name": "Test Student 008",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD009",
+    "name": "Test Student 009",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD010",
+    "name": "Test Student 010",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD011",
+    "name": "Test Student 011",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD012",
+    "name": "Test Student 012",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD013",
+    "name": "Test Student 013",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD014",
+    "name": "Test Student 014",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD015",
+    "name": "Test Student 015",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD016",
+    "name": "Test Student 016",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD017",
+    "name": "Test Student 017",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD018",
+    "name": "Test Student 018",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD019",
+    "name": "Test Student 019",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  },
+  {
+    "student_id": "STD020",
+    "name": "Test Student 020",
+    "program": "B.Sc. Honours in Computer Science",
+    "year": 4,
+    "active": true
+  }
+]

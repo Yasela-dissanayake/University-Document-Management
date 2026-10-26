@@ -620,6 +620,21 @@ def resolve_document_from_blockchain(
         }
 
     except Exception as exc:
+        error_text = str(exc).lower()
+        if (
+            "universityregistry: document not found" in error_text
+            or "document not found" in error_text
+        ):
+            trace["explanation"] = (
+                f"Document {normalized_document_id!r} does not exist "
+                "on the configured blockchain deployment."
+            )
+            return {
+                "ok": False,
+                "reason": "document_not_found",
+                "trace": trace,
+            }
+
         trace["explanation"] = (
             "Failed to resolve document "
             f"from blockchain: {exc}"
@@ -768,6 +783,21 @@ def get_authorized_document(
         )
 
     except Exception as exc:
+        error_text = str(exc).lower()
+        if (
+            "universityregistry: document not found" in error_text
+            or "document not found" in error_text
+        ):
+            trace["explanation"] = (
+                f"Document {normalized_document_id!r} does not exist "
+                "on the configured blockchain deployment."
+            )
+            return {
+                "ok": False,
+                "reason": "document_not_found",
+                "trace": trace,
+            }
+
         trace["explanation"] = (
             "Failed to retrieve blockchain "
             f"document details: {exc}"
@@ -779,7 +809,7 @@ def get_authorized_document(
             "trace": trace,
         }
 
-    if not document_details:
+    if not document_details or document_details.get("exists") is False:
         trace["explanation"] = (
             "Document does not exist on blockchain."
         )
@@ -1104,12 +1134,27 @@ def get_authorized_document(
 
     trace["ipfs_retrieved"] = True
 
-    trace["integrity_verified"] = bool(
-        ipfs_response.get(
-            "integrity_verified",
-            False,
-        )
+    trace["integrity_verified"] = (
+        ipfs_response.get("integrity_verified") is True
     )
+
+    if (
+        verify_integrity
+        and expected_content_hash
+        and trace["integrity_verified"] is not True
+    ):
+        trace["explanation"] = (
+            "The document was retrieved, but integrity verification "
+            "against the blockchain content hash was not confirmed. "
+            "The document will not be returned as a successful retrieval."
+        )
+        return {
+            "ok": False,
+            "authorized": False,
+            "reason": "integrity_verification_failed",
+            "blockchain_metadata": blockchain_metadata,
+            "trace": trace,
+        }
 
     # ----------------------------------------------------------------------
     # Step 8: Mark authorization successful

@@ -1,0 +1,320 @@
+[
+  {
+    "code": "BIO1002",
+    "name": "Basic Life Sciences (Foundation Course)",
+    "credits": 2,
+    "level": 1000
+  },
+  {
+    "code": "CSC1002",
+    "name": "Computer Applications",
+    "credits": 2,
+    "level": 1000
+  },
+  {
+    "code": "CSC1013",
+    "name": "Introduction to Computer Science and Programming",
+    "credits": 3,
+    "level": 1000
+  },
+  {
+    "code": "CSC1041",
+    "name": "Programming Laboratory I",
+    "credits": 1,
+    "level": 1000
+  },
+  {
+    "code": "ENG1002",
+    "name": "English for Academic Purposes",
+    "credits": 2,
+    "level": 1000
+  },
+  {
+    "code": "MAT1013",
+    "name": "Abstract Algebra I",
+    "credits": 3,
+    "level": 1000
+  },
+  {
+    "code": "MAT1032",
+    "name": "Differential Equations",
+    "credits": 2,
+    "level": 1000
+  },
+  {
+    "code": "STA1013",
+    "name": "Introduction to Statistics",
+    "credits": 3,
+    "level": 1000
+  },
+  {
+    "code": "STA1031",
+    "name": "Statistical Applications I",
+    "credits": 1,
+    "level": 1000
+  },
+  {
+    "code": "CSC1023",
+    "name": "Object-oriented Programming",
+    "credits": 3,
+    "level": 1000
+  },
+  {
+    "code": "CSC1051",
+    "name": "Programming Laboratory II",
+    "credits": 1,
+    "level": 1000
+  },
+  {
+    "code": "MAT1023",
+    "name": "Real Analysis I",
+    "credits": 3,
+    "level": 1000
+  },
+  {
+    "code": "MAT1053",
+    "name": "Classical Mechanics I",
+    "credits": 3,
+    "level": 1000
+  },
+  {
+    "code": "STA1023",
+    "name": "Introduction to Probability Theory",
+    "credits": 3,
+    "level": 1000
+  },
+  {
+    "code": "STA1041",
+    "name": "Statistics Applications II",
+    "credits": 1,
+    "level": 1000
+  },
+  {
+    "code": "CSC2012",
+    "name": "Data Structures",
+    "credits": 2,
+    "level": 2000
+  },
+  {
+    "code": "CSC2021",
+    "name": "Programming Using Data Structures",
+    "credits": 1,
+    "level": 2000
+  },
+  {
+    "code": "CSC2052",
+    "name": "Computer Architecture",
+    "credits": 2,
+    "level": 2000
+  },
+  {
+    "code": "CSC2102",
+    "name": "Web Programming I",
+    "credits": 2,
+    "level": 2000
+  },
+  {
+    "code": "MAT2023",
+    "name": "Real Analysis II",
+    "credits": 3,
+    "level": 2000
+  },
+  {
+    "code": "MAT2092",
+    "name": "Graph Theory",
+    "credits": 2,
+    "level": 2000
+  },
+  {
+    "code": "STA2013",
+    "name": "Probability Theory",
+    "credits": 3,
+    "level": 2000
+  },
+  {
+    "code": "STA2042",
+    "name": "Sampling Techniques",
+    "credits": 2,
+    "level": 2000
+  },
+  {
+    "code": "CSC2032",
+    "name": "Database Management Systems",
+    "credits": 2,
+    "level": 2000
+  },
+  {
+    "code": "CSC2041",
+    "name": "Programming using Database Management Systems",
+    "credits": 1,
+    "level": 2000
+  },
+  {
+    "code": "CSC2112",
+    "name": "Introduction to Computer Networks",
+    "credits": 2,
+    "level": 2000
+  },
+  {
+    "code": "MAT2072",
+    "name": "Numerical Analysis I",
+    "credits": 2,
+    "level": 2000
+  },
+  {
+    "code": "STA2033",
+    "name": "Theory of Statistics",
+    "credits": 3,
+    "level": 2000
+  },
+  {
+    "code": "STA2102",
+    "name": "Statistical Quality Control",
+    "credits": 2,
+    "level": 2000
+  },
+  {
+    "code": "CSC3093",
+    "name": "Object Oriented Analysis and Design",
+    "credits": 3,
+    "level": 3000
+  },
+  {
+    "code": "CSC3103",
+    "name": "Server Side Web Programming",
+    "credits": 3,
+    "level": 3000
+  },
+  {
+    "code": "CSC3112",
+    "name": "Software Engineering",
+    "credits": 2,
+    "level": 3000
+  },
+  {
+    "code": "CSC3132",
+    "name": "Digital Image Processing",
+    "credits": 2,
+    "level": 3000
+  },
+  {
+    "code": "CSC3141",
+    "name": "Image Processing Laboratory",
+    "credits": 1,
+    "level": 3000
+  },
+  {
+    "code": "CSC3152",
+    "name": "Design and Analysis of Algorithms",
+    "credits": 2,
+    "level": 3000
+  },
+  {
+    "code": "CSC3213",
+    "name": "Project in Computer Science I",
+    "credits": 3,
+    "level": 3000
+  },
+  {
+    "code": "CSC3033",
+    "name": "Operating Systems Concepts",
+    "credits": 3,
+    "level": 3000
+  },
+  {
+    "code": "CSC3073",
+    "name": "Computer Graphics",
+    "credits": 3,
+    "level": 3000
+  },
+  {
+    "code": "CSC3081",
+    "name": "Computer Graphics Programming",
+    "credits": 1,
+    "level": 3000
+  },
+  {
+    "code": "CSC3173",
+    "name": "Artificial Intelligence",
+    "credits": 3,
+    "level": 3000
+  },
+  {
+    "code": "CSC3182",
+    "name": "Advanced Computer Networks",
+    "credits": 2,
+    "level": 3000
+  },
+  {
+    "code": "CSC3252",
+    "name": "Scientific Writing and Presentation",
+    "credits": 2,
+    "level": 3000
+  },
+  {
+    "code": "MAT3092",
+    "name": "Combinatorics",
+    "credits": 2,
+    "level": 3000
+  },
+  {
+    "code": "CSC4063",
+    "name": "Distributed Computing",
+    "credits": 3,
+    "level": 4000
+  },
+  {
+    "code": "CSC4082",
+    "name": "Computer Vision",
+    "credits": 2,
+    "level": 4000
+  },
+  {
+    "code": "CSC4093",
+    "name": "Neural Networks and Deep Learning",
+    "credits": 3,
+    "level": 4000
+  },
+  {
+    "code": "CSC4142",
+    "name": "Software Project Management",
+    "credits": 2,
+    "level": 4000
+  },
+  {
+    "code": "CSC4996",
+    "name": "Project in Computer Science II – Research Project",
+    "credits": 6,
+    "level": 4000
+  },
+  {
+    "code": "SCI4003",
+    "name": "Industrial Training",
+    "credits": 3,
+    "level": 4000
+  },
+  {
+    "code": "CSC4043",
+    "name": "Parallel Processing",
+    "credits": 3,
+    "level": 4000
+  },
+  {
+    "code": "CSC4122",
+    "name": "Internet of Things",
+    "credits": 2,
+    "level": 4000
+  },
+  {
+    "code": "CSC4132",
+    "name": "Information and Network Security",
+    "credits": 2,
+    "level": 4000
+  },
+  {
+    "code": "CSC4162",
+    "name": "Special Topics in Computer Science",
+    "credits": 2,
+    "level": 4000
+  }
+]

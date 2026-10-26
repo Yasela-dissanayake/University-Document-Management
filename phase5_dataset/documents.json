@@ -1,0 +1,4042 @@
+[
+  {
+    "document_id": "TX-STD001-001",
+    "student_id": "STD001",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "A"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD001-001",
+    "student_id": "STD001",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD001-001",
+      "student_id": "STD001",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD001-001",
+    "student_id": "STD001",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 60,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 64,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 68,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 72,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 76,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 80,
+          "grade": "A+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD001-001",
+    "student_id": "STD001",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD001-001",
+      "student_id": "STD001",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "PENDING",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD002-001",
+    "student_id": "STD002",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "A-"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD002-001",
+    "student_id": "STD002",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD002-001",
+      "student_id": "STD002",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD002-001",
+    "student_id": "STD002",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD002-001",
+      "student_id": "STD002",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 67,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 71,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 75,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 79,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 83,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 87,
+          "grade": "A"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD002-001",
+    "student_id": "STD002",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD002-001",
+      "student_id": "STD002",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD003-001",
+    "student_id": "STD003",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD003-001",
+      "student_id": "STD003",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "B"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD003-001",
+    "student_id": "STD003",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD003-001",
+      "student_id": "STD003",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD003-001",
+    "student_id": "STD003",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD003-001",
+      "student_id": "STD003",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 74,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 78,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 82,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 86,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 90,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 94,
+          "grade": "B+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD003-001",
+    "student_id": "STD003",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD003-001",
+      "student_id": "STD003",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD004-001",
+    "student_id": "STD004",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD004-001",
+      "student_id": "STD004",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "B+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD004-001",
+    "student_id": "STD004",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD004-001",
+      "student_id": "STD004",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD004-001",
+    "student_id": "STD004",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD004-001",
+      "student_id": "STD004",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 81,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 85,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 89,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 93,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 97,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 61,
+          "grade": "A-"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD004-001",
+    "student_id": "STD004",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD004-001",
+      "student_id": "STD004",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "PENDING",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD005-001",
+    "student_id": "STD005",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD005-001",
+      "student_id": "STD005",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "A"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD005-001",
+    "student_id": "STD005",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD005-001",
+      "student_id": "STD005",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD005-001",
+    "student_id": "STD005",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD005-001",
+      "student_id": "STD005",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 88,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 92,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 96,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 60,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 64,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 68,
+          "grade": "A+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD005-001",
+    "student_id": "STD005",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD005-001",
+      "student_id": "STD005",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD006-001",
+    "student_id": "STD006",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD006-001",
+      "student_id": "STD006",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "B+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD006-001",
+    "student_id": "STD006",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD006-001",
+      "student_id": "STD006",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD006-001",
+    "student_id": "STD006",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD006-001",
+      "student_id": "STD006",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 95,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 99,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 63,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 67,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 71,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 75,
+          "grade": "B"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD006-001",
+    "student_id": "STD006",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD006-001",
+      "student_id": "STD006",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD007-001",
+    "student_id": "STD007",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD007-001",
+      "student_id": "STD007",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "A"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD007-001",
+    "student_id": "STD007",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD007-001",
+      "student_id": "STD007",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD007-001",
+    "student_id": "STD007",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD007-001",
+      "student_id": "STD007",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 62,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 66,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 70,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 74,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 78,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 82,
+          "grade": "A"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD007-001",
+    "student_id": "STD007",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD007-001",
+      "student_id": "STD007",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "PENDING",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD008-001",
+    "student_id": "STD008",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD008-001",
+      "student_id": "STD008",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "B"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD008-001",
+    "student_id": "STD008",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD008-001",
+      "student_id": "STD008",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD008-001",
+    "student_id": "STD008",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD008-001",
+      "student_id": "STD008",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 69,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 73,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 77,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 81,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 85,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 89,
+          "grade": "C+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD008-001",
+    "student_id": "STD008",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD008-001",
+      "student_id": "STD008",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD009-001",
+    "student_id": "STD009",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD009-001",
+      "student_id": "STD009",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "A"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD009-001",
+    "student_id": "STD009",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD009-001",
+      "student_id": "STD009",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD009-001",
+    "student_id": "STD009",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD009-001",
+      "student_id": "STD009",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 76,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 80,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 84,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 88,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 92,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 96,
+          "grade": "A-"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD009-001",
+    "student_id": "STD009",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD009-001",
+      "student_id": "STD009",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD010-001",
+    "student_id": "STD010",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD010-001",
+      "student_id": "STD010",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "C"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "C"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "A-"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD010-001",
+    "student_id": "STD010",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD010-001",
+      "student_id": "STD010",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD010-001",
+    "student_id": "STD010",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD010-001",
+      "student_id": "STD010",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 83,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 87,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 91,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 95,
+          "grade": "C"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 99,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 63,
+          "grade": "B+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD010-001",
+    "student_id": "STD010",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD010-001",
+      "student_id": "STD010",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "PENDING",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD011-001",
+    "student_id": "STD011",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD011-001",
+      "student_id": "STD011",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "A"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD011-001",
+    "student_id": "STD011",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD011-001",
+      "student_id": "STD011",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD011-001",
+    "student_id": "STD011",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD011-001",
+      "student_id": "STD011",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 90,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 94,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 98,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 62,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 66,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 70,
+          "grade": "A+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD011-001",
+    "student_id": "STD011",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD011-001",
+      "student_id": "STD011",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD012-001",
+    "student_id": "STD012",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD012-001",
+      "student_id": "STD012",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "A-"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD012-001",
+    "student_id": "STD012",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD012-001",
+      "student_id": "STD012",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD012-001",
+    "student_id": "STD012",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD012-001",
+      "student_id": "STD012",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 97,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 61,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 65,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 69,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 73,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 77,
+          "grade": "A"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD012-001",
+    "student_id": "STD012",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD012-001",
+      "student_id": "STD012",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD013-001",
+    "student_id": "STD013",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD013-001",
+      "student_id": "STD013",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "B"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD013-001",
+    "student_id": "STD013",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD013-001",
+      "student_id": "STD013",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD013-001",
+    "student_id": "STD013",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD013-001",
+      "student_id": "STD013",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 64,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 68,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 72,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 76,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 80,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 84,
+          "grade": "B+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD013-001",
+    "student_id": "STD013",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD013-001",
+      "student_id": "STD013",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "PENDING",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD014-001",
+    "student_id": "STD014",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD014-001",
+      "student_id": "STD014",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "B+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD014-001",
+    "student_id": "STD014",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD014-001",
+      "student_id": "STD014",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD014-001",
+    "student_id": "STD014",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD014-001",
+      "student_id": "STD014",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 71,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 75,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 79,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 83,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 87,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 91,
+          "grade": "A-"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD014-001",
+    "student_id": "STD014",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD014-001",
+      "student_id": "STD014",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD015-001",
+    "student_id": "STD015",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD015-001",
+      "student_id": "STD015",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "A"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD015-001",
+    "student_id": "STD015",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD015-001",
+      "student_id": "STD015",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD015-001",
+    "student_id": "STD015",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD015-001",
+      "student_id": "STD015",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 78,
+          "grade": "A+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 82,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 86,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 90,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 94,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 98,
+          "grade": "A+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD015-001",
+    "student_id": "STD015",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD015-001",
+      "student_id": "STD015",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD016-001",
+    "student_id": "STD016",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD016-001",
+      "student_id": "STD016",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "B+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD016-001",
+    "student_id": "STD016",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD016-001",
+      "student_id": "STD016",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD016-001",
+    "student_id": "STD016",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD016-001",
+      "student_id": "STD016",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 85,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 89,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 93,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 97,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 61,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 65,
+          "grade": "B"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD016-001",
+    "student_id": "STD016",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD016-001",
+      "student_id": "STD016",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "PENDING",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD017-001",
+    "student_id": "STD017",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD017-001",
+      "student_id": "STD017",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "A"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD017-001",
+    "student_id": "STD017",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD017-001",
+      "student_id": "STD017",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD017-001",
+    "student_id": "STD017",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD017-001",
+      "student_id": "STD017",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 92,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 96,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 60,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 64,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 68,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 72,
+          "grade": "A"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD017-001",
+    "student_id": "STD017",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD017-001",
+      "student_id": "STD017",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD018-001",
+    "student_id": "STD018",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD018-001",
+      "student_id": "STD018",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "B"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD018-001",
+    "student_id": "STD018",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD018-001",
+      "student_id": "STD018",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD018-001",
+    "student_id": "STD018",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD018-001",
+      "student_id": "STD018",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 99,
+          "grade": "C+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 63,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 67,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 71,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 75,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 79,
+          "grade": "C+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD018-001",
+    "student_id": "STD018",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD018-001",
+      "student_id": "STD018",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD019-001",
+    "student_id": "STD019",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD019-001",
+      "student_id": "STD019",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "A"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD019-001",
+    "student_id": "STD019",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD019-001",
+      "student_id": "STD019",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD019-001",
+    "student_id": "STD019",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD019-001",
+      "student_id": "STD019",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 66,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 70,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 74,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 78,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 82,
+          "grade": "A"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 86,
+          "grade": "A-"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD019-001",
+    "student_id": "STD019",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD019-001",
+      "student_id": "STD019",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "PENDING",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "TX-STD020-001",
+    "student_id": "STD020",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "content": {
+      "document_id": "TX-STD020-001",
+      "student_id": "STD020",
+      "document_type": "Transcript",
+      "semester": "Representative Academic Record",
+      "program": "B.Sc. Honours in Computer Science",
+      "year": 4,
+      "courses": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "credits": 2,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "credits": 2,
+          "grade": "C"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "credits": 2,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3213",
+          "name": "Project in Computer Science I",
+          "credits": 3,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3033",
+          "name": "Operating Systems Concepts",
+          "credits": 3,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3073",
+          "name": "Computer Graphics",
+          "credits": 3,
+          "grade": "C"
+        },
+        {
+          "code": "CSC3081",
+          "name": "Computer Graphics Programming",
+          "credits": 1,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3173",
+          "name": "Artificial Intelligence",
+          "credits": 3,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3182",
+          "name": "Advanced Computer Networks",
+          "credits": 2,
+          "grade": "A-"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 3,
+        "approval_status": "PENDING"
+      }
+    ]
+  },
+  {
+    "document_id": "REG-STD020-001",
+    "student_id": "STD020",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "content": {
+      "document_id": "REG-STD020-001",
+      "student_id": "STD020",
+      "document_type": "Registration Certificate",
+      "program": "B.Sc. Honours in Computer Science",
+      "registration_status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      },
+      {
+        "version": 2,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "EX-STD020-001",
+    "student_id": "STD020",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "content": {
+      "document_id": "EX-STD020-001",
+      "student_id": "STD020",
+      "document_type": "Examination Result Sheet",
+      "examination_year": "2026",
+      "results": [
+        {
+          "code": "CSC3093",
+          "name": "Object Oriented Analysis and Design",
+          "marks": 73,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3103",
+          "name": "Server Side Web Programming",
+          "marks": 77,
+          "grade": "A-"
+        },
+        {
+          "code": "CSC3112",
+          "name": "Software Engineering",
+          "marks": 81,
+          "grade": "B"
+        },
+        {
+          "code": "CSC3132",
+          "name": "Digital Image Processing",
+          "marks": 85,
+          "grade": "C"
+        },
+        {
+          "code": "CSC3141",
+          "name": "Image Processing Laboratory",
+          "marks": 89,
+          "grade": "B+"
+        },
+        {
+          "code": "CSC3152",
+          "name": "Design and Analysis of Algorithms",
+          "marks": 93,
+          "grade": "B+"
+        }
+      ]
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  },
+  {
+    "document_id": "SS-STD020-001",
+    "student_id": "STD020",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "content": {
+      "document_id": "SS-STD020-001",
+      "student_id": "STD020",
+      "document_type": "Student Service Record",
+      "service_type": "Scholarship",
+      "status": "ACTIVE",
+      "academic_year": "2026"
+    },
+    "version_plan": [
+      {
+        "version": 1,
+        "approval_status": "APPROVED"
+      }
+    ]
+  }
+]

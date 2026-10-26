@@ -1,0 +1,54 @@
+[
+  {
+    "id": "ATTACK-001",
+    "type": "unauthorized_student",
+    "user": {
+      "username": "attack_student",
+      "role": "STUDENT",
+      "student_id": "STD002"
+    },
+    "target_student_id": "STD001",
+    "document_id": "TX-STD001-001",
+    "expected": "rbac_denied_and_llm_blocked"
+  },
+  {
+    "id": "ATTACK-002",
+    "type": "rag_wrong_student",
+    "document_id": "TX-STD001-001",
+    "rag_mutation": {
+      "student_id": "STD999"
+    },
+    "expected": "rag_blockchain_identity_mismatch"
+  },
+  {
+    "id": "ATTACK-003",
+    "type": "rag_wrong_document_type",
+    "document_id": "TX-STD001-001",
+    "rag_mutation": {
+      "document_type": "Registration Certificate"
+    },
+    "expected": "rag_blockchain_identity_mismatch"
+  },
+  {
+    "id": "ATTACK-004",
+    "type": "ipfs_content_tampering",
+    "document_id": "TX-STD001-001",
+    "mutation": "modify_document_after_blockchain_hash_creation",
+    "expected": "integrity_verification_failed_and_llm_blocked"
+  },
+  {
+    "id": "ATTACK-005",
+    "type": "pending_latest_version",
+    "document_id": "TX-STD001-001",
+    "expected": "latest_approved_version_resolved"
+  },
+  {
+    "id": "ATTACK-006",
+    "type": "rag_wrong_version",
+    "document_id": "TX-STD001-001",
+    "rag_mutation": {
+      "latest_version": 1
+    },
+    "expected": "blockchain_version_is_authoritative"
+  }
+]

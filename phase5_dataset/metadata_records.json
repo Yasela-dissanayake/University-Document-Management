@@ -1,0 +1,1242 @@
+[
+  {
+    "document_id": "TX-STD001-001",
+    "student_id": "STD001",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std001-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD001-001",
+    "student_id": "STD001",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std001-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD001-001",
+    "student_id": "STD001",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std001-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD001-001",
+    "student_id": "STD001",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std001-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD002-001",
+    "student_id": "STD002",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std002-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD002-001",
+    "student_id": "STD002",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std002-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD002-001",
+    "student_id": "STD002",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std002-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD002-001",
+    "student_id": "STD002",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std002-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD003-001",
+    "student_id": "STD003",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std003-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD003-001",
+    "student_id": "STD003",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std003-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD003-001",
+    "student_id": "STD003",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std003-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD003-001",
+    "student_id": "STD003",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std003-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD004-001",
+    "student_id": "STD004",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std004-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD004-001",
+    "student_id": "STD004",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std004-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD004-001",
+    "student_id": "STD004",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std004-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD004-001",
+    "student_id": "STD004",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std004-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD005-001",
+    "student_id": "STD005",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std005-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD005-001",
+    "student_id": "STD005",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std005-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD005-001",
+    "student_id": "STD005",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std005-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD005-001",
+    "student_id": "STD005",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std005-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD006-001",
+    "student_id": "STD006",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std006-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD006-001",
+    "student_id": "STD006",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std006-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD006-001",
+    "student_id": "STD006",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std006-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD006-001",
+    "student_id": "STD006",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std006-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD007-001",
+    "student_id": "STD007",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std007-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD007-001",
+    "student_id": "STD007",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std007-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD007-001",
+    "student_id": "STD007",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std007-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD007-001",
+    "student_id": "STD007",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std007-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD008-001",
+    "student_id": "STD008",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std008-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD008-001",
+    "student_id": "STD008",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std008-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD008-001",
+    "student_id": "STD008",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std008-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD008-001",
+    "student_id": "STD008",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std008-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD009-001",
+    "student_id": "STD009",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std009-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD009-001",
+    "student_id": "STD009",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std009-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD009-001",
+    "student_id": "STD009",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std009-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD009-001",
+    "student_id": "STD009",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std009-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD010-001",
+    "student_id": "STD010",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std010-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD010-001",
+    "student_id": "STD010",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std010-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD010-001",
+    "student_id": "STD010",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std010-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD010-001",
+    "student_id": "STD010",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std010-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD011-001",
+    "student_id": "STD011",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std011-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD011-001",
+    "student_id": "STD011",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std011-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD011-001",
+    "student_id": "STD011",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std011-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD011-001",
+    "student_id": "STD011",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std011-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD012-001",
+    "student_id": "STD012",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std012-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD012-001",
+    "student_id": "STD012",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std012-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD012-001",
+    "student_id": "STD012",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std012-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD012-001",
+    "student_id": "STD012",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std012-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD013-001",
+    "student_id": "STD013",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std013-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD013-001",
+    "student_id": "STD013",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std013-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD013-001",
+    "student_id": "STD013",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std013-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD013-001",
+    "student_id": "STD013",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std013-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD014-001",
+    "student_id": "STD014",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std014-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD014-001",
+    "student_id": "STD014",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std014-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD014-001",
+    "student_id": "STD014",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std014-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD014-001",
+    "student_id": "STD014",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std014-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD015-001",
+    "student_id": "STD015",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std015-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD015-001",
+    "student_id": "STD015",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std015-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD015-001",
+    "student_id": "STD015",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std015-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD015-001",
+    "student_id": "STD015",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std015-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD016-001",
+    "student_id": "STD016",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std016-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD016-001",
+    "student_id": "STD016",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std016-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD016-001",
+    "student_id": "STD016",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std016-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD016-001",
+    "student_id": "STD016",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std016-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD017-001",
+    "student_id": "STD017",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std017-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD017-001",
+    "student_id": "STD017",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std017-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD017-001",
+    "student_id": "STD017",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std017-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD017-001",
+    "student_id": "STD017",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std017-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD018-001",
+    "student_id": "STD018",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std018-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD018-001",
+    "student_id": "STD018",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std018-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD018-001",
+    "student_id": "STD018",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std018-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD018-001",
+    "student_id": "STD018",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std018-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD019-001",
+    "student_id": "STD019",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std019-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD019-001",
+    "student_id": "STD019",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std019-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD019-001",
+    "student_id": "STD019",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std019-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD019-001",
+    "student_id": "STD019",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std019-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  },
+  {
+    "document_id": "TX-STD020-001",
+    "student_id": "STD020",
+    "document_type": "Transcript",
+    "repository": "academic",
+    "latest_version": 3,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-tx-std020-001-v2",
+    "keywords": [
+      "transcript",
+      "academic",
+      "semester",
+      "course",
+      "grade",
+      "credits"
+    ]
+  },
+  {
+    "document_id": "REG-STD020-001",
+    "student_id": "STD020",
+    "document_type": "Registration Certificate",
+    "repository": "registrar",
+    "latest_version": 2,
+    "latest_approved_version": 2,
+    "latest_approved_cid": "bafy-phase5-reg-std020-001-v2",
+    "keywords": [
+      "registration",
+      "enrollment",
+      "program",
+      "certificate"
+    ]
+  },
+  {
+    "document_id": "EX-STD020-001",
+    "student_id": "STD020",
+    "document_type": "Examination Result Sheet",
+    "repository": "examination",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ex-std020-001-v1",
+    "keywords": [
+      "examination",
+      "exam",
+      "result",
+      "marks"
+    ]
+  },
+  {
+    "document_id": "SS-STD020-001",
+    "student_id": "STD020",
+    "document_type": "Student Service Record",
+    "repository": "student_services",
+    "latest_version": 1,
+    "latest_approved_version": 1,
+    "latest_approved_cid": "bafy-phase5-ss-std020-001-v1",
+    "keywords": [
+      "student service",
+      "scholarship",
+      "request",
+      "welfare"
+    ]
+  }
+]

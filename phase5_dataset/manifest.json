@@ -1,0 +1,17 @@
+{
+  "dataset_name": "Hybrid-BC-AI UDocMgmt Phase 5 Evaluation Dataset",
+  "dataset_version": "1.0",
+  "synthetic": true,
+  "students": 20,
+  "logical_documents": 80,
+  "blockchain_version_records": 140,
+  "repositories": [
+    "academic",
+    "registrar",
+    "examination",
+    "student_services"
+  ],
+  "questions": 100,
+  "security_attacks": 6,
+  "integration_note": "Existing TX-98765 is intentionally not modified. Phase 5 uses synthetic IDs such as TX-STD001-001."
+}

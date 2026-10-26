@@ -1,0 +1,198 @@
+{
+  "evaluation": {
+    "runner": "phase5_evaluation_runner",
+    "runner_version": "1.0",
+    "started_at": "2026-09-20T15:51:36",
+    "elapsed_seconds": 349.685,
+    "mock_llm": true
+  },
+  "dataset_manifest": {
+    "dataset_name": "Hybrid-BC-AI UDocMgmt Phase 5 Evaluation Dataset",
+    "dataset_version": "1.0",
+    "synthetic": true,
+    "students": 20,
+    "logical_documents": 80,
+    "blockchain_version_records": 140,
+    "repositories": [
+      "academic",
+      "registrar",
+      "examination",
+      "student_services"
+    ],
+    "questions": 100,
+    "security_attacks": 6,
+    "integration_note": "Existing TX-98765 is intentionally not modified. Phase 5 uses synthetic IDs such as TX-STD001-001."
+  },
+  "dataset_counts": {
+    "students": 20,
+    "courses": 53,
+    "logical_documents": 80,
+    "metadata_records": 80,
+    "questions": 100,
+    "security_attacks": 6,
+    "planned_blockchain_versions": 140
+  },
+  "graph_security_invariants": {
+    "passed": true,
+    "missing_nodes": [],
+    "required_nodes": [
+      "analyze_query",
+      "authorize_query",
+      "denied_response",
+      "document_qa",
+      "phase3_response",
+      "phase4_response",
+      "retrieve_authorized_document",
+      "retrieve_metadata",
+      "retrieve_onchain_metadata",
+      "route_repository"
+    ]
+  },
+  "question_summary": null,
+  "security_summary": {
+    "total_attacks": 6,
+    "supported_attacks": 6,
+    "passed_attacks": 6,
+    "attack_block_rate_supported": 1.0,
+    "unsupported_attack_adapters": 0,
+    "overall_attack_suite_complete": true
+  },
+  "question_results": [],
+  "security_results": [
+    {
+      "id": "ATTACK-001",
+      "type": "unauthorized_student",
+      "expected": "rbac_denied_and_llm_blocked",
+      "passed": true,
+      "authorized": false,
+      "llm_invoked": false,
+      "document_retrieved": false,
+      "error": "forbidden",
+      "latency_ms": 239.76,
+      "trace_nodes": [
+        "analyze_query",
+        "authorize_query",
+        "denied_response"
+      ],
+      "details": "RBAC denial and LLM blocking verified."
+    },
+    {
+      "id": "ATTACK-002",
+      "type": "rag_wrong_student",
+      "expected": "rag_blockchain_identity_mismatch",
+      "passed": true,
+      "authorized": true,
+      "llm_invoked": null,
+      "document_retrieved": false,
+      "error": "rag_blockchain_identity_mismatch",
+      "ipfs_retrieval_started": false,
+      "decryption_started": false,
+      "latency_ms": 3483.44,
+      "trace_nodes": [
+        "analyze_query",
+        "authorize_query",
+        "route_repository",
+        "retrieve_metadata",
+        "retrieve_authorized_document",
+        "phase3_response"
+      ],
+      "details": "RAG/blockchain student identity mismatch was blocked."
+    },
+    {
+      "id": "ATTACK-003",
+      "type": "rag_wrong_document_type",
+      "expected": "rag_blockchain_identity_mismatch",
+      "passed": true,
+      "authorized": true,
+      "llm_invoked": null,
+      "document_retrieved": false,
+      "error": "rag_blockchain_identity_mismatch",
+      "ipfs_retrieval_started": false,
+      "decryption_started": false,
+      "latency_ms": 3301.012,
+      "trace_nodes": [
+        "analyze_query",
+        "authorize_query",
+        "route_repository",
+        "retrieve_metadata",
+        "retrieve_authorized_document",
+        "phase3_response"
+      ],
+      "details": "RAG/blockchain document-type mismatch was blocked."
+    },
+    {
+      "id": "ATTACK-004",
+      "type": "ipfs_content_tampering",
+      "expected": "integrity_verification_failed_and_llm_blocked",
+      "passed": true,
+      "authorized": true,
+      "llm_invoked": null,
+      "document_retrieved": false,
+      "integrity_verified": false,
+      "error": null,
+      "latency_ms": 8037.699,
+      "trace_nodes": [
+        "analyze_query",
+        "authorize_query",
+        "route_repository",
+        "retrieve_metadata",
+        "retrieve_authorized_document",
+        "phase3_response"
+      ],
+      "details": "Tampered plaintext was rejected at the integrity boundary and did not reach the LLM."
+    },
+    {
+      "id": "ATTACK-005",
+      "type": "pending_latest_version",
+      "expected": "latest_approved_version_resolved",
+      "passed": true,
+      "expected_approved_version": 2,
+      "resolved_version": 2,
+      "authorized": true,
+      "integrity_verified": true,
+      "llm_invoked": true,
+      "error": null,
+      "llm_error": null,
+      "latency_ms": 175467.336,
+      "trace_nodes": [
+        "analyze_query",
+        "authorize_query",
+        "route_repository",
+        "retrieve_metadata",
+        "retrieve_authorized_document",
+        "phase3_response",
+        "document_qa",
+        "phase4_response"
+      ],
+      "details": "Blockchain resolved the latest approved version rather than the pending latest version."
+    },
+    {
+      "id": "ATTACK-006",
+      "type": "rag_wrong_version",
+      "expected": "blockchain_version_is_authoritative",
+      "passed": true,
+      "rag_mutated_version": 1,
+      "expected_approved_version": 2,
+      "resolved_version": 2,
+      "authorized": true,
+      "document_retrieved": true,
+      "integrity_verified": true,
+      "llm_invoked": true,
+      "error": null,
+      "llm_error": null,
+      "latency_ms": 159142.348,
+      "trace_nodes": [
+        "analyze_query",
+        "authorize_query",
+        "route_repository",
+        "retrieve_metadata",
+        "retrieve_authorized_document",
+        "phase3_response",
+        "document_qa",
+        "phase4_response"
+      ],
+      "details": "Blockchain version remained authoritative despite mutated RAG version metadata."
+    }
+  ],
+  "experimental_note": "The dataset contains the complete synthetic ground truth. Question evaluation uses the currently available application/blockchain/IPFS state and does not assume that every planned blockchain version has been instantiated."
+}

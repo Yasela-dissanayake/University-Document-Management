@@ -1096,9 +1096,8 @@ def retrieve_authorized_document(state: AgentState) -> Dict[str, Any]:
 
         # Preserve a successful integrity result even when the tool returns it
         # inside the decrypted document envelope rather than at the top level.
-        integrity_verified = bool(
-            resolved.get("integrity_verified")
-            or (isinstance(document, dict) and document.get("integrity_verified") is True)
+        integrity_verified = (
+            resolved.get("integrity_verified") is True
         )
 
         trace = _add_trace_node(

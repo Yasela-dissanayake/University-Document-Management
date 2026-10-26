@@ -1,0 +1,363 @@
+{
+  "evaluation_type": "metadata_only_repository_rag",
+  "benchmark_path": "/mnt/sda3/University/4th-year/Research/V8_latest/university_blockchain_system/python_backend/ai/rag_benchmark.json",
+  "metadata_source": "METADATA_REGISTRY_PATH if configured, otherwise DEMO_METADATA",
+  "summary": {
+    "query_count": 10,
+    "metadata_record_count": 4,
+    "mean_latency_ms": 0.183,
+    "metrics": {
+      "precision@1": 0.7,
+      "precision@3": 0.2666,
+      "precision@5": 0.16,
+      "recall@1": 0.65,
+      "recall@3": 0.7,
+      "recall@5": 0.7,
+      "ndcg@1": 0.7,
+      "ndcg@3": 0.7,
+      "ndcg@5": 0.7,
+      "mrr": 0.7
+    },
+    "correct_empty_result_rate": 0.0,
+    "queries_with_wrong_student_results": 3,
+    "total_wrong_student_results": 3,
+    "queries_with_unexpected_results": 3,
+    "metadata_only_contract_pass_rate": 1.0
+  },
+  "per_query_results": [
+    {
+      "id": "Q01",
+      "query": "Find transcript metadata for student STD001",
+      "repositories": [
+        "academic"
+      ],
+      "expected_document_ids": [
+        "TX-98765"
+      ],
+      "retrieved_document_ids": [
+        "TX-98765"
+      ],
+      "result_count": 1,
+      "latency_ms": 0.369,
+      "empty_result_expected": false,
+      "empty_result_correct": null,
+      "wrong_student_document_ids": [],
+      "unexpected_document_ids": [],
+      "metrics": {
+        "precision@1": 1.0,
+        "recall@1": 1.0,
+        "ndcg@1": 1.0,
+        "precision@3": 0.3333,
+        "recall@3": 1.0,
+        "ndcg@3": 1.0,
+        "precision@5": 0.2,
+        "recall@5": 1.0,
+        "ndcg@5": 1.0,
+        "mrr": 1.0
+      },
+      "metadata_only_contract_pass": true
+    },
+    {
+      "id": "Q02",
+      "query": "Find CO521 transcript records for student STD001",
+      "repositories": [
+        "academic"
+      ],
+      "expected_document_ids": [
+        "TX-98765"
+      ],
+      "retrieved_document_ids": [
+        "TX-98765"
+      ],
+      "result_count": 1,
+      "latency_ms": 0.185,
+      "empty_result_expected": false,
+      "empty_result_correct": null,
+      "wrong_student_document_ids": [],
+      "unexpected_document_ids": [],
+      "metrics": {
+        "precision@1": 1.0,
+        "recall@1": 1.0,
+        "ndcg@1": 1.0,
+        "precision@3": 0.3333,
+        "recall@3": 1.0,
+        "ndcg@3": 1.0,
+        "precision@5": 0.2,
+        "recall@5": 1.0,
+        "ndcg@5": 1.0,
+        "mrr": 1.0
+      },
+      "metadata_only_contract_pass": true
+    },
+    {
+      "id": "Q03",
+      "query": "Find examination results for S19357",
+      "repositories": [
+        "examination"
+      ],
+      "expected_document_ids": [
+        "EX-19357-05"
+      ],
+      "retrieved_document_ids": [
+        "EX-19357-05"
+      ],
+      "result_count": 1,
+      "latency_ms": 0.157,
+      "empty_result_expected": false,
+      "empty_result_correct": null,
+      "wrong_student_document_ids": [],
+      "unexpected_document_ids": [],
+      "metrics": {
+        "precision@1": 1.0,
+        "recall@1": 1.0,
+        "ndcg@1": 1.0,
+        "precision@3": 0.3333,
+        "recall@3": 1.0,
+        "ndcg@3": 1.0,
+        "precision@5": 0.2,
+        "recall@5": 1.0,
+        "ndcg@5": 1.0,
+        "mrr": 1.0
+      },
+      "metadata_only_contract_pass": true
+    },
+    {
+      "id": "Q04",
+      "query": "Find registration records for S19357",
+      "repositories": [
+        "registrar"
+      ],
+      "expected_document_ids": [
+        "REG-19357-01"
+      ],
+      "retrieved_document_ids": [
+        "REG-19357-01"
+      ],
+      "result_count": 1,
+      "latency_ms": 0.131,
+      "empty_result_expected": false,
+      "empty_result_correct": null,
+      "wrong_student_document_ids": [],
+      "unexpected_document_ids": [],
+      "metrics": {
+        "precision@1": 1.0,
+        "recall@1": 1.0,
+        "ndcg@1": 1.0,
+        "precision@3": 0.3333,
+        "recall@3": 1.0,
+        "ndcg@3": 1.0,
+        "precision@5": 0.2,
+        "recall@5": 1.0,
+        "ndcg@5": 1.0,
+        "mrr": 1.0
+      },
+      "metadata_only_contract_pass": true
+    },
+    {
+      "id": "Q05",
+      "query": "Find scholarship and welfare service records for S19357",
+      "repositories": [
+        "student_services"
+      ],
+      "expected_document_ids": [
+        "SS-19357-01"
+      ],
+      "retrieved_document_ids": [
+        "SS-19357-01"
+      ],
+      "result_count": 1,
+      "latency_ms": 0.131,
+      "empty_result_expected": false,
+      "empty_result_correct": null,
+      "wrong_student_document_ids": [],
+      "unexpected_document_ids": [],
+      "metrics": {
+        "precision@1": 1.0,
+        "recall@1": 1.0,
+        "ndcg@1": 1.0,
+        "precision@3": 0.3333,
+        "recall@3": 1.0,
+        "ndcg@3": 1.0,
+        "precision@5": 0.2,
+        "recall@5": 1.0,
+        "ndcg@5": 1.0,
+        "mrr": 1.0
+      },
+      "metadata_only_contract_pass": true
+    },
+    {
+      "id": "Q06",
+      "query": "Find registration and examination records for student S19357",
+      "repositories": [
+        "registrar",
+        "examination"
+      ],
+      "expected_document_ids": [
+        "EX-19357-05",
+        "REG-19357-01"
+      ],
+      "retrieved_document_ids": [
+        "EX-19357-05",
+        "REG-19357-01"
+      ],
+      "result_count": 2,
+      "latency_ms": 0.278,
+      "empty_result_expected": false,
+      "empty_result_correct": null,
+      "wrong_student_document_ids": [],
+      "unexpected_document_ids": [],
+      "metrics": {
+        "precision@1": 1.0,
+        "recall@1": 0.5,
+        "ndcg@1": 1.0,
+        "precision@3": 0.6667,
+        "recall@3": 1.0,
+        "ndcg@3": 1.0,
+        "precision@5": 0.4,
+        "recall@5": 1.0,
+        "ndcg@5": 1.0,
+        "mrr": 1.0
+      },
+      "metadata_only_contract_pass": true
+    },
+    {
+      "id": "Q07",
+      "query": "Find transcript metadata for student S19357",
+      "repositories": [
+        "academic"
+      ],
+      "expected_document_ids": [],
+      "retrieved_document_ids": [
+        "TX-98765"
+      ],
+      "result_count": 1,
+      "latency_ms": 0.141,
+      "empty_result_expected": true,
+      "empty_result_correct": false,
+      "wrong_student_document_ids": [
+        "TX-98765"
+      ],
+      "unexpected_document_ids": [
+        "TX-98765"
+      ],
+      "metrics": {
+        "precision@1": 0.0,
+        "recall@1": 0.0,
+        "ndcg@1": 0.0,
+        "precision@3": 0.0,
+        "recall@3": 0.0,
+        "ndcg@3": 0.0,
+        "precision@5": 0.0,
+        "recall@5": 0.0,
+        "ndcg@5": 0.0,
+        "mrr": 0.0
+      },
+      "metadata_only_contract_pass": true
+    },
+    {
+      "id": "Q08",
+      "query": "Find CO521 examination records for student S19357",
+      "repositories": [
+        "examination"
+      ],
+      "expected_document_ids": [
+        "EX-19357-05"
+      ],
+      "retrieved_document_ids": [
+        "EX-19357-05"
+      ],
+      "result_count": 1,
+      "latency_ms": 0.145,
+      "empty_result_expected": false,
+      "empty_result_correct": null,
+      "wrong_student_document_ids": [],
+      "unexpected_document_ids": [],
+      "metrics": {
+        "precision@1": 1.0,
+        "recall@1": 1.0,
+        "ndcg@1": 1.0,
+        "precision@3": 0.3333,
+        "recall@3": 1.0,
+        "ndcg@3": 1.0,
+        "precision@5": 0.2,
+        "recall@5": 1.0,
+        "ndcg@5": 1.0,
+        "mrr": 1.0
+      },
+      "metadata_only_contract_pass": true
+    },
+    {
+      "id": "Q09",
+      "query": "Find transcript metadata for student STD999",
+      "repositories": [
+        "academic"
+      ],
+      "expected_document_ids": [],
+      "retrieved_document_ids": [
+        "TX-98765"
+      ],
+      "result_count": 1,
+      "latency_ms": 0.168,
+      "empty_result_expected": true,
+      "empty_result_correct": false,
+      "wrong_student_document_ids": [
+        "TX-98765"
+      ],
+      "unexpected_document_ids": [
+        "TX-98765"
+      ],
+      "metrics": {
+        "precision@1": 0.0,
+        "recall@1": 0.0,
+        "ndcg@1": 0.0,
+        "precision@3": 0.0,
+        "recall@3": 0.0,
+        "ndcg@3": 0.0,
+        "precision@5": 0.0,
+        "recall@5": 0.0,
+        "ndcg@5": 0.0,
+        "mrr": 0.0
+      },
+      "metadata_only_contract_pass": true
+    },
+    {
+      "id": "Q10",
+      "query": "Find registration records for student STD001",
+      "repositories": [
+        "registrar"
+      ],
+      "expected_document_ids": [],
+      "retrieved_document_ids": [
+        "REG-19357-01"
+      ],
+      "result_count": 1,
+      "latency_ms": 0.127,
+      "empty_result_expected": true,
+      "empty_result_correct": false,
+      "wrong_student_document_ids": [
+        "REG-19357-01"
+      ],
+      "unexpected_document_ids": [
+        "REG-19357-01"
+      ],
+      "metrics": {
+        "precision@1": 0.0,
+        "recall@1": 0.0,
+        "ndcg@1": 0.0,
+        "precision@3": 0.0,
+        "recall@3": 0.0,
+        "ndcg@3": 0.0,
+        "precision@5": 0.0,
+        "recall@5": 0.0,
+        "ndcg@5": 0.0,
+        "mrr": 0.0
+      },
+      "metadata_only_contract_pass": true
+    }
+  ],
+  "limitations": [
+    "Initial labels are based on the current development DEMO_METADATA fixture, not independently verified production data.",
+    "Ten queries are only an initial smoke benchmark, not a statistically representative evaluation.",
+    "This evaluates metadata retrieval only; it does not evaluate blockchain resolution, authorization, IPFS, decryption, or LLM answers."
+  ]
+}
