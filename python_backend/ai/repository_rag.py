@@ -285,6 +285,11 @@ def _format_result(
         "latest_approved_cid": record.get(
             "latest_approved_cid"
         ),
+        # Legacy registration records may have a CID but no version-level
+        # approval state. Keep it distinct from an approved document CID.
+        "legacy_ipfs_cid": record.get("latest_cid", ""),
+        "metadata_origin": record.get("metadata_origin", "unknown"),
+        "approval_status": record.get("approval_status", "UNKNOWN"),
         "relevance_score": score,
         "match_reasons": list(reasons),
 
