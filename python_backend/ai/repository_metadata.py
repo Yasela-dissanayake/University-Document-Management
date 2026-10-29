@@ -80,7 +80,7 @@ DEMO_METADATA: List[Dict[str, Any]] = [
 _ALLOWED = {
     "document_id", "student_id", "document_type", "semester",
     "course_codes", "keywords", "repository", "latest_version",
-    "latest_approved_cid", "metadata_origin", "approval_status",
+    "latest_approved_cid", "latest_cid", "metadata_origin", "approval_status",
 }
 
 
@@ -115,6 +115,7 @@ def _clean(record: Dict[str, Any]) -> Dict[str, Any]:
         cleaned["latest_version"] = 0
 
     cleaned["latest_approved_cid"] = str(cleaned.get("latest_approved_cid") or "").strip()
+    cleaned["latest_cid"] = str(cleaned.get("latest_cid") or "").strip()
     cleaned["metadata_origin"] = str(cleaned.get("metadata_origin") or "json_snapshot").strip()
     cleaned["approval_status"] = str(cleaned.get("approval_status") or "UNKNOWN").strip().upper()
     return cleaned
