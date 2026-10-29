@@ -1,19 +1,25 @@
 """
-Repository metadata registry.
+Metadata-only source registry for Repository RAG.
 
-Phase 2 / Phase 3 responsibility:
-    - Store and retrieve document metadata only.
-    - Support repository-centric metadata retrieval.
-    - Provide metadata for RAG-based document discovery.
+Source precedence:
+1. Explicit records passed by the caller (useful for isolated unit tests).
+2. METADATA_REGISTRY_PATH (a JSON snapshot maintained by an indexer/admin).
+3. METADATA_SOURCE=blockchain (default): read enumerable student-registration
+   metadata from the deployed UniversityRegistry.
 
-IMPORTANT:
-    This module must NEVER store or retrieve confidential document plaintext.
+DEMO_METADATA is available only when METADATA_SOURCE=demo is explicitly set.
+The loader never silently falls back to demo records.
 
-The repository metadata is used for discovery. Once a document is identified,
-the blockchain becomes authoritative for version, provenance, integrity,
-approval status, and the current approved IPFS CID.
+Important contract limitation:
+UniversityRegistry exposes studentIds/studentCount, so student registration
+records can be enumerated. Its versioned documents mapping has no document-ID
+enumeration method. DocumentVersionCreated indexes string identifiers as topic
+hashes, which cannot be decoded from event topics. Consequently this module
+cannot discover every createDocumentVersion record from the current contract
+without an off-chain indexer/snapshot. It does not fabricate those records.
+
+This module never retrieves IPFS content or decrypts documents.
 """
-
 from __future__ import annotations
 
 import json
@@ -21,18 +27,9 @@ import os
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
+from python_backend.ai.blockchain_metadata_source import load_blockchain_metadata_records
 
-# ---------------------------------------------------------------------------
-# Supported logical repositories
-# ---------------------------------------------------------------------------
-
-REPOSITORIES = (
-    "academic",
-    "registrar",
-    "examination",
-    "student_services",
-)
-
+REPOSITORIES = ("academic", "registrar", "examination", "student_services")
 
 REPOSITORY_DISPLAY_NAMES = {
     "academic": "Academic Repository",
@@ -41,456 +38,201 @@ REPOSITORY_DISPLAY_NAMES = {
     "student_services": "Student Services Repository",
 }
 
-
-# ---------------------------------------------------------------------------
-# Development-only metadata references
-#
-# IMPORTANT:
-# These records contain metadata only.
-# They must NOT contain confidential document plaintext.
-#
-# latest_version / latest_approved_cid are metadata references used for
-# discovery and demonstration. Phase 3 must resolve the authoritative
-# version and CID from the blockchain before retrieving the document.
-# ---------------------------------------------------------------------------
-
+# Development-only fixtures. They are intentionally unreachable unless the
+# operator explicitly selects METADATA_SOURCE=demo.
 DEMO_METADATA: List[Dict[str, Any]] = [
     {
-        "document_id": "TX-98765",
-        "student_id": "STD001",
-        "document_type": "Transcript",
-        "semester": "Semester 5",
-        "course_codes": [
-            "CO521",
-            "CO523",
-        ],
-        "keywords": [
-            "transcript",
-            "semester 5",
-            "computer engineering",
-            "academic",
-        ],
-        "repository": "academic",
-        "latest_version": 4,
+        "document_id": "TX-98765", "student_id": "STD001",
+        "document_type": "Transcript", "semester": "Semester 5",
+        "course_codes": ["CO521", "CO523"],
+        "keywords": ["transcript", "semester 5", "computer engineering", "academic"],
+        "repository": "academic", "latest_version": 4,
         "latest_approved_cid": "QmP2pwTUWYqzVEp3HQoBWHsZ99xUmgpWdJMYZDNKe9WUiF",
+        "metadata_origin": "demo_fixture", "approval_status": "APPROVED",
     },
     {
-        "document_id": "REG-19357-01",
-        "student_id": "S19357",
-        "document_type": "Student Registration Record",
-        "semester": None,
-        "course_codes": [],
-        "keywords": [
-            "registration",
-            "registered",
-            "enrollment",
-            "student",
-        ],
-        "repository": "registrar",
-        "latest_version": 1,
-        "latest_approved_cid": "bafy-demo-registrar-s19357-v1",
+        "document_id": "REG-19357-01", "student_id": "S19357",
+        "document_type": "Student Registration Record", "semester": None,
+        "course_codes": [], "keywords": ["registration", "registered", "enrollment", "student"],
+        "repository": "registrar", "latest_version": 1,
+        "latest_approved_cid": "", "metadata_origin": "demo_fixture",
+        "approval_status": "NOT_TRACKED",
     },
     {
-        "document_id": "EX-19357-05",
-        "student_id": "S19357",
-        "document_type": "Examination Record",
-        "semester": "Semester 5",
-        "course_codes": [
-            "CO521",
-            "CO523",
-            "CO525",
-        ],
-        "keywords": [
-            "examination",
-            "exam",
-            "results",
-            "mark sheet",
-            "semester 5",
-        ],
-        "repository": "examination",
-        "latest_version": 2,
-        "latest_approved_cid": "bafy-demo-examination-s19357-v2",
+        "document_id": "EX-19357-05", "student_id": "S19357",
+        "document_type": "Examination Record", "semester": "Semester 5",
+        "course_codes": ["CO521", "CO523", "CO525"],
+        "keywords": ["examination", "exam", "results", "mark sheet", "semester 5"],
+        "repository": "examination", "latest_version": 2,
+        "latest_approved_cid": "", "metadata_origin": "demo_fixture",
+        "approval_status": "NOT_TRACKED",
     },
     {
-        "document_id": "SS-19357-01",
-        "student_id": "S19357",
-        "document_type": "Student Services Record",
-        "semester": None,
-        "course_codes": [],
-        "keywords": [
-            "student services",
-            "scholarship",
-            "welfare",
-            "request",
-        ],
-        "repository": "student_services",
-        "latest_version": 1,
-        "latest_approved_cid": "bafy-demo-services-s19357-v1",
+        "document_id": "SS-19357-01", "student_id": "S19357",
+        "document_type": "Student Services Record", "semester": None,
+        "course_codes": [], "keywords": ["student services", "scholarship", "welfare", "request"],
+        "repository": "student_services", "latest_version": 1,
+        "latest_approved_cid": "", "metadata_origin": "demo_fixture",
+        "approval_status": "NOT_TRACKED",
     },
 ]
 
-
-# ---------------------------------------------------------------------------
-# Metadata schema
-#
-# Only these fields are allowed in repository metadata.
-#
-# Blockchain-specific authoritative fields such as contentHash,
-# approvalStatus, previousVersion, and timestamps do NOT belong here.
-# ---------------------------------------------------------------------------
-
 _ALLOWED = {
-    "document_id",
-    "student_id",
-    "document_type",
-    "semester",
-    "course_codes",
-    "keywords",
-    "repository",
-    "latest_version",
-    "latest_approved_cid",
+    "document_id", "student_id", "document_type", "semester",
+    "course_codes", "keywords", "repository", "latest_version",
+    "latest_approved_cid", "metadata_origin", "approval_status",
 }
 
 
-# ---------------------------------------------------------------------------
-# Normalization helpers
-# ---------------------------------------------------------------------------
-
 def _clean(record: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Normalize a metadata record.
+    """Normalize a record and retain only approved metadata fields."""
+    cleaned = {key: record.get(key) for key in _ALLOWED if key in record}
+    cleaned["document_id"] = str(cleaned.get("document_id") or "").strip()
+    cleaned["student_id"] = str(cleaned.get("student_id") or "").strip().upper()
+    cleaned["document_type"] = str(cleaned.get("document_type") or "").strip()
 
-    Only fields explicitly allowed by _ALLOWED are retained.
-    No confidential document content is accepted.
-    """
-
-    cleaned = {
-        key: record.get(key)
-        for key in _ALLOWED
-        if key in record
-    }
-
-    # Document identifier
-    cleaned["document_id"] = str(
-        cleaned.get("document_id", "")
-    ).strip()
-
-    # Student identifier
-    cleaned["student_id"] = str(
-        cleaned.get("student_id", "")
-    ).strip().upper()
-
-    # Document type
-    cleaned["document_type"] = str(
-        cleaned.get("document_type", "")
-    ).strip()
-
-    # Semester
     semester = cleaned.get("semester")
+    cleaned["semester"] = str(semester).strip() or None if semester is not None else None
+    cleaned["repository"] = str(cleaned.get("repository") or "").strip().lower()
 
-    if semester is None:
-        cleaned["semester"] = None
-    else:
-        semester_text = str(semester).strip()
-        cleaned["semester"] = semester_text or None
-
-    # Repository
-    cleaned["repository"] = str(
-        cleaned.get("repository", "")
-    ).strip().lower()
-
-    # Course codes
     course_codes = cleaned.get("course_codes") or []
-
     if not isinstance(course_codes, (list, tuple, set)):
         course_codes = [course_codes]
-
     cleaned["course_codes"] = [
-        str(course).strip().upper()
-        for course in course_codes
-        if str(course).strip()
+        str(value).strip().upper() for value in course_codes if str(value).strip()
     ]
 
-    # Keywords
     keywords = cleaned.get("keywords") or []
-
     if not isinstance(keywords, (list, tuple, set)):
         keywords = [keywords]
-
     cleaned["keywords"] = [
-        str(keyword).strip().lower()
-        for keyword in keywords
-        if str(keyword).strip()
+        str(value).strip().lower() for value in keywords if str(value).strip()
     ]
 
-    # Latest version
     try:
-        cleaned["latest_version"] = int(
-            cleaned.get("latest_version", 0)
-        )
+        cleaned["latest_version"] = max(0, int(cleaned.get("latest_version", 0) or 0))
     except (TypeError, ValueError):
         cleaned["latest_version"] = 0
 
-    # CID is only a metadata reference.
-    cid = cleaned.get("latest_approved_cid")
-
-    if cid is None:
-        cleaned["latest_approved_cid"] = ""
-    else:
-        cleaned["latest_approved_cid"] = str(cid).strip()
-
+    cleaned["latest_approved_cid"] = str(cleaned.get("latest_approved_cid") or "").strip()
+    cleaned["metadata_origin"] = str(cleaned.get("metadata_origin") or "json_snapshot").strip()
+    cleaned["approval_status"] = str(cleaned.get("approval_status") or "UNKNOWN").strip().upper()
     return cleaned
 
 
-# ---------------------------------------------------------------------------
-# Validation
-# ---------------------------------------------------------------------------
-
 def validate_metadata_record(record: Dict[str, Any]) -> bool:
-    """
-    Validate a repository metadata record.
-
-    Validation is intentionally limited to metadata structure.
-    Confidential document content is never accepted or inspected.
-    """
-
+    """Validate the metadata schema; document plaintext is never accepted."""
     if not isinstance(record, dict):
         return False
-
     cleaned = _clean(record)
-
-    if not cleaned["document_id"]:
-        return False
-
-    if not cleaned["student_id"]:
-        return False
-
-    if not cleaned["document_type"]:
-        return False
-
-    if cleaned["repository"] not in REPOSITORIES:
-        return False
-
-    if cleaned["latest_version"] < 0:
-        return False
-
-    return True
+    return bool(
+        cleaned["document_id"]
+        and cleaned["student_id"]
+        and cleaned["document_type"]
+        and cleaned["repository"] in REPOSITORIES
+        and cleaned["latest_version"] >= 0
+    )
 
 
-# ---------------------------------------------------------------------------
-# Loading
-# ---------------------------------------------------------------------------
+def _load_json_snapshot(configured: str) -> List[Dict[str, Any]]:
+    path = Path(configured).expanduser()
+    if not path.is_absolute():
+        path = Path(__file__).resolve().parent / path
+    if not path.is_file():
+        raise FileNotFoundError(f"METADATA_REGISTRY_PATH does not exist: {path}")
+    with path.open("r", encoding="utf-8") as file:
+        loaded = json.load(file)
+    source = loaded.get("documents") if isinstance(loaded, dict) else loaded
+    if not isinstance(source, list):
+        raise ValueError("Metadata snapshot must be a JSON array or an object with a 'documents' array.")
+    return source
+
 
 def load_metadata_records(
     records: Optional[Iterable[Dict[str, Any]]] = None,
 ) -> List[Dict[str, Any]]:
     """
-    Load repository metadata records.
+    Load metadata without silently switching to synthetic fixtures.
 
-    Priority:
-        1. Explicitly supplied records
-        2. METADATA_REGISTRY_PATH environment variable
-        3. Development DEMO_METADATA
-
-    The registry file may contain either:
-
-        [
-            {...},
-            {...}
-        ]
-
-    or:
-
-        {
-            "documents": [
-                {...},
-                {...}
-            ]
-        }
-
-    Invalid records are ignored.
+    METADATA_SOURCE values:
+      - blockchain (default): enumerable metadata from UniversityRegistry
+      - json: requires METADATA_REGISTRY_PATH
+      - demo: explicitly opt into development fixtures
+    A configured METADATA_REGISTRY_PATH takes precedence over METADATA_SOURCE.
     """
-
     if records is not None:
         source = list(records)
-
     else:
-        configured = os.getenv(
-            "METADATA_REGISTRY_PATH",
-            "",
-        ).strip()
-
-        if configured:
-            path = Path(configured)
-
-            if not path.is_absolute():
-                path = (
-                    Path(__file__).resolve().parent
-                    / path
-                )
-
-            with path.open(
-                "r",
-                encoding="utf-8",
-            ) as file:
-                loaded = json.load(file)
-
-            if isinstance(loaded, dict):
-                source = loaded.get(
-                    "documents",
-                    [],
-                )
-            else:
-                source = loaded
-
+        configured_path = os.getenv("METADATA_REGISTRY_PATH", "").strip()
+        if configured_path:
+            source = _load_json_snapshot(configured_path)
         else:
-            source = DEMO_METADATA
+            source_name = os.getenv("METADATA_SOURCE", "blockchain").strip().lower()
+            if source_name == "blockchain":
+                source = load_blockchain_metadata_records()
+            elif source_name == "json":
+                raise RuntimeError(
+                    "METADATA_SOURCE=json requires METADATA_REGISTRY_PATH to point to a metadata snapshot."
+                )
+            elif source_name == "demo":
+                source = DEMO_METADATA
+            else:
+                raise ValueError(
+                    "Unsupported METADATA_SOURCE. Choose 'blockchain', 'json', or 'demo'."
+                )
 
     if not isinstance(source, list):
-        return []
+        raise ValueError("Metadata source must return a list of records.")
 
     valid_records: List[Dict[str, Any]] = []
-
+    seen_ids = set()
     for record in source:
-        if not isinstance(record, dict):
+        if not isinstance(record, dict) or not validate_metadata_record(record):
             continue
-
-        if not validate_metadata_record(record):
+        cleaned = _clean(record)
+        # Keep the first occurrence, avoiding duplicate document IDs from snapshots.
+        if cleaned["document_id"] in seen_ids:
             continue
-
-        valid_records.append(
-            _clean(record)
-        )
-
+        seen_ids.add(cleaned["document_id"])
+        valid_records.append(cleaned)
     return valid_records
 
 
-# ---------------------------------------------------------------------------
-# Repository-specific retrieval
-# ---------------------------------------------------------------------------
-
-def get_repository_metadata(
-    repository: str,
-    records: Optional[Iterable[Dict[str, Any]]] = None,
-) -> List[Dict[str, Any]]:
-    """
-    Return metadata records belonging to one repository.
-    """
-
-    repository_name = str(
-        repository or ""
-    ).strip().lower()
-
+def get_repository_metadata(repository: str, records: Optional[Iterable[Dict[str, Any]]] = None) -> List[Dict[str, Any]]:
+    repository_name = str(repository or "").strip().lower()
     if repository_name not in REPOSITORIES:
         return []
-
-    return [
-        record
-        for record in load_metadata_records(records)
-        if record["repository"] == repository_name
-    ]
+    return [record for record in load_metadata_records(records) if record["repository"] == repository_name]
 
 
-# ---------------------------------------------------------------------------
-# All repositories
-# ---------------------------------------------------------------------------
-
-def get_all_metadata(
-    records: Optional[Iterable[Dict[str, Any]]] = None,
-) -> List[Dict[str, Any]]:
-    """
-    Return metadata from all supported repositories.
-    """
-
+def get_all_metadata(records: Optional[Iterable[Dict[str, Any]]] = None) -> List[Dict[str, Any]]:
     return load_metadata_records(records)
 
 
-# ---------------------------------------------------------------------------
-# Document lookup
-# ---------------------------------------------------------------------------
-
-def get_document_metadata(
-    document_id: str,
-    records: Optional[Iterable[Dict[str, Any]]] = None,
-) -> Optional[Dict[str, Any]]:
-    """
-    Find one metadata record by document ID.
-
-    This is still metadata-only. It does not retrieve the document itself.
-    """
-
-    target = str(
-        document_id or ""
-    ).strip()
-
+def get_document_metadata(document_id: str, records: Optional[Iterable[Dict[str, Any]]] = None) -> Optional[Dict[str, Any]]:
+    target = str(document_id or "").strip()
     if not target:
         return None
-
-    for record in load_metadata_records(records):
-        if record["document_id"] == target:
-            return record
-
-    return None
+    return next((record for record in load_metadata_records(records) if record["document_id"] == target), None)
 
 
-# ---------------------------------------------------------------------------
-# Student-specific metadata
-# ---------------------------------------------------------------------------
-
-def get_student_metadata(
-    student_id: str,
-    records: Optional[Iterable[Dict[str, Any]]] = None,
-) -> List[Dict[str, Any]]:
-    """
-    Return metadata references associated with a student.
-    """
-
-    target = str(
-        student_id or ""
-    ).strip().upper()
-
+def get_student_metadata(student_id: str, records: Optional[Iterable[Dict[str, Any]]] = None) -> List[Dict[str, Any]]:
+    target = str(student_id or "").strip().upper()
     if not target:
         return []
+    return [record for record in load_metadata_records(records) if record["student_id"] == target]
 
-    return [
-        record
-        for record in load_metadata_records(records)
-        if record["student_id"] == target
-    ]
-
-
-# ---------------------------------------------------------------------------
-# Repository + student lookup
-# ---------------------------------------------------------------------------
 
 def get_student_repository_metadata(
     student_id: str,
     repository: str,
     records: Optional[Iterable[Dict[str, Any]]] = None,
 ) -> List[Dict[str, Any]]:
-    """
-    Return metadata for a student within a specific repository.
-    """
-
-    target_student = str(
-        student_id or ""
-    ).strip().upper()
-
-    target_repository = str(
-        repository or ""
-    ).strip().lower()
-
-    if (
-        not target_student
-        or target_repository not in REPOSITORIES
-    ):
+    target_student = str(student_id or "").strip().upper()
+    target_repository = str(repository or "").strip().lower()
+    if not target_student or target_repository not in REPOSITORIES:
         return []
-
     return [
-        record
-        for record in load_metadata_records(records)
-        if (
-            record["student_id"] == target_student
-            and record["repository"] == target_repository
-        )
+        record for record in load_metadata_records(records)
+        if record["student_id"] == target_student and record["repository"] == target_repository
     ]
