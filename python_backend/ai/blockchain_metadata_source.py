@@ -117,7 +117,7 @@ def load_blockchain_metadata_records() -> List[Dict[str, Any]]:
             "course_codes": [],
             "keywords": ["student", "registration", "enrollment", "registrar"],
             "repository": "registrar",
-            "latest_version": 1,
+            "latest_version": 0,
             # Legacy registerStudent records have no approval field. Do not
             # misrepresent their CID as an approved document version.
             "latest_approved_cid": "",
