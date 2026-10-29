@@ -1,10 +1,16 @@
-"""Standalone metadata-only RepositoryMetadataRAG evaluator.
+"""Evaluate metadata-only Repository RAG against manually verified ground truth.
 
-Copy this file to python_backend/ai/evaluate_repository_rag.py and the
-benchmark JSON to python_backend/ai/rag_benchmark.json.
-
-Run from project root:
+Run from the repository root:
+    python -m python_backend.ai.evaluate_repository_rag --prepare-benchmark
+Review the generated candidate benchmark, anonymize identifiers if necessary, and
+independently verify every relevant_document_ids label. Set
+"ground_truth_status": "verified" only after that review, then run:
     python -m python_backend.ai.evaluate_repository_rag
+
+The default metadata source is the live blockchain adapter; demo fixtures are
+available only with METADATA_SOURCE=demo. A run with unverified labels is
+refused unless --allow-unverified-ground-truth is explicitly passed, and the
+resulting report is marked diagnostic_only.
 """
 from __future__ import annotations
 
@@ -14,7 +20,7 @@ import math
 import sys
 import time
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Sequence, Set
+from typing import Any, Dict, List, Sequence, Set
 
 from python_backend.ai.repository_metadata import load_metadata_records
 from python_backend.ai.repository_rag import RepositoryMetadataRAG
@@ -23,8 +29,7 @@ DEFAULT_BENCHMARK = Path(__file__).resolve().parent / "rag_benchmark.json"
 
 
 def precision_at_k(retrieved: Sequence[str], relevant: Set[str], k: int) -> float:
-    top = list(retrieved[:k])
-    return sum(doc_id in relevant for doc_id in top) / k if k > 0 else 0.0
+    return sum(doc_id in relevant for doc_id in retrieved[:k]) / k if k > 0 else 0.0
 
 
 def recall_at_k(retrieved: Sequence[str], relevant: Set[str], k: int) -> float:
@@ -50,6 +55,46 @@ def ndcg_at_k(retrieved: Sequence[str], relevant: Set[str], k: int) -> float:
     ideal_count = min(len(relevant), k)
     idcg = sum(1.0 / math.log2(rank + 1) for rank in range(1, ideal_count + 1))
     return dcg / idcg if idcg else (1.0 if not retrieved[:k] else 0.0)
+
+
+def _prepare_candidate_benchmark(records: List[Dict[str, Any]], output: Path) -> None:
+    """Write candidate cases from real metadata; labels are explicitly unverified."""
+    queries: List[Dict[str, Any]] = []
+    for index, record in enumerate(records, start=1):
+        student_id = str(record.get("student_id") or "").strip()
+        document_type = str(record.get("document_type") or "").strip()
+        repository = str(record.get("repository") or "").strip()
+        document_id = str(record.get("document_id") or "").strip()
+        if not all((student_id, document_type, repository, document_id)):
+            continue
+        queries.append({
+            "id": f"CANDIDATE-{index:04d}",
+            "query": f"Find {document_type} metadata for student {student_id}",
+            "repositories": [repository],
+            "student_id": student_id,
+            "course_code": None,
+            "relevant_document_ids": [document_id],
+            "notes": (
+                "PROVISIONAL label generated from the source record. Independently verify "
+                "whether this is the complete relevant set; edit query and labels as needed."
+            ),
+        })
+
+    benchmark = {
+        "description": (
+            "Candidate metadata-only RAG benchmark generated from the configured real metadata source. "
+            "Labels are provisional and must be independently verified before reporting final metrics."
+        ),
+        "ground_truth_status": "needs_manual_review",
+        "metadata_record_count_at_generation": len(records),
+        "k_values": [1, 3, 5],
+        "queries": queries,
+    }
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(benchmark, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"Candidate benchmark written to: {output.resolve()}")
+    print(f"Candidate queries: {len(queries)}")
+    print('Review the labels and set "ground_truth_status" to "verified" only after independent validation.')
 
 
 def evaluate_case(rag: RepositoryMetadataRAG, case: Dict[str, Any],
@@ -96,13 +141,8 @@ def evaluate_case(rag: RepositoryMetadataRAG, case: Dict[str, Any],
         ),
     }
     for k in k_values:
-        row["metrics"][f"precision@{k}"] = round(
-            sum(doc_id in relevant for doc_id in retrieved[:k]) / k, 4
-        )
-        row["metrics"][f"recall@{k}"] = round(
-            (sum(doc_id in relevant for doc_id in retrieved[:k]) / len(relevant))
-            if relevant else (1.0 if not retrieved[:k] else 0.0), 4
-        )
+        row["metrics"][f"precision@{k}"] = round(precision_at_k(retrieved, relevant, k), 4)
+        row["metrics"][f"recall@{k}"] = round(recall_at_k(retrieved, relevant, k), 4)
         row["metrics"][f"ndcg@{k}"] = round(ndcg_at_k(retrieved, relevant, k), 4)
     row["metrics"]["mrr"] = round(reciprocal_rank(retrieved, relevant), 4)
     return row
@@ -118,19 +158,42 @@ def main() -> int:
     parser.add_argument("--benchmark", type=Path, default=DEFAULT_BENCHMARK)
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--output", type=Path, default=Path("rag_evaluation_report.json"))
+    parser.add_argument(
+        "--prepare-benchmark",
+        action="store_true",
+        help="Create provisional candidate queries from the configured metadata source, then stop.",
+    )
+    parser.add_argument(
+        "--allow-unverified-ground-truth",
+        action="store_true",
+        help="Run diagnostic metrics with unverified labels; report is explicitly marked diagnostic_only.",
+    )
     args = parser.parse_args()
     if args.top_k < 1:
         parser.error("--top-k must be at least 1")
 
     try:
+        records = load_metadata_records()
+        if args.prepare_benchmark:
+            _prepare_candidate_benchmark(records, args.benchmark)
+            return 0
         benchmark = json.loads(args.benchmark.read_text(encoding="utf-8"))
         cases = benchmark["queries"]
+        ground_truth_status = str(benchmark.get("ground_truth_status", "unverified")).lower()
+        if ground_truth_status != "verified" and not args.allow_unverified_ground_truth:
+            print(
+                "Benchmark ground truth is not verified. Review relevant_document_ids "
+                "independently, set ground_truth_status to 'verified', or pass "
+                "--allow-unverified-ground-truth for a diagnostic-only run.",
+                file=sys.stderr,
+            )
+            return 2
         k_values = sorted({int(k) for k in benchmark.get("k_values", [1, 3, 5]) if int(k) > 0}) or [1, 3, 5]
-        records = load_metadata_records()
         rag = RepositoryMetadataRAG(records=records)
     except Exception as exc:
         print(f"Could not initialize evaluation: {exc}", file=sys.stderr)
         return 2
+
     if not isinstance(cases, list) or not cases:
         print("Benchmark JSON must contain a non-empty queries list.", file=sys.stderr)
         return 2
@@ -157,14 +220,19 @@ def main() -> int:
     }
     report = {
         "evaluation_type": "metadata_only_repository_rag",
+        "metadata_source": (
+            "METADATA_REGISTRY_PATH" if __import__("os").getenv("METADATA_REGISTRY_PATH")
+            else __import__("os").getenv("METADATA_SOURCE", "blockchain")
+        ),
+        "ground_truth_status": ground_truth_status,
+        "diagnostic_only": ground_truth_status != "verified",
         "benchmark_path": str(args.benchmark),
-        "metadata_source": "METADATA_REGISTRY_PATH if configured, otherwise DEMO_METADATA",
         "summary": summary,
         "per_query_results": rows,
         "limitations": [
-            "Initial labels are based on the current development DEMO_METADATA fixture, not independently verified production data.",
-            "Ten queries are only an initial smoke benchmark, not a statistically representative evaluation.",
-            "This evaluates metadata retrieval only; it does not evaluate blockchain resolution, authorization, IPFS, decryption, or LLM answers."
+            "UniversityRegistry can enumerate student registration records but cannot enumerate logical document IDs stored only in its documents mapping; a maintained metadata snapshot/indexer is required for complete versioned-document coverage.",
+            "Candidate labels generated from metadata are not independent ground truth. Independently review all labels before setting ground_truth_status to verified.",
+            "This evaluates metadata retrieval only; it does not evaluate authorization, authoritative version resolution, IPFS retrieval, decryption, or LLM answer quality.",
         ],
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -175,6 +243,8 @@ def main() -> int:
     print("=" * 68)
     print(f"Metadata records: {summary['metadata_record_count']}")
     print(f"Queries:          {summary['query_count']}")
+    print(f"Ground truth:     {ground_truth_status}")
+    print(f"Diagnostic only:  {report['diagnostic_only']}")
     print(f"Mean latency:     {summary['mean_latency_ms']} ms")
     for name, value in summary["metrics"].items():
         print(f"{name:12s} {value:.4f}")
@@ -184,9 +254,8 @@ def main() -> int:
     print(f"Queries with unexpected results: {summary['queries_with_unexpected_results']}")
     print(f"Metadata-only contract pass rate: {summary['metadata_only_contract_pass_rate']}")
     print(f"Report written to: {args.output.resolve()}")
-    print("\nPer-query results:")
     for row in rows:
-        print(f"{row['id']} | retrieved={row['retrieved_document_ids']} | expected={row['expected_document_ids']} | wrong_student={row['wrong_student_document_ids']}")
+        print(f"{row['id']} | retrieved={row['retrieved_document_ids']} | expected={row['expected_document_ids']}")
     return 0
 
 
