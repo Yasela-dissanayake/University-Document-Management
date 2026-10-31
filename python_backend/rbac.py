@@ -104,6 +104,27 @@ def can_view_offchain(user: Optional[Dict], target_student_id: str) -> bool:
     return False
 
 
+EXAMINATION_DOCUMENT_TYPES = {"EXAMINATION RESULT SHEET"}
+
+
+def can_view_document(user: Optional[Dict], target_student_id: str, document_type: str) -> bool:
+    """Apply existing RBAC plus a document-type restriction for EXAM_DIVISION."""
+    if not user:
+        return False
+    role = _canon(user.get("role") or "")
+    if role == "EXAM_DIVISION":
+        return _canon(document_type) in EXAMINATION_DOCUMENT_TYPES
+    return can_view_offchain(user, target_student_id)
+
+
+def can_attempt_document_lookup(user: Optional[Dict], intent: str) -> bool:
+    """Permit EXAM_DIVISION to reach the blockchain check only for explicit document retrieval."""
+    if not user:
+        return False
+    if _canon(user.get("role") or "") == "EXAM_DIVISION":
+        return str(intent or "").strip().lower() == "document_retrieval"
+    return True
+
 
 # ---------------------------------------------------------------------
 # === Extended RBAC with Role Hierarchy & Workflow Permissions ===
