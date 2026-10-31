@@ -889,9 +889,11 @@ def get_authorized_document(
         }
 
     try:
-        allowed = _is_allowed_offchain(
+        # This type comes from blockchain document details, never from RAG.
+        allowed = rbac.can_view_document(
             user,
             authorization_student_id,
+            blockchain_document_type,
         )
 
     except Exception as exc:
