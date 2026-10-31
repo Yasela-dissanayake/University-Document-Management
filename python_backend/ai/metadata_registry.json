@@ -1,0 +1,2007 @@
+{
+  "description": "Synthetic metadata-only registry for controlled Repository RAG evaluation.",
+  "dataset_type": "synthetic",
+  "document_count": 100,
+  "documents": [
+    {
+      "document_id": "TX-SYN0001-0001",
+      "student_id": "SYN0001",
+      "document_type": "Transcript",
+      "semester": "Semester 8",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 8",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "academic",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-tx-syn0001-0001"
+    },
+    {
+      "document_id": "REG-SYN0001-0002",
+      "student_id": "SYN0001",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "registrar",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-reg-syn0001-0002"
+    },
+    {
+      "document_id": "EX-SYN0001-0003",
+      "student_id": "SYN0001",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 3",
+      "course_codes": [
+        "ICT301",
+        "ICT302"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 3",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "examination",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-ex-syn0001-0003"
+    },
+    {
+      "document_id": "SS-SYN0001-0004",
+      "student_id": "SYN0001",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "student_services",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ss-syn0001-0004"
+    },
+    {
+      "document_id": "TX-SYN0002-0005",
+      "student_id": "SYN0002",
+      "document_type": "Transcript",
+      "semester": "Semester 5",
+      "course_codes": [
+        "ICT301",
+        "ICT302"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 5",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "academic",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-tx-syn0002-0005"
+    },
+    {
+      "document_id": "REG-SYN0002-0006",
+      "student_id": "SYN0002",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "registrar",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-reg-syn0002-0006"
+    },
+    {
+      "document_id": "EX-SYN0002-0007",
+      "student_id": "SYN0002",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 3",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 3",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "examination",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-ex-syn0002-0007"
+    },
+    {
+      "document_id": "SS-SYN0002-0008",
+      "student_id": "SYN0002",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "student_services",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ss-syn0002-0008"
+    },
+    {
+      "document_id": "TX-SYN0003-0009",
+      "student_id": "SYN0003",
+      "document_type": "Transcript",
+      "semester": "Semester 2",
+      "course_codes": [
+        "ICT201",
+        "ICT202"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 2",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "academic",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-tx-syn0003-0009"
+    },
+    {
+      "document_id": "REG-SYN0003-0010",
+      "student_id": "SYN0003",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "registrar",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-reg-syn0003-0010"
+    },
+    {
+      "document_id": "EX-SYN0003-0011",
+      "student_id": "SYN0003",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 7",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 7",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "examination",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ex-syn0003-0011"
+    },
+    {
+      "document_id": "SS-SYN0003-0012",
+      "student_id": "SYN0003",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "student_services",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ss-syn0003-0012"
+    },
+    {
+      "document_id": "TX-SYN0004-0013",
+      "student_id": "SYN0004",
+      "document_type": "Transcript",
+      "semester": "Semester 3",
+      "course_codes": [
+        "ICT101",
+        "ICT102"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 3",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "academic",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-tx-syn0004-0013"
+    },
+    {
+      "document_id": "REG-SYN0004-0014",
+      "student_id": "SYN0004",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "registrar",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-reg-syn0004-0014"
+    },
+    {
+      "document_id": "EX-SYN0004-0015",
+      "student_id": "SYN0004",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 5",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 5",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "examination",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-ex-syn0004-0015"
+    },
+    {
+      "document_id": "SS-SYN0004-0016",
+      "student_id": "SYN0004",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "student_services",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ss-syn0004-0016"
+    },
+    {
+      "document_id": "TX-SYN0005-0017",
+      "student_id": "SYN0005",
+      "document_type": "Transcript",
+      "semester": "Semester 7",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 7",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "academic",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-tx-syn0005-0017"
+    },
+    {
+      "document_id": "REG-SYN0005-0018",
+      "student_id": "SYN0005",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "registrar",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-reg-syn0005-0018"
+    },
+    {
+      "document_id": "EX-SYN0005-0019",
+      "student_id": "SYN0005",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 7",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 7",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "examination",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ex-syn0005-0019"
+    },
+    {
+      "document_id": "SS-SYN0005-0020",
+      "student_id": "SYN0005",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "student_services",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ss-syn0005-0020"
+    },
+    {
+      "document_id": "TX-SYN0006-0021",
+      "student_id": "SYN0006",
+      "document_type": "Transcript",
+      "semester": "Semester 5",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 5",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "academic",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-tx-syn0006-0021"
+    },
+    {
+      "document_id": "REG-SYN0006-0022",
+      "student_id": "SYN0006",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "registrar",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-reg-syn0006-0022"
+    },
+    {
+      "document_id": "EX-SYN0006-0023",
+      "student_id": "SYN0006",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 8",
+      "course_codes": [
+        "ICT201",
+        "ICT202"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 8",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "examination",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-ex-syn0006-0023"
+    },
+    {
+      "document_id": "SS-SYN0006-0024",
+      "student_id": "SYN0006",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "student_services",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ss-syn0006-0024"
+    },
+    {
+      "document_id": "TX-SYN0007-0025",
+      "student_id": "SYN0007",
+      "document_type": "Transcript",
+      "semester": "Semester 2",
+      "course_codes": [
+        "ICT301",
+        "ICT302"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 2",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "academic",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-tx-syn0007-0025"
+    },
+    {
+      "document_id": "REG-SYN0007-0026",
+      "student_id": "SYN0007",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "registrar",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-reg-syn0007-0026"
+    },
+    {
+      "document_id": "EX-SYN0007-0027",
+      "student_id": "SYN0007",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 8",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 8",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "examination",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-ex-syn0007-0027"
+    },
+    {
+      "document_id": "SS-SYN0007-0028",
+      "student_id": "SYN0007",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "student_services",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-ss-syn0007-0028"
+    },
+    {
+      "document_id": "TX-SYN0008-0029",
+      "student_id": "SYN0008",
+      "document_type": "Transcript",
+      "semester": "Semester 8",
+      "course_codes": [
+        "ICT301",
+        "ICT302"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 8",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "academic",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-tx-syn0008-0029"
+    },
+    {
+      "document_id": "REG-SYN0008-0030",
+      "student_id": "SYN0008",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "registrar",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-reg-syn0008-0030"
+    },
+    {
+      "document_id": "EX-SYN0008-0031",
+      "student_id": "SYN0008",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 4",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 4",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "examination",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-ex-syn0008-0031"
+    },
+    {
+      "document_id": "SS-SYN0008-0032",
+      "student_id": "SYN0008",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "student_services",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-ss-syn0008-0032"
+    },
+    {
+      "document_id": "TX-SYN0009-0033",
+      "student_id": "SYN0009",
+      "document_type": "Transcript",
+      "semester": "Semester 3",
+      "course_codes": [
+        "ICT301",
+        "ICT302"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 3",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "academic",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-tx-syn0009-0033"
+    },
+    {
+      "document_id": "REG-SYN0009-0034",
+      "student_id": "SYN0009",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "registrar",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-reg-syn0009-0034"
+    },
+    {
+      "document_id": "EX-SYN0009-0035",
+      "student_id": "SYN0009",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 7",
+      "course_codes": [
+        "ICT201",
+        "ICT202"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 7",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "examination",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ex-syn0009-0035"
+    },
+    {
+      "document_id": "SS-SYN0009-0036",
+      "student_id": "SYN0009",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "student_services",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-ss-syn0009-0036"
+    },
+    {
+      "document_id": "TX-SYN0010-0037",
+      "student_id": "SYN0010",
+      "document_type": "Transcript",
+      "semester": "Semester 1",
+      "course_codes": [
+        "ICT301",
+        "ICT302"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 1",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "academic",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-tx-syn0010-0037"
+    },
+    {
+      "document_id": "REG-SYN0010-0038",
+      "student_id": "SYN0010",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "registrar",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-reg-syn0010-0038"
+    },
+    {
+      "document_id": "EX-SYN0010-0039",
+      "student_id": "SYN0010",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 2",
+      "course_codes": [
+        "ICT201",
+        "ICT202"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 2",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "examination",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ex-syn0010-0039"
+    },
+    {
+      "document_id": "SS-SYN0010-0040",
+      "student_id": "SYN0010",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "student_services",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ss-syn0010-0040"
+    },
+    {
+      "document_id": "TX-SYN0011-0041",
+      "student_id": "SYN0011",
+      "document_type": "Transcript",
+      "semester": "Semester 2",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 2",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "academic",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-tx-syn0011-0041"
+    },
+    {
+      "document_id": "REG-SYN0011-0042",
+      "student_id": "SYN0011",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "registrar",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-reg-syn0011-0042"
+    },
+    {
+      "document_id": "EX-SYN0011-0043",
+      "student_id": "SYN0011",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 2",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 2",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "examination",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-ex-syn0011-0043"
+    },
+    {
+      "document_id": "SS-SYN0011-0044",
+      "student_id": "SYN0011",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "student_services",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ss-syn0011-0044"
+    },
+    {
+      "document_id": "TX-SYN0012-0045",
+      "student_id": "SYN0012",
+      "document_type": "Transcript",
+      "semester": "Semester 5",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 5",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "academic",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-tx-syn0012-0045"
+    },
+    {
+      "document_id": "REG-SYN0012-0046",
+      "student_id": "SYN0012",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "registrar",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-reg-syn0012-0046"
+    },
+    {
+      "document_id": "EX-SYN0012-0047",
+      "student_id": "SYN0012",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 1",
+      "course_codes": [
+        "ICT101",
+        "ICT102"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 1",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "examination",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-ex-syn0012-0047"
+    },
+    {
+      "document_id": "SS-SYN0012-0048",
+      "student_id": "SYN0012",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "student_services",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ss-syn0012-0048"
+    },
+    {
+      "document_id": "TX-SYN0013-0049",
+      "student_id": "SYN0013",
+      "document_type": "Transcript",
+      "semester": "Semester 1",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 1",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "academic",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-tx-syn0013-0049"
+    },
+    {
+      "document_id": "REG-SYN0013-0050",
+      "student_id": "SYN0013",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "registrar",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-reg-syn0013-0050"
+    },
+    {
+      "document_id": "EX-SYN0013-0051",
+      "student_id": "SYN0013",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 2",
+      "course_codes": [
+        "ICT201",
+        "ICT202"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 2",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "examination",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-ex-syn0013-0051"
+    },
+    {
+      "document_id": "SS-SYN0013-0052",
+      "student_id": "SYN0013",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "student_services",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ss-syn0013-0052"
+    },
+    {
+      "document_id": "TX-SYN0014-0053",
+      "student_id": "SYN0014",
+      "document_type": "Transcript",
+      "semester": "Semester 1",
+      "course_codes": [
+        "ICT201",
+        "ICT202"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 1",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "academic",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-tx-syn0014-0053"
+    },
+    {
+      "document_id": "REG-SYN0014-0054",
+      "student_id": "SYN0014",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "registrar",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-reg-syn0014-0054"
+    },
+    {
+      "document_id": "EX-SYN0014-0055",
+      "student_id": "SYN0014",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 2",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 2",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "examination",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-ex-syn0014-0055"
+    },
+    {
+      "document_id": "SS-SYN0014-0056",
+      "student_id": "SYN0014",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "student_services",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ss-syn0014-0056"
+    },
+    {
+      "document_id": "TX-SYN0015-0057",
+      "student_id": "SYN0015",
+      "document_type": "Transcript",
+      "semester": "Semester 2",
+      "course_codes": [
+        "ICT101",
+        "ICT102"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 2",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "academic",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-tx-syn0015-0057"
+    },
+    {
+      "document_id": "REG-SYN0015-0058",
+      "student_id": "SYN0015",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "registrar",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-reg-syn0015-0058"
+    },
+    {
+      "document_id": "EX-SYN0015-0059",
+      "student_id": "SYN0015",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 5",
+      "course_codes": [
+        "ICT201",
+        "ICT202"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 5",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "examination",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-ex-syn0015-0059"
+    },
+    {
+      "document_id": "SS-SYN0015-0060",
+      "student_id": "SYN0015",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "student_services",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ss-syn0015-0060"
+    },
+    {
+      "document_id": "TX-SYN0016-0061",
+      "student_id": "SYN0016",
+      "document_type": "Transcript",
+      "semester": "Semester 4",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 4",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "academic",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-tx-syn0016-0061"
+    },
+    {
+      "document_id": "REG-SYN0016-0062",
+      "student_id": "SYN0016",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "registrar",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-reg-syn0016-0062"
+    },
+    {
+      "document_id": "EX-SYN0016-0063",
+      "student_id": "SYN0016",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 4",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 4",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "examination",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ex-syn0016-0063"
+    },
+    {
+      "document_id": "SS-SYN0016-0064",
+      "student_id": "SYN0016",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "student_services",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ss-syn0016-0064"
+    },
+    {
+      "document_id": "TX-SYN0017-0065",
+      "student_id": "SYN0017",
+      "document_type": "Transcript",
+      "semester": "Semester 8",
+      "course_codes": [
+        "ICT301",
+        "ICT302"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 8",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "academic",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-tx-syn0017-0065"
+    },
+    {
+      "document_id": "REG-SYN0017-0066",
+      "student_id": "SYN0017",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "registrar",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-reg-syn0017-0066"
+    },
+    {
+      "document_id": "EX-SYN0017-0067",
+      "student_id": "SYN0017",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 1",
+      "course_codes": [
+        "ICT101",
+        "ICT102"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 1",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "examination",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ex-syn0017-0067"
+    },
+    {
+      "document_id": "SS-SYN0017-0068",
+      "student_id": "SYN0017",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "student_services",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ss-syn0017-0068"
+    },
+    {
+      "document_id": "TX-SYN0018-0069",
+      "student_id": "SYN0018",
+      "document_type": "Transcript",
+      "semester": "Semester 1",
+      "course_codes": [
+        "ICT101",
+        "ICT102"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 1",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "academic",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-tx-syn0018-0069"
+    },
+    {
+      "document_id": "REG-SYN0018-0070",
+      "student_id": "SYN0018",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "registrar",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-reg-syn0018-0070"
+    },
+    {
+      "document_id": "EX-SYN0018-0071",
+      "student_id": "SYN0018",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 5",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 5",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "examination",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ex-syn0018-0071"
+    },
+    {
+      "document_id": "SS-SYN0018-0072",
+      "student_id": "SYN0018",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "student_services",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ss-syn0018-0072"
+    },
+    {
+      "document_id": "TX-SYN0019-0073",
+      "student_id": "SYN0019",
+      "document_type": "Transcript",
+      "semester": "Semester 2",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 2",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "academic",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-tx-syn0019-0073"
+    },
+    {
+      "document_id": "REG-SYN0019-0074",
+      "student_id": "SYN0019",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "registrar",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-reg-syn0019-0074"
+    },
+    {
+      "document_id": "EX-SYN0019-0075",
+      "student_id": "SYN0019",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 7",
+      "course_codes": [
+        "ICT101",
+        "ICT102"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 7",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "examination",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ex-syn0019-0075"
+    },
+    {
+      "document_id": "SS-SYN0019-0076",
+      "student_id": "SYN0019",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "student_services",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-ss-syn0019-0076"
+    },
+    {
+      "document_id": "TX-SYN0020-0077",
+      "student_id": "SYN0020",
+      "document_type": "Transcript",
+      "semester": "Semester 5",
+      "course_codes": [
+        "ICT101",
+        "ICT102"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 5",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "academic",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-tx-syn0020-0077"
+    },
+    {
+      "document_id": "REG-SYN0020-0078",
+      "student_id": "SYN0020",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "registrar",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-reg-syn0020-0078"
+    },
+    {
+      "document_id": "EX-SYN0020-0079",
+      "student_id": "SYN0020",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 8",
+      "course_codes": [
+        "ICT101",
+        "ICT102"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 8",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "examination",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-ex-syn0020-0079"
+    },
+    {
+      "document_id": "SS-SYN0020-0080",
+      "student_id": "SYN0020",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "student_services",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-ss-syn0020-0080"
+    },
+    {
+      "document_id": "TX-SYN0021-0081",
+      "student_id": "SYN0021",
+      "document_type": "Transcript",
+      "semester": "Semester 3",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 3",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "academic",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-tx-syn0021-0081"
+    },
+    {
+      "document_id": "REG-SYN0021-0082",
+      "student_id": "SYN0021",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "registrar",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-reg-syn0021-0082"
+    },
+    {
+      "document_id": "EX-SYN0021-0083",
+      "student_id": "SYN0021",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 5",
+      "course_codes": [
+        "ICT301",
+        "ICT302"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 5",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "examination",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ex-syn0021-0083"
+    },
+    {
+      "document_id": "SS-SYN0021-0084",
+      "student_id": "SYN0021",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "student_services",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ss-syn0021-0084"
+    },
+    {
+      "document_id": "TX-SYN0022-0085",
+      "student_id": "SYN0022",
+      "document_type": "Transcript",
+      "semester": "Semester 4",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 4",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "academic",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-tx-syn0022-0085"
+    },
+    {
+      "document_id": "REG-SYN0022-0086",
+      "student_id": "SYN0022",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "registrar",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-reg-syn0022-0086"
+    },
+    {
+      "document_id": "EX-SYN0022-0087",
+      "student_id": "SYN0022",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 8",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 8",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "examination",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ex-syn0022-0087"
+    },
+    {
+      "document_id": "SS-SYN0022-0088",
+      "student_id": "SYN0022",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "student_services",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-ss-syn0022-0088"
+    },
+    {
+      "document_id": "TX-SYN0023-0089",
+      "student_id": "SYN0023",
+      "document_type": "Transcript",
+      "semester": "Semester 3",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 3",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "academic",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-tx-syn0023-0089"
+    },
+    {
+      "document_id": "REG-SYN0023-0090",
+      "student_id": "SYN0023",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "registrar",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-reg-syn0023-0090"
+    },
+    {
+      "document_id": "EX-SYN0023-0091",
+      "student_id": "SYN0023",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 2",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 2",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "examination",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-ex-syn0023-0091"
+    },
+    {
+      "document_id": "SS-SYN0023-0092",
+      "student_id": "SYN0023",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "student_services",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-ss-syn0023-0092"
+    },
+    {
+      "document_id": "TX-SYN0024-0093",
+      "student_id": "SYN0024",
+      "document_type": "Transcript",
+      "semester": "Semester 6",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 6",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "academic",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-tx-syn0024-0093"
+    },
+    {
+      "document_id": "REG-SYN0024-0094",
+      "student_id": "SYN0024",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "registrar",
+      "latest_version": 4,
+      "latest_approved_cid": "synthetic-cid-reg-syn0024-0094"
+    },
+    {
+      "document_id": "EX-SYN0024-0095",
+      "student_id": "SYN0024",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 4",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 4",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "examination",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ex-syn0024-0095"
+    },
+    {
+      "document_id": "SS-SYN0024-0096",
+      "student_id": "SYN0024",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict301",
+        "ict302"
+      ],
+      "repository": "student_services",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ss-syn0024-0096"
+    },
+    {
+      "document_id": "TX-SYN0025-0097",
+      "student_id": "SYN0025",
+      "document_type": "Transcript",
+      "semester": "Semester 7",
+      "course_codes": [
+        "ICT501",
+        "ICT502"
+      ],
+      "keywords": [
+        "transcript",
+        "academic record",
+        "grades",
+        "course results",
+        "semester 7",
+        "ict501",
+        "ict502"
+      ],
+      "repository": "academic",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-tx-syn0025-0097"
+    },
+    {
+      "document_id": "REG-SYN0025-0098",
+      "student_id": "SYN0025",
+      "document_type": "Registration Certificate",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "registration",
+        "enrolment",
+        "student status",
+        "registrar",
+        "ict201",
+        "ict202"
+      ],
+      "repository": "registrar",
+      "latest_version": 3,
+      "latest_approved_cid": "synthetic-cid-reg-syn0025-0098"
+    },
+    {
+      "document_id": "EX-SYN0025-0099",
+      "student_id": "SYN0025",
+      "document_type": "Examination Result Sheet",
+      "semester": "Semester 3",
+      "course_codes": [
+        "ICT401",
+        "ICT402"
+      ],
+      "keywords": [
+        "examination",
+        "exam results",
+        "marks",
+        "assessment",
+        "semester 3",
+        "ict401",
+        "ict402"
+      ],
+      "repository": "examination",
+      "latest_version": 2,
+      "latest_approved_cid": "synthetic-cid-ex-syn0025-0099"
+    },
+    {
+      "document_id": "SS-SYN0025-0100",
+      "student_id": "SYN0025",
+      "document_type": "Student Service Record",
+      "semester": null,
+      "course_codes": [],
+      "keywords": [
+        "student services",
+        "welfare",
+        "scholarship",
+        "student support",
+        "ict101",
+        "ict102"
+      ],
+      "repository": "student_services",
+      "latest_version": 1,
+      "latest_approved_cid": "synthetic-cid-ss-syn0025-0100"
+    }
+  ]
+}

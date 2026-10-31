@@ -1,0 +1,24 @@
+{
+  "dataset_type": "generated_test_fixture",
+  "seed": 20261029,
+  "document_count": 100,
+  "query_count": 100,
+  "query_category_counts": {
+    "scoped_natural_language": 40,
+    "broad_student_records": 20,
+    "attribute_search": 20,
+    "no_answer": 20
+  },
+  "repository_counts": {
+    "academic": 25,
+    "registrar": 25,
+    "examination": 25,
+    "student_services": 25
+  },
+  "student_count": 25,
+  "source": "locally generated test data",
+  "real_blockchain_records": 0,
+  "real_ipfs_objects": 0,
+  "blockchain_writes": 0,
+  "ipfs_uploads": 0
+}

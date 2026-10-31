@@ -1,0 +1,1551 @@
+{
+  "description": "Mixed-difficulty metadata retrieval benchmark with scoped, broad, attribute, and no-answer queries.",
+  "dataset_type": "generated_evaluation_benchmark",
+  "ground_truth_status": "generated_unverified",
+  "metadata_record_count_at_generation": 100,
+  "k_values": [
+    1,
+    3,
+    5
+  ],
+  "queries": [
+    {
+      "id": "Q-0001",
+      "category": "scoped_natural_language",
+      "query": "I need proof of my academic performance for student STU0001",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0001",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0001-0001"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0002",
+      "category": "scoped_natural_language",
+      "query": "Can you locate the enrolment confirmation for STU0001?",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0001",
+      "course_code": null,
+      "relevant_document_ids": [
+        "REG-STU0001-0002"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0003",
+      "category": "scoped_natural_language",
+      "query": "Please find the exam marks document for student STU0001",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0001",
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0001-0003"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0004",
+      "category": "scoped_natural_language",
+      "query": "Look up student support or welfare information for STU0001",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0001",
+      "course_code": null,
+      "relevant_document_ids": [
+        "SS-STU0001-0004"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0005",
+      "category": "scoped_natural_language",
+      "query": "I need the official record showing that STU0002 is registered",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0002",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0002-0005"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0006",
+      "category": "scoped_natural_language",
+      "query": "Find the semester grades record belonging to STU0002",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0002",
+      "course_code": null,
+      "relevant_document_ids": [
+        "REG-STU0002-0006"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0007",
+      "category": "scoped_natural_language",
+      "query": "Locate the examination results for STU0002",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0002",
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0002-0007"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0008",
+      "category": "scoped_natural_language",
+      "query": "Show the student services file for STU0002",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0002",
+      "course_code": null,
+      "relevant_document_ids": [
+        "SS-STU0002-0008"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0009",
+      "category": "scoped_natural_language",
+      "query": "I need proof of my academic performance for student STU0003",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0003",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0003-0009"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0010",
+      "category": "scoped_natural_language",
+      "query": "Can you locate the enrolment confirmation for STU0003?",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0003",
+      "course_code": null,
+      "relevant_document_ids": [
+        "REG-STU0003-0010"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0011",
+      "category": "scoped_natural_language",
+      "query": "Please find the exam marks document for student STU0003",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0003",
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0003-0011"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0012",
+      "category": "scoped_natural_language",
+      "query": "Look up student support or welfare information for STU0003",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0003",
+      "course_code": null,
+      "relevant_document_ids": [
+        "SS-STU0003-0012"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0013",
+      "category": "scoped_natural_language",
+      "query": "I need the official record showing that STU0004 is registered",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0004",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0004-0013"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0014",
+      "category": "scoped_natural_language",
+      "query": "Find the semester grades record belonging to STU0004",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0004",
+      "course_code": null,
+      "relevant_document_ids": [
+        "REG-STU0004-0014"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0015",
+      "category": "scoped_natural_language",
+      "query": "Locate the examination results for STU0004",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0004",
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0004-0015"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0016",
+      "category": "scoped_natural_language",
+      "query": "Show the student services file for STU0004",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0004",
+      "course_code": null,
+      "relevant_document_ids": [
+        "SS-STU0004-0016"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0017",
+      "category": "scoped_natural_language",
+      "query": "I need proof of my academic performance for student STU0005",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0005",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0005-0017"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0018",
+      "category": "scoped_natural_language",
+      "query": "Can you locate the enrolment confirmation for STU0005?",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0005",
+      "course_code": null,
+      "relevant_document_ids": [
+        "REG-STU0005-0018"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0019",
+      "category": "scoped_natural_language",
+      "query": "Please find the exam marks document for student STU0005",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0005",
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0005-0019"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0020",
+      "category": "scoped_natural_language",
+      "query": "Look up student support or welfare information for STU0005",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0005",
+      "course_code": null,
+      "relevant_document_ids": [
+        "SS-STU0005-0020"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0021",
+      "category": "scoped_natural_language",
+      "query": "I need the official record showing that STU0006 is registered",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0006",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0006-0021"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0022",
+      "category": "scoped_natural_language",
+      "query": "Find the semester grades record belonging to STU0006",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0006",
+      "course_code": null,
+      "relevant_document_ids": [
+        "REG-STU0006-0022"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0023",
+      "category": "scoped_natural_language",
+      "query": "Locate the examination results for STU0006",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0006",
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0006-0023"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0024",
+      "category": "scoped_natural_language",
+      "query": "Show the student services file for STU0006",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0006",
+      "course_code": null,
+      "relevant_document_ids": [
+        "SS-STU0006-0024"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0025",
+      "category": "scoped_natural_language",
+      "query": "I need proof of my academic performance for student STU0007",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0007",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0007-0025"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0026",
+      "category": "scoped_natural_language",
+      "query": "Can you locate the enrolment confirmation for STU0007?",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0007",
+      "course_code": null,
+      "relevant_document_ids": [
+        "REG-STU0007-0026"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0027",
+      "category": "scoped_natural_language",
+      "query": "Please find the exam marks document for student STU0007",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0007",
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0007-0027"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0028",
+      "category": "scoped_natural_language",
+      "query": "Look up student support or welfare information for STU0007",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0007",
+      "course_code": null,
+      "relevant_document_ids": [
+        "SS-STU0007-0028"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0029",
+      "category": "scoped_natural_language",
+      "query": "I need the official record showing that STU0008 is registered",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0008",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0008-0029"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0030",
+      "category": "scoped_natural_language",
+      "query": "Find the semester grades record belonging to STU0008",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0008",
+      "course_code": null,
+      "relevant_document_ids": [
+        "REG-STU0008-0030"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0031",
+      "category": "scoped_natural_language",
+      "query": "Locate the examination results for STU0008",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0008",
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0008-0031"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0032",
+      "category": "scoped_natural_language",
+      "query": "Show the student services file for STU0008",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0008",
+      "course_code": null,
+      "relevant_document_ids": [
+        "SS-STU0008-0032"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0033",
+      "category": "scoped_natural_language",
+      "query": "I need proof of my academic performance for student STU0009",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0009",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0009-0033"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0034",
+      "category": "scoped_natural_language",
+      "query": "Can you locate the enrolment confirmation for STU0009?",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0009",
+      "course_code": null,
+      "relevant_document_ids": [
+        "REG-STU0009-0034"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0035",
+      "category": "scoped_natural_language",
+      "query": "Please find the exam marks document for student STU0009",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0009",
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0009-0035"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0036",
+      "category": "scoped_natural_language",
+      "query": "Look up student support or welfare information for STU0009",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0009",
+      "course_code": null,
+      "relevant_document_ids": [
+        "SS-STU0009-0036"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0037",
+      "category": "scoped_natural_language",
+      "query": "I need the official record showing that STU0010 is registered",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0010",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0010-0037"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0038",
+      "category": "scoped_natural_language",
+      "query": "Find the semester grades record belonging to STU0010",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0010",
+      "course_code": null,
+      "relevant_document_ids": [
+        "REG-STU0010-0038"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0039",
+      "category": "scoped_natural_language",
+      "query": "Locate the examination results for STU0010",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0010",
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0010-0039"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0040",
+      "category": "scoped_natural_language",
+      "query": "Show the student services file for STU0010",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0010",
+      "course_code": null,
+      "relevant_document_ids": [
+        "SS-STU0010-0040"
+      ],
+      "notes": "Single intended target with an explicit student scope and repository."
+    },
+    {
+      "id": "Q-0041",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0001",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0001",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0001-0001",
+        "REG-STU0001-0002",
+        "EX-STU0001-0003",
+        "SS-STU0001-0004"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0042",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0002",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0002",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0002-0005",
+        "REG-STU0002-0006",
+        "EX-STU0002-0007",
+        "SS-STU0002-0008"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0043",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0003",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0003",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0003-0009",
+        "REG-STU0003-0010",
+        "EX-STU0003-0011",
+        "SS-STU0003-0012"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0044",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0004",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0004",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0004-0013",
+        "REG-STU0004-0014",
+        "EX-STU0004-0015",
+        "SS-STU0004-0016"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0045",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0005",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0005",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0005-0017",
+        "REG-STU0005-0018",
+        "EX-STU0005-0019",
+        "SS-STU0005-0020"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0046",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0006",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0006",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0006-0021",
+        "REG-STU0006-0022",
+        "EX-STU0006-0023",
+        "SS-STU0006-0024"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0047",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0007",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0007",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0007-0025",
+        "REG-STU0007-0026",
+        "EX-STU0007-0027",
+        "SS-STU0007-0028"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0048",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0008",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0008",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0008-0029",
+        "REG-STU0008-0030",
+        "EX-STU0008-0031",
+        "SS-STU0008-0032"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0049",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0009",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0009",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0009-0033",
+        "REG-STU0009-0034",
+        "EX-STU0009-0035",
+        "SS-STU0009-0036"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0050",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0010",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0010",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0010-0037",
+        "REG-STU0010-0038",
+        "EX-STU0010-0039",
+        "SS-STU0010-0040"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0051",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0011",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0011",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0011-0041",
+        "REG-STU0011-0042",
+        "EX-STU0011-0043",
+        "SS-STU0011-0044"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0052",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0012",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0012",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0012-0045",
+        "REG-STU0012-0046",
+        "EX-STU0012-0047",
+        "SS-STU0012-0048"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0053",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0013",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0013",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0013-0049",
+        "REG-STU0013-0050",
+        "EX-STU0013-0051",
+        "SS-STU0013-0052"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0054",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0014",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0014",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0014-0053",
+        "REG-STU0014-0054",
+        "EX-STU0014-0055",
+        "SS-STU0014-0056"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0055",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0015",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0015",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0015-0057",
+        "REG-STU0015-0058",
+        "EX-STU0015-0059",
+        "SS-STU0015-0060"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0056",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0016",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0016",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0016-0061",
+        "REG-STU0016-0062",
+        "EX-STU0016-0063",
+        "SS-STU0016-0064"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0057",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0017",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0017",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0017-0065",
+        "REG-STU0017-0066",
+        "EX-STU0017-0067",
+        "SS-STU0017-0068"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0058",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0018",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0018",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0018-0069",
+        "REG-STU0018-0070",
+        "EX-STU0018-0071",
+        "SS-STU0018-0072"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0059",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0019",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0019",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0019-0073",
+        "REG-STU0019-0074",
+        "EX-STU0019-0075",
+        "SS-STU0019-0076"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0060",
+      "category": "broad_student_records",
+      "query": "Show me the available university records for STU0020",
+      "repositories": [
+        "academic",
+        "registrar",
+        "examination",
+        "student_services"
+      ],
+      "student_id": "STU0020",
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0020-0077",
+        "REG-STU0020-0078",
+        "EX-STU0020-0079",
+        "SS-STU0020-0080"
+      ],
+      "notes": "Multiple records are relevant; tests recall and ranking across repositories."
+    },
+    {
+      "id": "Q-0061",
+      "category": "attribute_search",
+      "query": "Find semester 1 results",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0003-0011",
+        "EX-STU0007-0027",
+        "EX-STU0009-0035",
+        "EX-STU0010-0039",
+        "EX-STU0011-0043",
+        "EX-STU0020-0079",
+        "EX-STU0025-0099"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0062",
+      "category": "attribute_search",
+      "query": "Find academic performance records for semester 2",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0012-0045"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0063",
+      "category": "attribute_search",
+      "query": "Find semester 3 results",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0012-0047"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0064",
+      "category": "attribute_search",
+      "query": "Find academic performance records for semester 4",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0001-0001",
+        "TX-STU0002-0005",
+        "TX-STU0009-0033",
+        "TX-STU0017-0065",
+        "TX-STU0019-0073",
+        "TX-STU0022-0085"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0065",
+      "category": "attribute_search",
+      "query": "Find semester 5 results",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0001-0003",
+        "EX-STU0004-0015",
+        "EX-STU0005-0019",
+        "EX-STU0013-0051"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0066",
+      "category": "attribute_search",
+      "query": "Find academic performance records for semester 6",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0006-0021",
+        "TX-STU0023-0089"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0067",
+      "category": "attribute_search",
+      "query": "Find semester 7 results",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0015-0059",
+        "EX-STU0021-0083",
+        "EX-STU0023-0091",
+        "EX-STU0024-0095"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0068",
+      "category": "attribute_search",
+      "query": "Find academic performance records for semester 8",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0004-0013",
+        "TX-STU0014-0053",
+        "TX-STU0020-0077",
+        "TX-STU0025-0097"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0069",
+      "category": "attribute_search",
+      "query": "Find semester 1 results",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0003-0011",
+        "EX-STU0007-0027",
+        "EX-STU0009-0035",
+        "EX-STU0010-0039",
+        "EX-STU0011-0043",
+        "EX-STU0020-0079",
+        "EX-STU0025-0099"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0070",
+      "category": "attribute_search",
+      "query": "Find academic performance records for semester 2",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0012-0045"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0071",
+      "category": "attribute_search",
+      "query": "Find semester 3 results",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0012-0047"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0072",
+      "category": "attribute_search",
+      "query": "Find academic performance records for semester 4",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0001-0001",
+        "TX-STU0002-0005",
+        "TX-STU0009-0033",
+        "TX-STU0017-0065",
+        "TX-STU0019-0073",
+        "TX-STU0022-0085"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0073",
+      "category": "attribute_search",
+      "query": "Find semester 5 results",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0001-0003",
+        "EX-STU0004-0015",
+        "EX-STU0005-0019",
+        "EX-STU0013-0051"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0074",
+      "category": "attribute_search",
+      "query": "Find academic performance records for semester 6",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0006-0021",
+        "TX-STU0023-0089"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0075",
+      "category": "attribute_search",
+      "query": "Find semester 7 results",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0015-0059",
+        "EX-STU0021-0083",
+        "EX-STU0023-0091",
+        "EX-STU0024-0095"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0076",
+      "category": "attribute_search",
+      "query": "Find academic performance records for semester 8",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0004-0013",
+        "TX-STU0014-0053",
+        "TX-STU0020-0077",
+        "TX-STU0025-0097"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0077",
+      "category": "attribute_search",
+      "query": "Find semester 1 results",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0003-0011",
+        "EX-STU0007-0027",
+        "EX-STU0009-0035",
+        "EX-STU0010-0039",
+        "EX-STU0011-0043",
+        "EX-STU0020-0079",
+        "EX-STU0025-0099"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0078",
+      "category": "attribute_search",
+      "query": "Find academic performance records for semester 2",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0012-0045"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0079",
+      "category": "attribute_search",
+      "query": "Find semester 3 results",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "EX-STU0012-0047"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0080",
+      "category": "attribute_search",
+      "query": "Find academic performance records for semester 4",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": null,
+      "course_code": null,
+      "relevant_document_ids": [
+        "TX-STU0001-0001",
+        "TX-STU0002-0005",
+        "TX-STU0009-0033",
+        "TX-STU0017-0065",
+        "TX-STU0019-0073",
+        "TX-STU0022-0085"
+      ],
+      "notes": "Attribute query; expected set is based on matching metadata attributes."
+    },
+    {
+      "id": "Q-0081",
+      "category": "no_answer",
+      "query": "Find a veterinary license for STU0001",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0001",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0082",
+      "category": "no_answer",
+      "query": "Retrieve a parking permit for STU0002",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0002",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0083",
+      "category": "no_answer",
+      "query": "Find a library fine receipt for STU0003",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0003",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0084",
+      "category": "no_answer",
+      "query": "Show a laboratory equipment calibration certificate for STU0004",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0004",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0085",
+      "category": "no_answer",
+      "query": "Find a dormitory meal voucher for STU0005",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0005",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0086",
+      "category": "no_answer",
+      "query": "Find a veterinary license for STU0006",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0006",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0087",
+      "category": "no_answer",
+      "query": "Retrieve a parking permit for STU0007",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0007",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0088",
+      "category": "no_answer",
+      "query": "Find a library fine receipt for STU0008",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0008",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0089",
+      "category": "no_answer",
+      "query": "Show a laboratory equipment calibration certificate for STU0009",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0009",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0090",
+      "category": "no_answer",
+      "query": "Find a dormitory meal voucher for STU0010",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0010",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0091",
+      "category": "no_answer",
+      "query": "Find a veterinary license for STU0011",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0011",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0092",
+      "category": "no_answer",
+      "query": "Retrieve a parking permit for STU0012",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0012",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0093",
+      "category": "no_answer",
+      "query": "Find a library fine receipt for STU0013",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0013",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0094",
+      "category": "no_answer",
+      "query": "Show a laboratory equipment calibration certificate for STU0014",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0014",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0095",
+      "category": "no_answer",
+      "query": "Find a dormitory meal voucher for STU0015",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0015",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0096",
+      "category": "no_answer",
+      "query": "Find a veterinary license for STU0016",
+      "repositories": [
+        "academic"
+      ],
+      "student_id": "STU0016",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0097",
+      "category": "no_answer",
+      "query": "Retrieve a parking permit for STU0017",
+      "repositories": [
+        "registrar"
+      ],
+      "student_id": "STU0017",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0098",
+      "category": "no_answer",
+      "query": "Find a library fine receipt for STU0018",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0018",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0099",
+      "category": "no_answer",
+      "query": "Show a laboratory equipment calibration certificate for STU0019",
+      "repositories": [
+        "examination"
+      ],
+      "student_id": "STU0019",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    },
+    {
+      "id": "Q-0100",
+      "category": "no_answer",
+      "query": "Find a dormitory meal voucher for STU0020",
+      "repositories": [
+        "student_services"
+      ],
+      "student_id": "STU0020",
+      "course_code": null,
+      "relevant_document_ids": [],
+      "notes": "Expected no result because this document type is absent from the metadata fixture."
+    }
+  ],
+  "notes": [
+    "Records and identifiers are generated test fixtures, not real institutional records.",
+    "Relevance labels are provisional and require independent review.",
+    "The benchmark evaluates metadata retrieval only; it does not evaluate authorization, blockchain consistency, IPFS retrieval, decryption, or answer generation."
+  ]
+}

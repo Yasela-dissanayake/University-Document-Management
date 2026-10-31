@@ -1,0 +1,5 @@
+{
+  "status": "NOT_RUN",
+  "note": "This snapshot step does not fetch or decrypt IPFS objects.",
+  "records": []
+}

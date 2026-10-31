@@ -134,9 +134,11 @@ def _score(
 
     normalized_question = _norm(question)
 
-    question_tokens = _tokens(
-        normalized_question
-    )
+    question_tokens = _tokens(normalized_question)
+    # Identity is a filtering constraint, not evidence that the document type
+    # or metadata is relevant to the query.
+    if student_id:
+        question_tokens -= _tokens(student_id)
 
     record_tokens = _tokens(
         _record_text(record)
@@ -160,13 +162,10 @@ def _score(
         record.get("student_id")
     )
 
-    if (
-        normalized_student_id
-        and record_student_id
-        == normalized_student_id
-    ):
-        score += 10
-        reasons.append("student_id_match")
+    # Student identity is enforced as a hard filter in search_repository_metadata.
+    # Do not award relevance points for identity alone: otherwise every document
+    # belonging to that student could appear relevant even when its type/content
+    # metadata does not match the requested task.
 
     # ------------------------------------------------------------------
     # Course code
@@ -316,6 +315,10 @@ def search_repository_metadata(
     """
     Search metadata within one logical repository.
 
+    When student_id or course_code is supplied, it is enforced as a hard
+    filter before relevance scoring. This prevents unrelated students or
+    courses from appearing in the result set.
+
     Returns metadata references only.
 
     It does NOT:
@@ -351,11 +354,25 @@ def search_repository_metadata(
     for record in load_metadata_records(
         records
     ):
-        if (
-            record.get("repository")
-            != repository_name
-        ):
+        if record.get("repository") != repository_name:
             continue
+
+        # Explicit identity and course constraints are hard filters, not
+        # relevance bonuses. This prevents cross-student records from being
+        # returned when a caller supplies a student_id.
+        requested_student_id = _norm(student_id).upper()
+        record_student_id = _norm(record.get("student_id")).upper()
+        if requested_student_id and record_student_id != requested_student_id:
+            continue
+
+        requested_course_code = _norm(course_code).upper()
+        if requested_course_code:
+            record_course_codes = {
+                _norm(code).upper()
+                for code in (record.get("course_codes") or [])
+            }
+            if requested_course_code not in record_course_codes:
+                continue
 
         score, reasons = _score(
             question,
@@ -541,7 +558,9 @@ class RepositoryMetadataRAG:
         Search metadata across the supplied repositories.
 
         The supplied repositories are treated as the permitted search
-        scope. This method does not grant additional access.
+        scope. Supplied student_id and course_code constraints are passed
+        to each repository search as hard filters. This method does not
+        grant additional access.
         """
 
         return search_multiple_repositories(

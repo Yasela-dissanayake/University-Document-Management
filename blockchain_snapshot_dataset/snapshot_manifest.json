@@ -1,0 +1,1323 @@
+{
+  "snapshot_type": "read_only_blockchain_metadata_snapshot",
+  "created_at_utc": "2026-10-29T06:21:15.185149+00:00",
+  "network": {
+    "chain_id": 11155111,
+    "contract_address": "0x28234Bcb8625184d8bD1A3bdFbAa787CCd73e57D",
+    "latest_block_number": 26016443
+  },
+  "candidate_discovery": {
+    "candidate_count": 166,
+    "candidate_ids_are_hints_only": true,
+    "sources": [
+      "local_candidate:phase5_dataset/documents.json",
+      "local_candidate:phase5_dataset/metadata_records.json",
+      "project_scan:build_blockchain_snapshot.py",
+      "project_scan:dataset_generator.py",
+      "project_scan:phase5_dataset/blockchain_verification_report.json",
+      "project_scan:phase5_dataset/documents.json",
+      "project_scan:phase5_dataset/manifest.json",
+      "project_scan:phase5_dataset/metadata_records.json",
+      "project_scan:phase5_dataset/questions.json",
+      "project_scan:phase5_dataset/security_attacks.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_132039.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_134527.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_135820.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_144714.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_152016.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_155136.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_171130.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_182335.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_184606.json",
+      "project_scan:phase5_results/phase5_evaluation_20260920_191110.json",
+      "project_scan:phase5_results/phase5_evaluation_20261026_062730.json",
+      "project_scan:phase5_results/phase5_evaluation_20261026_074912.json",
+      "project_scan:python_backend/ai/rag_benchmark.json",
+      "project_scan:python_backend/ai/test_agent.py",
+      "project_scan:python_backend/diagnose_rpc_submission.py",
+      "project_scan:python_backend/test_document_versioning.py",
+      "project_scan:python_backend/test_hybrid_document_flow.py"
+    ],
+    "method": "Scanned local dataset JSON and project text/source files for document ID patterns, plus optional candidate file."
+  },
+  "counts": {
+    "candidate_ids": 166,
+    "documents_read_from_chain": 22,
+    "not_found_on_chain": 144,
+    "read_errors": 0,
+    "version_entries": 40
+  },
+  "read_status_counts": {
+    "NOT_FOUND_ON_CHAIN": 144,
+    "READ": 22
+  },
+  "completeness": {
+    "complete_chain_inventory": false,
+    "reason": "This first snapshot only checks candidate IDs discovered from local files. Completeness requires a contract-level document index or historical event/transaction discovery."
+  },
+  "safety": {
+    "read_only": true,
+    "blockchain_transactions_submitted": 0,
+    "ipfs_uploads_performed": 0,
+    "decrypted_document_content_saved": false
+  },
+  "dataset_sha256": {
+    "documents.json": "d99bf78bf5db5b8070f1adf0b063f136a34a947a322e0417906ba14d30313129",
+    "metadata_records.json": "d99bf78bf5db5b8070f1adf0b063f136a34a947a322e0417906ba14d30313129",
+    "version_history.json": "2df701bb39da0ce81d83b06a88397dcd3090f5ec31de57ddcde0d4157314a1ce"
+  },
+  "not_found_documents": [
+    {
+      "document_id": "EX-STD006-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD007-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD008-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD009-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD010-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD011-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD012-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD013-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD014-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD015-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD016-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD017-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD018-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD019-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "EX-STD020-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD007-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD008-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD009-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD010-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD011-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD012-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD013-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD014-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD015-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD016-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD017-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD018-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD019-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "REG-STD020-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD006-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD007-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD008-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD009-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD010-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD011-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD012-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD013-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD014-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD015-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD016-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD017-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD018-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD019-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "SS-STD020-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "STD001-TRANSCRIPT",
+      "candidate_sources": [
+        "project_scan:build_blockchain_snapshot.py",
+        "project_scan:python_backend/diagnose_rpc_submission.py",
+        "project_scan:python_backend/test_hybrid_document_flow.py"
+      ]
+    },
+    {
+      "document_id": "STD002-REGISTRATION",
+      "candidate_sources": [
+        "project_scan:python_backend/ai/rag_benchmark.json"
+      ]
+    },
+    {
+      "document_id": "STD003-REGISTRATION",
+      "candidate_sources": [
+        "project_scan:python_backend/ai/rag_benchmark.json"
+      ]
+    },
+    {
+      "document_id": "STD004-REGISTRATION",
+      "candidate_sources": [
+        "project_scan:python_backend/ai/rag_benchmark.json"
+      ]
+    },
+    {
+      "document_id": "STD005-REGISTRATION",
+      "candidate_sources": [
+        "project_scan:python_backend/ai/rag_benchmark.json"
+      ]
+    },
+    {
+      "document_id": "STD006-REGISTRATION",
+      "candidate_sources": [
+        "project_scan:python_backend/ai/rag_benchmark.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD007-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD008-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD009-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD010-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD011-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD012-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD013-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD014-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD015-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD016-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD017-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD018-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD019-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "TX-STD020-001",
+      "candidate_sources": [
+        "local_candidate:phase5_dataset/documents.json",
+        "local_candidate:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/documents.json",
+        "project_scan:phase5_dataset/metadata_records.json",
+        "project_scan:phase5_dataset/questions.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_153657.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_165124.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_172746.json",
+        "project_scan:phase5_results/phase5_evaluation_20260920_191110.json"
+      ]
+    },
+    {
+      "document_id": "ex-std001-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std002-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std003-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std004-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std005-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std006-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std007-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std008-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std009-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std010-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std011-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std012-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std013-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std014-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std015-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std016-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std017-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std018-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std019-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ex-std020-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std001-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std002-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std003-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std004-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std005-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std006-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std007-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std008-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std009-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std010-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std011-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std012-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std013-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std014-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std015-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std016-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std017-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std018-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std019-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "reg-std020-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std001-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std002-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std003-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std004-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std005-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std006-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std007-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std008-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std009-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std010-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std011-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std012-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std013-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std014-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std015-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std016-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std017-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std018-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std019-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "ss-std020-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std001-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std002-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std003-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std004-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std005-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std006-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std007-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std008-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std009-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std010-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std011-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std012-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std013-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std014-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std015-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std016-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std017-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std018-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std019-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    },
+    {
+      "document_id": "tx-std020-001",
+      "candidate_sources": [
+        "project_scan:phase5_dataset/blockchain_verification_report.json",
+        "project_scan:phase5_dataset/metadata_records.json"
+      ]
+    }
+  ],
+  "read_errors": []
+}
