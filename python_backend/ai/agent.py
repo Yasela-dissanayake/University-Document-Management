@@ -595,7 +595,16 @@ def authorize_query(state: AgentState) -> Dict[str, Any]:
             reason = "student_id_required_for_protected_request"
         else:
             try:
-                allowed = bool(rbac.can_view_offchain(user, student_id))
+                role = str(user.get("role", "")).strip().upper()
+                provisional_exam_lookup = (
+                    role == "EXAM_DIVISION"
+                    and intent == "document_retrieval"
+                    and rbac.can_attempt_document_lookup(user, intent)
+                )
+                allowed = bool(
+                    rbac.can_view_offchain(user, student_id)
+                    or provisional_exam_lookup
+                )
                 reason = "rbac_allowed" if allowed else "rbac_denied"
             except Exception:
                 logger.exception("RBAC check failed")

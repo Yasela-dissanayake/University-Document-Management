@@ -228,7 +228,7 @@ def register():
                 doc["timestamp"] = timestamp
 
                 # --- NEW: encrypt and store with default ACL principals ---
-                principals = acl.default_principals(student_id)
+                principals = acl.default_principals(student_id, doc.get("document_type"))
                 ipfs_hash, content_hash = acl.encrypt_and_store(doc, principals, ipfs)
 
             tx_hash = bc.register_student_record(
@@ -283,7 +283,7 @@ def update():
             doc["timestamp"] = timestamp
 
             # Encrypt & store with ACL
-            principals = acl.default_principals(student_id)
+            principals = acl.default_principals(student_id, doc.get("document_type"))
             ipfs_hash, content_hash = acl.encrypt_and_store(doc, principals, ipfs)
 
             # ✅ ADD THIS: Create workflow record BEFORE blockchain

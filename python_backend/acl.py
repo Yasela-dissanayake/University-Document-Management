@@ -283,6 +283,7 @@ DEFAULT_ROLE_PRINCIPALS = {
 
 def default_principals(
     student_id: str,
+    document_type: Optional[str] = None,
 ) -> List[str]:
     """
     Return the default principals for a document.
@@ -306,6 +307,9 @@ def default_principals(
         principals.append(
             f"student:{sid}"
         )
+
+    if str(document_type or "").strip().upper() == "EXAMINATION RESULT SHEET":
+        principals.append("role:EXAM_DIVISION")
 
     return sorted(
         set(principals)
@@ -647,6 +651,38 @@ def _find_wrapped_for(
         str(row[0]),
         bytes(row[1]),
     )
+
+
+def grant_principal_access(cid: str, source_principal: str, target_principal: str) -> None:
+    """
+    Re-wrap a document DEK for another principal using an existing source
+    grant. Requires the trusted host's ACL master secret; does not change
+    blockchain or IPFS content.
+    """
+    cid = str(cid or "").strip()
+    source = str(source_principal or "").strip()
+    target = str(target_principal or "").strip()
+    if not cid or not source or not target:
+        raise ValueError("cid, source_principal and target_principal are required")
+    if source == target:
+        raise ValueError("Source and target principals must differ")
+    found = _find_wrapped_for(cid, [source])
+    if not found:
+        raise PermissionError(f"No wrapped key exists for {source!r}")
+    _, wrapped_key = found
+    source_fernet = _fernet_from_key(_derive_kek_for_principal(source))
+    try:
+        data_key = source_fernet.decrypt(wrapped_key)
+    except Exception as exc:
+        raise PermissionError(f"Unable to unwrap DEK for {source!r}") from exc
+    target_fernet = _fernet_from_key(_derive_kek_for_principal(target))
+    target_wrapped = target_fernet.encrypt(data_key)
+    with sqlite3.connect(DB_PATH) as connection:
+        connection.execute(
+            """INSERT OR REPLACE INTO doc_wrapped_keys (cid, principal, wrapped_key)
+               VALUES (?, ?, ?)""",
+            (cid, target, target_wrapped),
+        )
 
 
 # ===========================================================================

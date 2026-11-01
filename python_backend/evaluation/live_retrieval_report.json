@@ -1,7 +1,7 @@
 {
   "evaluation": {
     "name": "live_blockchain_ipfs_acl_document_retrieval",
-    "generated_at": "2026-10-31T05:34:45.550873+00:00",
+    "generated_at": "2026-11-01T09:27:58.013680+00:00",
     "project_root": "/mnt/sda3/University/4th-year/Research/V8_latest/university_blockchain_system",
     "inventory_file": "/mnt/sda3/University/4th-year/Research/V8_latest/university_blockchain_system/python_backend/evaluation/live_deployment_report.json",
     "output_file": "/mnt/sda3/University/4th-year/Research/V8_latest/university_blockchain_system/python_backend/evaluation/live_retrieval_report.json",
@@ -94,19 +94,19 @@
   },
   "summary": {
     "total_attempts": 161,
-    "retrieved_and_integrity_verified": 110,
+    "retrieved_and_integrity_verified": 115,
     "retrieved_but_integrity_not_verified": 0,
-    "denied_by_rbac": 46,
+    "denied_by_rbac": 41,
     "denied_by_acl": 0,
     "other_failures": 5,
     "outcomes": {
-      "denied_by_rbac": 46,
+      "denied_by_rbac": 41,
       "ipfs_error": 5,
-      "retrieved_and_integrity_verified": 110
+      "retrieved_and_integrity_verified": 115
     },
-    "successful_integrity_verification_rate": 0.6832,
-    "mean_latency_ms": 4670.122,
-    "max_latency_ms": 8665.461,
+    "successful_integrity_verification_rate": 0.7143,
+    "mean_latency_ms": 3940.6,
+    "max_latency_ms": 6716.671,
     "note": "Access denials are reported separately and are not automatically classified as defects. Expected access must be assessed against the configured RBAC and per-document ACL policy."
   },
   "results": [
@@ -133,7 +133,7 @@
       "ipfs_cid": "QmVJTBDxj4itVofJC6WYMBaYauEDcCRXjSprACUyWge6Et",
       "expected_content_hash": "fd9f9c6ae771c3df3b833039e99e55b5c4f6f0bba7920908f5ca9112c43b3b0f",
       "actual_content_hash": "fd9f9c6ae771c3df3b833039e99e55b5c4f6f0bba7920908f5ca9112c43b3b0f",
-      "elapsed_ms": 5425.135,
+      "elapsed_ms": 4869.596,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -153,27 +153,27 @@
         "role": "EXAM_DIVISION",
         "student_id": ""
       },
-      "outcome": "denied_by_rbac",
-      "ok": false,
-      "authorized": false,
-      "integrity_verified": false,
-      "document_content_returned_in_memory": false,
+      "outcome": "retrieved_and_integrity_verified",
+      "ok": true,
+      "authorized": true,
+      "integrity_verified": true,
+      "document_content_returned_in_memory": true,
       "document_content_written_to_report": false,
-      "reason": "forbidden",
+      "reason": null,
       "exception_type": null,
-      "resolved_version": null,
-      "approval_status": null,
-      "ipfs_cid": null,
-      "expected_content_hash": "",
-      "actual_content_hash": "",
-      "elapsed_ms": 2197.55,
+      "resolved_version": 1,
+      "approval_status": "APPROVED",
+      "ipfs_cid": "QmVJTBDxj4itVofJC6WYMBaYauEDcCRXjSprACUyWge6Et",
+      "expected_content_hash": "fd9f9c6ae771c3df3b833039e99e55b5c4f6f0bba7920908f5ca9112c43b3b0f",
+      "actual_content_hash": "fd9f9c6ae771c3df3b833039e99e55b5c4f6f0bba7920908f5ca9112c43b3b0f",
+      "elapsed_ms": 4535.491,
       "trace": {
-        "rbac_allowed": false,
-        "blockchain_resolved": false,
-        "ipfs_retrieved": false,
-        "integrity_verified": false,
-        "authorized": false,
-        "explanation": "Access denied by RBAC before confidential IPFS retrieval."
+        "rbac_allowed": true,
+        "blockchain_resolved": true,
+        "ipfs_retrieved": true,
+        "integrity_verified": true,
+        "authorized": true,
+        "explanation": "Document access authorized. Retrieved immutable version 1 from blockchain-resolved CID QmVJTBDxj4itVofJC6WYMBaYauEDcCRXjSprACUyWge6Et. Integrity verified against the blockchain content hash."
       }
     },
     {
@@ -199,7 +199,7 @@
       "ipfs_cid": "QmVJTBDxj4itVofJC6WYMBaYauEDcCRXjSprACUyWge6Et",
       "expected_content_hash": "fd9f9c6ae771c3df3b833039e99e55b5c4f6f0bba7920908f5ca9112c43b3b0f",
       "actual_content_hash": "fd9f9c6ae771c3df3b833039e99e55b5c4f6f0bba7920908f5ca9112c43b3b0f",
-      "elapsed_ms": 7173.993,
+      "elapsed_ms": 4891.796,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -232,7 +232,7 @@
       "ipfs_cid": "QmVJTBDxj4itVofJC6WYMBaYauEDcCRXjSprACUyWge6Et",
       "expected_content_hash": "fd9f9c6ae771c3df3b833039e99e55b5c4f6f0bba7920908f5ca9112c43b3b0f",
       "actual_content_hash": "fd9f9c6ae771c3df3b833039e99e55b5c4f6f0bba7920908f5ca9112c43b3b0f",
-      "elapsed_ms": 8251.847,
+      "elapsed_ms": 4606.433,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -265,7 +265,7 @@
       "ipfs_cid": "QmVJTBDxj4itVofJC6WYMBaYauEDcCRXjSprACUyWge6Et",
       "expected_content_hash": "fd9f9c6ae771c3df3b833039e99e55b5c4f6f0bba7920908f5ca9112c43b3b0f",
       "actual_content_hash": "fd9f9c6ae771c3df3b833039e99e55b5c4f6f0bba7920908f5ca9112c43b3b0f",
-      "elapsed_ms": 7274.947,
+      "elapsed_ms": 4503.65,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -298,7 +298,7 @@
       "ipfs_cid": "QmVJTBDxj4itVofJC6WYMBaYauEDcCRXjSprACUyWge6Et",
       "expected_content_hash": "fd9f9c6ae771c3df3b833039e99e55b5c4f6f0bba7920908f5ca9112c43b3b0f",
       "actual_content_hash": "fd9f9c6ae771c3df3b833039e99e55b5c4f6f0bba7920908f5ca9112c43b3b0f",
-      "elapsed_ms": 7225.353,
+      "elapsed_ms": 5016.511,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -331,7 +331,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2517.76,
+      "elapsed_ms": 1474.93,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -364,7 +364,7 @@
       "ipfs_cid": "QmasPK5dVTG1bYVo3wy91AdjUHxqQAkPnc77j1Av5DXGzq",
       "expected_content_hash": "d9764e01c2db2d7437a14406c31ab340d38b593c2350e242e5760d989f1bd85b",
       "actual_content_hash": "d9764e01c2db2d7437a14406c31ab340d38b593c2350e242e5760d989f1bd85b",
-      "elapsed_ms": 7163.606,
+      "elapsed_ms": 4983.028,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -384,27 +384,27 @@
         "role": "EXAM_DIVISION",
         "student_id": ""
       },
-      "outcome": "denied_by_rbac",
-      "ok": false,
-      "authorized": false,
-      "integrity_verified": false,
-      "document_content_returned_in_memory": false,
+      "outcome": "retrieved_and_integrity_verified",
+      "ok": true,
+      "authorized": true,
+      "integrity_verified": true,
+      "document_content_returned_in_memory": true,
       "document_content_written_to_report": false,
-      "reason": "forbidden",
+      "reason": null,
       "exception_type": null,
-      "resolved_version": null,
-      "approval_status": null,
-      "ipfs_cid": null,
-      "expected_content_hash": "",
-      "actual_content_hash": "",
-      "elapsed_ms": 2426.996,
+      "resolved_version": 1,
+      "approval_status": "APPROVED",
+      "ipfs_cid": "QmasPK5dVTG1bYVo3wy91AdjUHxqQAkPnc77j1Av5DXGzq",
+      "expected_content_hash": "d9764e01c2db2d7437a14406c31ab340d38b593c2350e242e5760d989f1bd85b",
+      "actual_content_hash": "d9764e01c2db2d7437a14406c31ab340d38b593c2350e242e5760d989f1bd85b",
+      "elapsed_ms": 4399.282,
       "trace": {
-        "rbac_allowed": false,
-        "blockchain_resolved": false,
-        "ipfs_retrieved": false,
-        "integrity_verified": false,
-        "authorized": false,
-        "explanation": "Access denied by RBAC before confidential IPFS retrieval."
+        "rbac_allowed": true,
+        "blockchain_resolved": true,
+        "ipfs_retrieved": true,
+        "integrity_verified": true,
+        "authorized": true,
+        "explanation": "Document access authorized. Retrieved immutable version 1 from blockchain-resolved CID QmasPK5dVTG1bYVo3wy91AdjUHxqQAkPnc77j1Av5DXGzq. Integrity verified against the blockchain content hash."
       }
     },
     {
@@ -430,7 +430,7 @@
       "ipfs_cid": "QmasPK5dVTG1bYVo3wy91AdjUHxqQAkPnc77j1Av5DXGzq",
       "expected_content_hash": "d9764e01c2db2d7437a14406c31ab340d38b593c2350e242e5760d989f1bd85b",
       "actual_content_hash": "d9764e01c2db2d7437a14406c31ab340d38b593c2350e242e5760d989f1bd85b",
-      "elapsed_ms": 6833.74,
+      "elapsed_ms": 4423.402,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -463,7 +463,7 @@
       "ipfs_cid": "QmasPK5dVTG1bYVo3wy91AdjUHxqQAkPnc77j1Av5DXGzq",
       "expected_content_hash": "d9764e01c2db2d7437a14406c31ab340d38b593c2350e242e5760d989f1bd85b",
       "actual_content_hash": "d9764e01c2db2d7437a14406c31ab340d38b593c2350e242e5760d989f1bd85b",
-      "elapsed_ms": 8041.394,
+      "elapsed_ms": 5197.241,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -496,7 +496,7 @@
       "ipfs_cid": "QmasPK5dVTG1bYVo3wy91AdjUHxqQAkPnc77j1Av5DXGzq",
       "expected_content_hash": "d9764e01c2db2d7437a14406c31ab340d38b593c2350e242e5760d989f1bd85b",
       "actual_content_hash": "d9764e01c2db2d7437a14406c31ab340d38b593c2350e242e5760d989f1bd85b",
-      "elapsed_ms": 7664.679,
+      "elapsed_ms": 4587.295,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -529,7 +529,7 @@
       "ipfs_cid": "QmasPK5dVTG1bYVo3wy91AdjUHxqQAkPnc77j1Av5DXGzq",
       "expected_content_hash": "d9764e01c2db2d7437a14406c31ab340d38b593c2350e242e5760d989f1bd85b",
       "actual_content_hash": "d9764e01c2db2d7437a14406c31ab340d38b593c2350e242e5760d989f1bd85b",
-      "elapsed_ms": 7306.47,
+      "elapsed_ms": 4422.552,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -562,7 +562,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2630.882,
+      "elapsed_ms": 1477.167,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -595,7 +595,7 @@
       "ipfs_cid": "QmQQGsL9Quem7gt9H8VZociXQTbr8JBRCHPZLS2uZd2z7v",
       "expected_content_hash": "41774035d357838b6fc23f0d10775668666174de8ffb9feac006170f7243e696",
       "actual_content_hash": "41774035d357838b6fc23f0d10775668666174de8ffb9feac006170f7243e696",
-      "elapsed_ms": 6695.367,
+      "elapsed_ms": 4730.058,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -615,27 +615,27 @@
         "role": "EXAM_DIVISION",
         "student_id": ""
       },
-      "outcome": "denied_by_rbac",
-      "ok": false,
-      "authorized": false,
-      "integrity_verified": false,
-      "document_content_returned_in_memory": false,
+      "outcome": "retrieved_and_integrity_verified",
+      "ok": true,
+      "authorized": true,
+      "integrity_verified": true,
+      "document_content_returned_in_memory": true,
       "document_content_written_to_report": false,
-      "reason": "forbidden",
+      "reason": null,
       "exception_type": null,
-      "resolved_version": null,
-      "approval_status": null,
-      "ipfs_cid": null,
-      "expected_content_hash": "",
-      "actual_content_hash": "",
-      "elapsed_ms": 2620.918,
+      "resolved_version": 1,
+      "approval_status": "APPROVED",
+      "ipfs_cid": "QmQQGsL9Quem7gt9H8VZociXQTbr8JBRCHPZLS2uZd2z7v",
+      "expected_content_hash": "41774035d357838b6fc23f0d10775668666174de8ffb9feac006170f7243e696",
+      "actual_content_hash": "41774035d357838b6fc23f0d10775668666174de8ffb9feac006170f7243e696",
+      "elapsed_ms": 4442.313,
       "trace": {
-        "rbac_allowed": false,
-        "blockchain_resolved": false,
-        "ipfs_retrieved": false,
-        "integrity_verified": false,
-        "authorized": false,
-        "explanation": "Access denied by RBAC before confidential IPFS retrieval."
+        "rbac_allowed": true,
+        "blockchain_resolved": true,
+        "ipfs_retrieved": true,
+        "integrity_verified": true,
+        "authorized": true,
+        "explanation": "Document access authorized. Retrieved immutable version 1 from blockchain-resolved CID QmQQGsL9Quem7gt9H8VZociXQTbr8JBRCHPZLS2uZd2z7v. Integrity verified against the blockchain content hash."
       }
     },
     {
@@ -661,7 +661,7 @@
       "ipfs_cid": "QmQQGsL9Quem7gt9H8VZociXQTbr8JBRCHPZLS2uZd2z7v",
       "expected_content_hash": "41774035d357838b6fc23f0d10775668666174de8ffb9feac006170f7243e696",
       "actual_content_hash": "41774035d357838b6fc23f0d10775668666174de8ffb9feac006170f7243e696",
-      "elapsed_ms": 7174.112,
+      "elapsed_ms": 4712.463,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -694,7 +694,7 @@
       "ipfs_cid": "QmQQGsL9Quem7gt9H8VZociXQTbr8JBRCHPZLS2uZd2z7v",
       "expected_content_hash": "41774035d357838b6fc23f0d10775668666174de8ffb9feac006170f7243e696",
       "actual_content_hash": "41774035d357838b6fc23f0d10775668666174de8ffb9feac006170f7243e696",
-      "elapsed_ms": 7514.809,
+      "elapsed_ms": 4915.311,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -727,7 +727,7 @@
       "ipfs_cid": "QmQQGsL9Quem7gt9H8VZociXQTbr8JBRCHPZLS2uZd2z7v",
       "expected_content_hash": "41774035d357838b6fc23f0d10775668666174de8ffb9feac006170f7243e696",
       "actual_content_hash": "41774035d357838b6fc23f0d10775668666174de8ffb9feac006170f7243e696",
-      "elapsed_ms": 6929.202,
+      "elapsed_ms": 4595.34,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -760,7 +760,7 @@
       "ipfs_cid": "QmQQGsL9Quem7gt9H8VZociXQTbr8JBRCHPZLS2uZd2z7v",
       "expected_content_hash": "41774035d357838b6fc23f0d10775668666174de8ffb9feac006170f7243e696",
       "actual_content_hash": "41774035d357838b6fc23f0d10775668666174de8ffb9feac006170f7243e696",
-      "elapsed_ms": 7338.078,
+      "elapsed_ms": 4297.038,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -793,7 +793,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2581.982,
+      "elapsed_ms": 1642.167,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -826,7 +826,7 @@
       "ipfs_cid": "QmXqM5AXnEmZSGyKhYbWT6BFYu8RV8VUbPh6M7ih6zcpuP",
       "expected_content_hash": "94dab5aaaac59c08a16992936bca49492dc0f4cdd1ab6aefc3eb76eedcc17f63",
       "actual_content_hash": "94dab5aaaac59c08a16992936bca49492dc0f4cdd1ab6aefc3eb76eedcc17f63",
-      "elapsed_ms": 7254.642,
+      "elapsed_ms": 4459.974,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -846,27 +846,27 @@
         "role": "EXAM_DIVISION",
         "student_id": ""
       },
-      "outcome": "denied_by_rbac",
-      "ok": false,
-      "authorized": false,
-      "integrity_verified": false,
-      "document_content_returned_in_memory": false,
+      "outcome": "retrieved_and_integrity_verified",
+      "ok": true,
+      "authorized": true,
+      "integrity_verified": true,
+      "document_content_returned_in_memory": true,
       "document_content_written_to_report": false,
-      "reason": "forbidden",
+      "reason": null,
       "exception_type": null,
-      "resolved_version": null,
-      "approval_status": null,
-      "ipfs_cid": null,
-      "expected_content_hash": "",
-      "actual_content_hash": "",
-      "elapsed_ms": 2145.064,
+      "resolved_version": 1,
+      "approval_status": "APPROVED",
+      "ipfs_cid": "QmXqM5AXnEmZSGyKhYbWT6BFYu8RV8VUbPh6M7ih6zcpuP",
+      "expected_content_hash": "94dab5aaaac59c08a16992936bca49492dc0f4cdd1ab6aefc3eb76eedcc17f63",
+      "actual_content_hash": "94dab5aaaac59c08a16992936bca49492dc0f4cdd1ab6aefc3eb76eedcc17f63",
+      "elapsed_ms": 4971.607,
       "trace": {
-        "rbac_allowed": false,
-        "blockchain_resolved": false,
-        "ipfs_retrieved": false,
-        "integrity_verified": false,
-        "authorized": false,
-        "explanation": "Access denied by RBAC before confidential IPFS retrieval."
+        "rbac_allowed": true,
+        "blockchain_resolved": true,
+        "ipfs_retrieved": true,
+        "integrity_verified": true,
+        "authorized": true,
+        "explanation": "Document access authorized. Retrieved immutable version 1 from blockchain-resolved CID QmXqM5AXnEmZSGyKhYbWT6BFYu8RV8VUbPh6M7ih6zcpuP. Integrity verified against the blockchain content hash."
       }
     },
     {
@@ -892,7 +892,7 @@
       "ipfs_cid": "QmXqM5AXnEmZSGyKhYbWT6BFYu8RV8VUbPh6M7ih6zcpuP",
       "expected_content_hash": "94dab5aaaac59c08a16992936bca49492dc0f4cdd1ab6aefc3eb76eedcc17f63",
       "actual_content_hash": "94dab5aaaac59c08a16992936bca49492dc0f4cdd1ab6aefc3eb76eedcc17f63",
-      "elapsed_ms": 7134.671,
+      "elapsed_ms": 4573.256,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -925,7 +925,7 @@
       "ipfs_cid": "QmXqM5AXnEmZSGyKhYbWT6BFYu8RV8VUbPh6M7ih6zcpuP",
       "expected_content_hash": "94dab5aaaac59c08a16992936bca49492dc0f4cdd1ab6aefc3eb76eedcc17f63",
       "actual_content_hash": "94dab5aaaac59c08a16992936bca49492dc0f4cdd1ab6aefc3eb76eedcc17f63",
-      "elapsed_ms": 6983.772,
+      "elapsed_ms": 4846.5,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -958,7 +958,7 @@
       "ipfs_cid": "QmXqM5AXnEmZSGyKhYbWT6BFYu8RV8VUbPh6M7ih6zcpuP",
       "expected_content_hash": "94dab5aaaac59c08a16992936bca49492dc0f4cdd1ab6aefc3eb76eedcc17f63",
       "actual_content_hash": "94dab5aaaac59c08a16992936bca49492dc0f4cdd1ab6aefc3eb76eedcc17f63",
-      "elapsed_ms": 8134.784,
+      "elapsed_ms": 6716.671,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -991,7 +991,7 @@
       "ipfs_cid": "QmXqM5AXnEmZSGyKhYbWT6BFYu8RV8VUbPh6M7ih6zcpuP",
       "expected_content_hash": "94dab5aaaac59c08a16992936bca49492dc0f4cdd1ab6aefc3eb76eedcc17f63",
       "actual_content_hash": "94dab5aaaac59c08a16992936bca49492dc0f4cdd1ab6aefc3eb76eedcc17f63",
-      "elapsed_ms": 7692.939,
+      "elapsed_ms": 4846.615,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1024,7 +1024,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2151.201,
+      "elapsed_ms": 1532.465,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -1057,7 +1057,7 @@
       "ipfs_cid": "QmdL4gnGYA1dWJiFRdKnQvfs5MsDwKqBkWR7PGeN43Q7pT",
       "expected_content_hash": "986b8af2e56acd5bbf636435ab48aa7108c5a4dd05f20a68524fccb59018fee9",
       "actual_content_hash": "986b8af2e56acd5bbf636435ab48aa7108c5a4dd05f20a68524fccb59018fee9",
-      "elapsed_ms": 7712.807,
+      "elapsed_ms": 4613.369,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1077,27 +1077,27 @@
         "role": "EXAM_DIVISION",
         "student_id": ""
       },
-      "outcome": "denied_by_rbac",
-      "ok": false,
-      "authorized": false,
-      "integrity_verified": false,
-      "document_content_returned_in_memory": false,
+      "outcome": "retrieved_and_integrity_verified",
+      "ok": true,
+      "authorized": true,
+      "integrity_verified": true,
+      "document_content_returned_in_memory": true,
       "document_content_written_to_report": false,
-      "reason": "forbidden",
+      "reason": null,
       "exception_type": null,
-      "resolved_version": null,
-      "approval_status": null,
-      "ipfs_cid": null,
-      "expected_content_hash": "",
-      "actual_content_hash": "",
-      "elapsed_ms": 2708.12,
+      "resolved_version": 1,
+      "approval_status": "APPROVED",
+      "ipfs_cid": "QmdL4gnGYA1dWJiFRdKnQvfs5MsDwKqBkWR7PGeN43Q7pT",
+      "expected_content_hash": "986b8af2e56acd5bbf636435ab48aa7108c5a4dd05f20a68524fccb59018fee9",
+      "actual_content_hash": "986b8af2e56acd5bbf636435ab48aa7108c5a4dd05f20a68524fccb59018fee9",
+      "elapsed_ms": 4535.459,
       "trace": {
-        "rbac_allowed": false,
-        "blockchain_resolved": false,
-        "ipfs_retrieved": false,
-        "integrity_verified": false,
-        "authorized": false,
-        "explanation": "Access denied by RBAC before confidential IPFS retrieval."
+        "rbac_allowed": true,
+        "blockchain_resolved": true,
+        "ipfs_retrieved": true,
+        "integrity_verified": true,
+        "authorized": true,
+        "explanation": "Document access authorized. Retrieved immutable version 1 from blockchain-resolved CID QmdL4gnGYA1dWJiFRdKnQvfs5MsDwKqBkWR7PGeN43Q7pT. Integrity verified against the blockchain content hash."
       }
     },
     {
@@ -1123,7 +1123,7 @@
       "ipfs_cid": "QmdL4gnGYA1dWJiFRdKnQvfs5MsDwKqBkWR7PGeN43Q7pT",
       "expected_content_hash": "986b8af2e56acd5bbf636435ab48aa7108c5a4dd05f20a68524fccb59018fee9",
       "actual_content_hash": "986b8af2e56acd5bbf636435ab48aa7108c5a4dd05f20a68524fccb59018fee9",
-      "elapsed_ms": 7611.352,
+      "elapsed_ms": 5001.387,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1156,7 +1156,7 @@
       "ipfs_cid": "QmdL4gnGYA1dWJiFRdKnQvfs5MsDwKqBkWR7PGeN43Q7pT",
       "expected_content_hash": "986b8af2e56acd5bbf636435ab48aa7108c5a4dd05f20a68524fccb59018fee9",
       "actual_content_hash": "986b8af2e56acd5bbf636435ab48aa7108c5a4dd05f20a68524fccb59018fee9",
-      "elapsed_ms": 8131.212,
+      "elapsed_ms": 4818.822,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1189,7 +1189,7 @@
       "ipfs_cid": "QmdL4gnGYA1dWJiFRdKnQvfs5MsDwKqBkWR7PGeN43Q7pT",
       "expected_content_hash": "986b8af2e56acd5bbf636435ab48aa7108c5a4dd05f20a68524fccb59018fee9",
       "actual_content_hash": "986b8af2e56acd5bbf636435ab48aa7108c5a4dd05f20a68524fccb59018fee9",
-      "elapsed_ms": 7175.144,
+      "elapsed_ms": 4683.747,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1222,7 +1222,7 @@
       "ipfs_cid": "QmdL4gnGYA1dWJiFRdKnQvfs5MsDwKqBkWR7PGeN43Q7pT",
       "expected_content_hash": "986b8af2e56acd5bbf636435ab48aa7108c5a4dd05f20a68524fccb59018fee9",
       "actual_content_hash": "986b8af2e56acd5bbf636435ab48aa7108c5a4dd05f20a68524fccb59018fee9",
-      "elapsed_ms": 7289.798,
+      "elapsed_ms": 4515.919,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1255,7 +1255,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2506.804,
+      "elapsed_ms": 1625.045,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -1288,7 +1288,7 @@
       "ipfs_cid": "QmSoQY9Wi9qupZwRvWn1CbBfFs19tWHE8pcCrrMKSjU9o8",
       "expected_content_hash": "477b48fa5300b4a29cad0736365cdafb5d9af12f8b8b606730f53f629fc26fbc",
       "actual_content_hash": "477b48fa5300b4a29cad0736365cdafb5d9af12f8b8b606730f53f629fc26fbc",
-      "elapsed_ms": 6962.129,
+      "elapsed_ms": 4725.707,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1321,7 +1321,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2552.408,
+      "elapsed_ms": 1552.71,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -1354,7 +1354,7 @@
       "ipfs_cid": "QmSoQY9Wi9qupZwRvWn1CbBfFs19tWHE8pcCrrMKSjU9o8",
       "expected_content_hash": "477b48fa5300b4a29cad0736365cdafb5d9af12f8b8b606730f53f629fc26fbc",
       "actual_content_hash": "477b48fa5300b4a29cad0736365cdafb5d9af12f8b8b606730f53f629fc26fbc",
-      "elapsed_ms": 7763.569,
+      "elapsed_ms": 4585.267,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1387,7 +1387,7 @@
       "ipfs_cid": "QmSoQY9Wi9qupZwRvWn1CbBfFs19tWHE8pcCrrMKSjU9o8",
       "expected_content_hash": "477b48fa5300b4a29cad0736365cdafb5d9af12f8b8b606730f53f629fc26fbc",
       "actual_content_hash": "477b48fa5300b4a29cad0736365cdafb5d9af12f8b8b606730f53f629fc26fbc",
-      "elapsed_ms": 7767.012,
+      "elapsed_ms": 4832.853,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1420,7 +1420,7 @@
       "ipfs_cid": "QmSoQY9Wi9qupZwRvWn1CbBfFs19tWHE8pcCrrMKSjU9o8",
       "expected_content_hash": "477b48fa5300b4a29cad0736365cdafb5d9af12f8b8b606730f53f629fc26fbc",
       "actual_content_hash": "477b48fa5300b4a29cad0736365cdafb5d9af12f8b8b606730f53f629fc26fbc",
-      "elapsed_ms": 6819.734,
+      "elapsed_ms": 5163.836,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1453,7 +1453,7 @@
       "ipfs_cid": "QmSoQY9Wi9qupZwRvWn1CbBfFs19tWHE8pcCrrMKSjU9o8",
       "expected_content_hash": "477b48fa5300b4a29cad0736365cdafb5d9af12f8b8b606730f53f629fc26fbc",
       "actual_content_hash": "477b48fa5300b4a29cad0736365cdafb5d9af12f8b8b606730f53f629fc26fbc",
-      "elapsed_ms": 7156.3,
+      "elapsed_ms": 4916.152,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1486,7 +1486,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 3020.428,
+      "elapsed_ms": 1565.15,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -1519,7 +1519,7 @@
       "ipfs_cid": "QmZRE5m3wJ9rYdRXpXiVhQzEqBoYbo8v4b8kUM6Se9ZZjf",
       "expected_content_hash": "ebab70bd38a5ee01c9d9b13a34e1800d7f4ac2ffe3d3d84e31a1e826340cbb32",
       "actual_content_hash": "ebab70bd38a5ee01c9d9b13a34e1800d7f4ac2ffe3d3d84e31a1e826340cbb32",
-      "elapsed_ms": 7339.046,
+      "elapsed_ms": 4926.196,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1552,7 +1552,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2344.0,
+      "elapsed_ms": 1524.835,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -1585,7 +1585,7 @@
       "ipfs_cid": "QmZRE5m3wJ9rYdRXpXiVhQzEqBoYbo8v4b8kUM6Se9ZZjf",
       "expected_content_hash": "ebab70bd38a5ee01c9d9b13a34e1800d7f4ac2ffe3d3d84e31a1e826340cbb32",
       "actual_content_hash": "ebab70bd38a5ee01c9d9b13a34e1800d7f4ac2ffe3d3d84e31a1e826340cbb32",
-      "elapsed_ms": 6951.81,
+      "elapsed_ms": 4718.572,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1618,7 +1618,7 @@
       "ipfs_cid": "QmZRE5m3wJ9rYdRXpXiVhQzEqBoYbo8v4b8kUM6Se9ZZjf",
       "expected_content_hash": "ebab70bd38a5ee01c9d9b13a34e1800d7f4ac2ffe3d3d84e31a1e826340cbb32",
       "actual_content_hash": "ebab70bd38a5ee01c9d9b13a34e1800d7f4ac2ffe3d3d84e31a1e826340cbb32",
-      "elapsed_ms": 7864.231,
+      "elapsed_ms": 4458.697,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1651,7 +1651,7 @@
       "ipfs_cid": "QmZRE5m3wJ9rYdRXpXiVhQzEqBoYbo8v4b8kUM6Se9ZZjf",
       "expected_content_hash": "ebab70bd38a5ee01c9d9b13a34e1800d7f4ac2ffe3d3d84e31a1e826340cbb32",
       "actual_content_hash": "ebab70bd38a5ee01c9d9b13a34e1800d7f4ac2ffe3d3d84e31a1e826340cbb32",
-      "elapsed_ms": 7754.945,
+      "elapsed_ms": 4749.278,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1684,7 +1684,7 @@
       "ipfs_cid": "QmZRE5m3wJ9rYdRXpXiVhQzEqBoYbo8v4b8kUM6Se9ZZjf",
       "expected_content_hash": "ebab70bd38a5ee01c9d9b13a34e1800d7f4ac2ffe3d3d84e31a1e826340cbb32",
       "actual_content_hash": "ebab70bd38a5ee01c9d9b13a34e1800d7f4ac2ffe3d3d84e31a1e826340cbb32",
-      "elapsed_ms": 8665.461,
+      "elapsed_ms": 4675.317,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1717,7 +1717,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2125.723,
+      "elapsed_ms": 1605.259,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -1750,7 +1750,7 @@
       "ipfs_cid": "QmNUcYCmC9x29c1b2yeCjKz9mXk1mi5JNrLuQhRFtUmGkB",
       "expected_content_hash": "bb86dc760c70c675e95e78c766e238fb78499e583b44d268db03ee4e87381ce1",
       "actual_content_hash": "bb86dc760c70c675e95e78c766e238fb78499e583b44d268db03ee4e87381ce1",
-      "elapsed_ms": 7706.599,
+      "elapsed_ms": 4581.706,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1783,7 +1783,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2601.455,
+      "elapsed_ms": 1730.281,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -1816,7 +1816,7 @@
       "ipfs_cid": "QmNUcYCmC9x29c1b2yeCjKz9mXk1mi5JNrLuQhRFtUmGkB",
       "expected_content_hash": "bb86dc760c70c675e95e78c766e238fb78499e583b44d268db03ee4e87381ce1",
       "actual_content_hash": "bb86dc760c70c675e95e78c766e238fb78499e583b44d268db03ee4e87381ce1",
-      "elapsed_ms": 7288.523,
+      "elapsed_ms": 4756.391,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1849,7 +1849,7 @@
       "ipfs_cid": "QmNUcYCmC9x29c1b2yeCjKz9mXk1mi5JNrLuQhRFtUmGkB",
       "expected_content_hash": "bb86dc760c70c675e95e78c766e238fb78499e583b44d268db03ee4e87381ce1",
       "actual_content_hash": "bb86dc760c70c675e95e78c766e238fb78499e583b44d268db03ee4e87381ce1",
-      "elapsed_ms": 6623.795,
+      "elapsed_ms": 4665.191,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1882,7 +1882,7 @@
       "ipfs_cid": "QmNUcYCmC9x29c1b2yeCjKz9mXk1mi5JNrLuQhRFtUmGkB",
       "expected_content_hash": "bb86dc760c70c675e95e78c766e238fb78499e583b44d268db03ee4e87381ce1",
       "actual_content_hash": "bb86dc760c70c675e95e78c766e238fb78499e583b44d268db03ee4e87381ce1",
-      "elapsed_ms": 7804.339,
+      "elapsed_ms": 4566.459,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1915,7 +1915,7 @@
       "ipfs_cid": "QmNUcYCmC9x29c1b2yeCjKz9mXk1mi5JNrLuQhRFtUmGkB",
       "expected_content_hash": "bb86dc760c70c675e95e78c766e238fb78499e583b44d268db03ee4e87381ce1",
       "actual_content_hash": "bb86dc760c70c675e95e78c766e238fb78499e583b44d268db03ee4e87381ce1",
-      "elapsed_ms": 7300.539,
+      "elapsed_ms": 4361.693,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -1948,7 +1948,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2618.602,
+      "elapsed_ms": 1426.698,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -1981,7 +1981,7 @@
       "ipfs_cid": "QmQipQitAeukxpLntW4sLbdWrya5n6ADnLHwN6q9pDZcQL",
       "expected_content_hash": "fbcd84f1ec43eb3e3a4e56bd631cd450b9260b47443922928dc2850a135978a0",
       "actual_content_hash": "fbcd84f1ec43eb3e3a4e56bd631cd450b9260b47443922928dc2850a135978a0",
-      "elapsed_ms": 7447.415,
+      "elapsed_ms": 4394.632,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2014,7 +2014,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2837.273,
+      "elapsed_ms": 1389.73,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -2047,7 +2047,7 @@
       "ipfs_cid": "QmQipQitAeukxpLntW4sLbdWrya5n6ADnLHwN6q9pDZcQL",
       "expected_content_hash": "fbcd84f1ec43eb3e3a4e56bd631cd450b9260b47443922928dc2850a135978a0",
       "actual_content_hash": "fbcd84f1ec43eb3e3a4e56bd631cd450b9260b47443922928dc2850a135978a0",
-      "elapsed_ms": 8562.113,
+      "elapsed_ms": 4408.903,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2080,7 +2080,7 @@
       "ipfs_cid": "QmQipQitAeukxpLntW4sLbdWrya5n6ADnLHwN6q9pDZcQL",
       "expected_content_hash": "fbcd84f1ec43eb3e3a4e56bd631cd450b9260b47443922928dc2850a135978a0",
       "actual_content_hash": "fbcd84f1ec43eb3e3a4e56bd631cd450b9260b47443922928dc2850a135978a0",
-      "elapsed_ms": 7725.533,
+      "elapsed_ms": 4370.331,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2113,7 +2113,7 @@
       "ipfs_cid": "QmQipQitAeukxpLntW4sLbdWrya5n6ADnLHwN6q9pDZcQL",
       "expected_content_hash": "fbcd84f1ec43eb3e3a4e56bd631cd450b9260b47443922928dc2850a135978a0",
       "actual_content_hash": "fbcd84f1ec43eb3e3a4e56bd631cd450b9260b47443922928dc2850a135978a0",
-      "elapsed_ms": 7612.948,
+      "elapsed_ms": 4285.597,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2146,7 +2146,7 @@
       "ipfs_cid": "QmQipQitAeukxpLntW4sLbdWrya5n6ADnLHwN6q9pDZcQL",
       "expected_content_hash": "fbcd84f1ec43eb3e3a4e56bd631cd450b9260b47443922928dc2850a135978a0",
       "actual_content_hash": "fbcd84f1ec43eb3e3a4e56bd631cd450b9260b47443922928dc2850a135978a0",
-      "elapsed_ms": 7195.78,
+      "elapsed_ms": 4590.319,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2179,7 +2179,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2275.064,
+      "elapsed_ms": 1497.907,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -2212,7 +2212,7 @@
       "ipfs_cid": "Qmb7hsKHoQUWYvhujvBSJ3q2wJVAircGEpUGNQBxiMRi7g",
       "expected_content_hash": "28f9b99f200ebed84cf0f6f1bce106b9aa0de705214b0cf7d3da725aeca600e1",
       "actual_content_hash": "28f9b99f200ebed84cf0f6f1bce106b9aa0de705214b0cf7d3da725aeca600e1",
-      "elapsed_ms": 7238.444,
+      "elapsed_ms": 5313.672,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2245,7 +2245,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2213.781,
+      "elapsed_ms": 1484.205,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -2278,7 +2278,7 @@
       "ipfs_cid": "Qmb7hsKHoQUWYvhujvBSJ3q2wJVAircGEpUGNQBxiMRi7g",
       "expected_content_hash": "28f9b99f200ebed84cf0f6f1bce106b9aa0de705214b0cf7d3da725aeca600e1",
       "actual_content_hash": "28f9b99f200ebed84cf0f6f1bce106b9aa0de705214b0cf7d3da725aeca600e1",
-      "elapsed_ms": 7239.261,
+      "elapsed_ms": 4470.287,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2311,7 +2311,7 @@
       "ipfs_cid": "Qmb7hsKHoQUWYvhujvBSJ3q2wJVAircGEpUGNQBxiMRi7g",
       "expected_content_hash": "28f9b99f200ebed84cf0f6f1bce106b9aa0de705214b0cf7d3da725aeca600e1",
       "actual_content_hash": "28f9b99f200ebed84cf0f6f1bce106b9aa0de705214b0cf7d3da725aeca600e1",
-      "elapsed_ms": 7234.369,
+      "elapsed_ms": 4329.132,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2344,7 +2344,7 @@
       "ipfs_cid": "Qmb7hsKHoQUWYvhujvBSJ3q2wJVAircGEpUGNQBxiMRi7g",
       "expected_content_hash": "28f9b99f200ebed84cf0f6f1bce106b9aa0de705214b0cf7d3da725aeca600e1",
       "actual_content_hash": "28f9b99f200ebed84cf0f6f1bce106b9aa0de705214b0cf7d3da725aeca600e1",
-      "elapsed_ms": 4448.681,
+      "elapsed_ms": 4354.609,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2377,7 +2377,7 @@
       "ipfs_cid": "Qmb7hsKHoQUWYvhujvBSJ3q2wJVAircGEpUGNQBxiMRi7g",
       "expected_content_hash": "28f9b99f200ebed84cf0f6f1bce106b9aa0de705214b0cf7d3da725aeca600e1",
       "actual_content_hash": "28f9b99f200ebed84cf0f6f1bce106b9aa0de705214b0cf7d3da725aeca600e1",
-      "elapsed_ms": 4606.295,
+      "elapsed_ms": 4732.285,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2410,7 +2410,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1483.987,
+      "elapsed_ms": 1414.232,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -2443,7 +2443,7 @@
       "ipfs_cid": "QmauELfjKQfBqQkBG6jB18vHYbaJK7aTJZ47ngg7LPpypk",
       "expected_content_hash": "1f661e473140c87b9bcd1fea961d547ad71c6e2c65e8c71b1784c3a0f71e2c02",
       "actual_content_hash": "1f661e473140c87b9bcd1fea961d547ad71c6e2c65e8c71b1784c3a0f71e2c02",
-      "elapsed_ms": 4392.939,
+      "elapsed_ms": 4722.106,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2476,7 +2476,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1451.448,
+      "elapsed_ms": 1447.708,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -2509,7 +2509,7 @@
       "ipfs_cid": "QmauELfjKQfBqQkBG6jB18vHYbaJK7aTJZ47ngg7LPpypk",
       "expected_content_hash": "1f661e473140c87b9bcd1fea961d547ad71c6e2c65e8c71b1784c3a0f71e2c02",
       "actual_content_hash": "1f661e473140c87b9bcd1fea961d547ad71c6e2c65e8c71b1784c3a0f71e2c02",
-      "elapsed_ms": 4450.815,
+      "elapsed_ms": 4979.828,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2542,7 +2542,7 @@
       "ipfs_cid": "QmauELfjKQfBqQkBG6jB18vHYbaJK7aTJZ47ngg7LPpypk",
       "expected_content_hash": "1f661e473140c87b9bcd1fea961d547ad71c6e2c65e8c71b1784c3a0f71e2c02",
       "actual_content_hash": "1f661e473140c87b9bcd1fea961d547ad71c6e2c65e8c71b1784c3a0f71e2c02",
-      "elapsed_ms": 4412.342,
+      "elapsed_ms": 4388.026,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2575,7 +2575,7 @@
       "ipfs_cid": "QmauELfjKQfBqQkBG6jB18vHYbaJK7aTJZ47ngg7LPpypk",
       "expected_content_hash": "1f661e473140c87b9bcd1fea961d547ad71c6e2c65e8c71b1784c3a0f71e2c02",
       "actual_content_hash": "1f661e473140c87b9bcd1fea961d547ad71c6e2c65e8c71b1784c3a0f71e2c02",
-      "elapsed_ms": 4376.971,
+      "elapsed_ms": 4754.812,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2608,7 +2608,7 @@
       "ipfs_cid": "QmauELfjKQfBqQkBG6jB18vHYbaJK7aTJZ47ngg7LPpypk",
       "expected_content_hash": "1f661e473140c87b9bcd1fea961d547ad71c6e2c65e8c71b1784c3a0f71e2c02",
       "actual_content_hash": "1f661e473140c87b9bcd1fea961d547ad71c6e2c65e8c71b1784c3a0f71e2c02",
-      "elapsed_ms": 4369.012,
+      "elapsed_ms": 4661.736,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2641,7 +2641,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1446.073,
+      "elapsed_ms": 1567.168,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -2674,7 +2674,7 @@
       "ipfs_cid": "QmfNNQecc4yRrJWqWtJiNsTgw3tFLtoyyebjRbwz4YpfBM",
       "expected_content_hash": "5594d93adbf85443675d0dc560499f2587b68ffaa8c7c18fb60b0d2f20498e4d",
       "actual_content_hash": "5594d93adbf85443675d0dc560499f2587b68ffaa8c7c18fb60b0d2f20498e4d",
-      "elapsed_ms": 4611.411,
+      "elapsed_ms": 5123.142,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2707,7 +2707,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1467.4,
+      "elapsed_ms": 1494.365,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -2740,7 +2740,7 @@
       "ipfs_cid": "QmfNNQecc4yRrJWqWtJiNsTgw3tFLtoyyebjRbwz4YpfBM",
       "expected_content_hash": "5594d93adbf85443675d0dc560499f2587b68ffaa8c7c18fb60b0d2f20498e4d",
       "actual_content_hash": "5594d93adbf85443675d0dc560499f2587b68ffaa8c7c18fb60b0d2f20498e4d",
-      "elapsed_ms": 4991.626,
+      "elapsed_ms": 4618.314,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2773,7 +2773,7 @@
       "ipfs_cid": "QmfNNQecc4yRrJWqWtJiNsTgw3tFLtoyyebjRbwz4YpfBM",
       "expected_content_hash": "5594d93adbf85443675d0dc560499f2587b68ffaa8c7c18fb60b0d2f20498e4d",
       "actual_content_hash": "5594d93adbf85443675d0dc560499f2587b68ffaa8c7c18fb60b0d2f20498e4d",
-      "elapsed_ms": 4387.372,
+      "elapsed_ms": 4812.181,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2806,7 +2806,7 @@
       "ipfs_cid": "QmfNNQecc4yRrJWqWtJiNsTgw3tFLtoyyebjRbwz4YpfBM",
       "expected_content_hash": "5594d93adbf85443675d0dc560499f2587b68ffaa8c7c18fb60b0d2f20498e4d",
       "actual_content_hash": "5594d93adbf85443675d0dc560499f2587b68ffaa8c7c18fb60b0d2f20498e4d",
-      "elapsed_ms": 4582.085,
+      "elapsed_ms": 4627.212,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2839,7 +2839,7 @@
       "ipfs_cid": "QmfNNQecc4yRrJWqWtJiNsTgw3tFLtoyyebjRbwz4YpfBM",
       "expected_content_hash": "5594d93adbf85443675d0dc560499f2587b68ffaa8c7c18fb60b0d2f20498e4d",
       "actual_content_hash": "5594d93adbf85443675d0dc560499f2587b68ffaa8c7c18fb60b0d2f20498e4d",
-      "elapsed_ms": 4698.753,
+      "elapsed_ms": 4999.157,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2872,7 +2872,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1439.502,
+      "elapsed_ms": 1528.08,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -2905,7 +2905,7 @@
       "ipfs_cid": "QmXMUKxgxuu8E8evWrzR9P9tUYYvKcJgwqj45Jr3DRJ2Nw",
       "expected_content_hash": "41dce5fd06bff4e19bdbfbe1050d96e497bdc38429cedd6fd7d6ccce565986bb",
       "actual_content_hash": "41dce5fd06bff4e19bdbfbe1050d96e497bdc38429cedd6fd7d6ccce565986bb",
-      "elapsed_ms": 4535.883,
+      "elapsed_ms": 4517.319,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -2938,7 +2938,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1555.033,
+      "elapsed_ms": 1627.362,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -2971,7 +2971,7 @@
       "ipfs_cid": "QmXMUKxgxuu8E8evWrzR9P9tUYYvKcJgwqj45Jr3DRJ2Nw",
       "expected_content_hash": "41dce5fd06bff4e19bdbfbe1050d96e497bdc38429cedd6fd7d6ccce565986bb",
       "actual_content_hash": "41dce5fd06bff4e19bdbfbe1050d96e497bdc38429cedd6fd7d6ccce565986bb",
-      "elapsed_ms": 4709.275,
+      "elapsed_ms": 4528.184,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3004,7 +3004,7 @@
       "ipfs_cid": "QmXMUKxgxuu8E8evWrzR9P9tUYYvKcJgwqj45Jr3DRJ2Nw",
       "expected_content_hash": "41dce5fd06bff4e19bdbfbe1050d96e497bdc38429cedd6fd7d6ccce565986bb",
       "actual_content_hash": "41dce5fd06bff4e19bdbfbe1050d96e497bdc38429cedd6fd7d6ccce565986bb",
-      "elapsed_ms": 4875.601,
+      "elapsed_ms": 4486.869,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3037,7 +3037,7 @@
       "ipfs_cid": "QmXMUKxgxuu8E8evWrzR9P9tUYYvKcJgwqj45Jr3DRJ2Nw",
       "expected_content_hash": "41dce5fd06bff4e19bdbfbe1050d96e497bdc38429cedd6fd7d6ccce565986bb",
       "actual_content_hash": "41dce5fd06bff4e19bdbfbe1050d96e497bdc38429cedd6fd7d6ccce565986bb",
-      "elapsed_ms": 4584.358,
+      "elapsed_ms": 5330.212,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3070,7 +3070,7 @@
       "ipfs_cid": "QmXMUKxgxuu8E8evWrzR9P9tUYYvKcJgwqj45Jr3DRJ2Nw",
       "expected_content_hash": "41dce5fd06bff4e19bdbfbe1050d96e497bdc38429cedd6fd7d6ccce565986bb",
       "actual_content_hash": "41dce5fd06bff4e19bdbfbe1050d96e497bdc38429cedd6fd7d6ccce565986bb",
-      "elapsed_ms": 4446.007,
+      "elapsed_ms": 5837.112,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3103,7 +3103,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1474.555,
+      "elapsed_ms": 1528.362,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -3136,7 +3136,7 @@
       "ipfs_cid": "QmYq6XWwLvUg7DuRtHHdFHZ7f7ihyWP9o6WV511cpyMr4i",
       "expected_content_hash": "2bb7fb9dac7a66f86a9a93a927133da4b7b2f6520d6dca46e97b29d87d54224b",
       "actual_content_hash": "2bb7fb9dac7a66f86a9a93a927133da4b7b2f6520d6dca46e97b29d87d54224b",
-      "elapsed_ms": 4402.918,
+      "elapsed_ms": 5130.838,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3169,7 +3169,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1456.613,
+      "elapsed_ms": 1628.014,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -3202,7 +3202,7 @@
       "ipfs_cid": "QmYq6XWwLvUg7DuRtHHdFHZ7f7ihyWP9o6WV511cpyMr4i",
       "expected_content_hash": "2bb7fb9dac7a66f86a9a93a927133da4b7b2f6520d6dca46e97b29d87d54224b",
       "actual_content_hash": "2bb7fb9dac7a66f86a9a93a927133da4b7b2f6520d6dca46e97b29d87d54224b",
-      "elapsed_ms": 4405.972,
+      "elapsed_ms": 5231.821,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3235,7 +3235,7 @@
       "ipfs_cid": "QmYq6XWwLvUg7DuRtHHdFHZ7f7ihyWP9o6WV511cpyMr4i",
       "expected_content_hash": "2bb7fb9dac7a66f86a9a93a927133da4b7b2f6520d6dca46e97b29d87d54224b",
       "actual_content_hash": "2bb7fb9dac7a66f86a9a93a927133da4b7b2f6520d6dca46e97b29d87d54224b",
-      "elapsed_ms": 4384.984,
+      "elapsed_ms": 4809.466,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3268,7 +3268,7 @@
       "ipfs_cid": "QmYq6XWwLvUg7DuRtHHdFHZ7f7ihyWP9o6WV511cpyMr4i",
       "expected_content_hash": "2bb7fb9dac7a66f86a9a93a927133da4b7b2f6520d6dca46e97b29d87d54224b",
       "actual_content_hash": "2bb7fb9dac7a66f86a9a93a927133da4b7b2f6520d6dca46e97b29d87d54224b",
-      "elapsed_ms": 4930.838,
+      "elapsed_ms": 4750.45,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3301,7 +3301,7 @@
       "ipfs_cid": "QmYq6XWwLvUg7DuRtHHdFHZ7f7ihyWP9o6WV511cpyMr4i",
       "expected_content_hash": "2bb7fb9dac7a66f86a9a93a927133da4b7b2f6520d6dca46e97b29d87d54224b",
       "actual_content_hash": "2bb7fb9dac7a66f86a9a93a927133da4b7b2f6520d6dca46e97b29d87d54224b",
-      "elapsed_ms": 4384.116,
+      "elapsed_ms": 4917.583,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3334,7 +3334,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1446.549,
+      "elapsed_ms": 1489.974,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -3367,7 +3367,7 @@
       "ipfs_cid": "QmVBZwYfRrUBzXGjoF9QxGCKynTB7pG7hF6PVfkc7yCfmH",
       "expected_content_hash": "d5b9e86dbf6995a658f24ff1f086053ea9279c7afed3b5db12b8c20276a9a2ea",
       "actual_content_hash": "d5b9e86dbf6995a658f24ff1f086053ea9279c7afed3b5db12b8c20276a9a2ea",
-      "elapsed_ms": 4378.978,
+      "elapsed_ms": 5033.266,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3400,7 +3400,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1415.625,
+      "elapsed_ms": 1828.192,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -3433,7 +3433,7 @@
       "ipfs_cid": "QmVBZwYfRrUBzXGjoF9QxGCKynTB7pG7hF6PVfkc7yCfmH",
       "expected_content_hash": "d5b9e86dbf6995a658f24ff1f086053ea9279c7afed3b5db12b8c20276a9a2ea",
       "actual_content_hash": "d5b9e86dbf6995a658f24ff1f086053ea9279c7afed3b5db12b8c20276a9a2ea",
-      "elapsed_ms": 4672.42,
+      "elapsed_ms": 4617.079,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3466,7 +3466,7 @@
       "ipfs_cid": "QmVBZwYfRrUBzXGjoF9QxGCKynTB7pG7hF6PVfkc7yCfmH",
       "expected_content_hash": "d5b9e86dbf6995a658f24ff1f086053ea9279c7afed3b5db12b8c20276a9a2ea",
       "actual_content_hash": "d5b9e86dbf6995a658f24ff1f086053ea9279c7afed3b5db12b8c20276a9a2ea",
-      "elapsed_ms": 4500.491,
+      "elapsed_ms": 4590.505,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3499,7 +3499,7 @@
       "ipfs_cid": "QmVBZwYfRrUBzXGjoF9QxGCKynTB7pG7hF6PVfkc7yCfmH",
       "expected_content_hash": "d5b9e86dbf6995a658f24ff1f086053ea9279c7afed3b5db12b8c20276a9a2ea",
       "actual_content_hash": "d5b9e86dbf6995a658f24ff1f086053ea9279c7afed3b5db12b8c20276a9a2ea",
-      "elapsed_ms": 4397.16,
+      "elapsed_ms": 4831.311,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3532,7 +3532,7 @@
       "ipfs_cid": "QmVBZwYfRrUBzXGjoF9QxGCKynTB7pG7hF6PVfkc7yCfmH",
       "expected_content_hash": "d5b9e86dbf6995a658f24ff1f086053ea9279c7afed3b5db12b8c20276a9a2ea",
       "actual_content_hash": "d5b9e86dbf6995a658f24ff1f086053ea9279c7afed3b5db12b8c20276a9a2ea",
-      "elapsed_ms": 4808.465,
+      "elapsed_ms": 4462.005,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3565,7 +3565,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1587.151,
+      "elapsed_ms": 1420.339,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -3598,7 +3598,7 @@
       "ipfs_cid": "QmQr4TaxZm1ymqHrUFsM5bT8VJQXbW9Vipq5xN51s9eryN",
       "expected_content_hash": "04311c69e44195ab67c298ef559c416fab6dfd7acd1dc83fead8ef22e03cb658",
       "actual_content_hash": "04311c69e44195ab67c298ef559c416fab6dfd7acd1dc83fead8ef22e03cb658",
-      "elapsed_ms": 4721.441,
+      "elapsed_ms": 4972.448,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3631,7 +3631,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1843.667,
+      "elapsed_ms": 1486.956,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -3664,7 +3664,7 @@
       "ipfs_cid": "QmQr4TaxZm1ymqHrUFsM5bT8VJQXbW9Vipq5xN51s9eryN",
       "expected_content_hash": "04311c69e44195ab67c298ef559c416fab6dfd7acd1dc83fead8ef22e03cb658",
       "actual_content_hash": "04311c69e44195ab67c298ef559c416fab6dfd7acd1dc83fead8ef22e03cb658",
-      "elapsed_ms": 6014.205,
+      "elapsed_ms": 5064.792,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3697,7 +3697,7 @@
       "ipfs_cid": "QmQr4TaxZm1ymqHrUFsM5bT8VJQXbW9Vipq5xN51s9eryN",
       "expected_content_hash": "04311c69e44195ab67c298ef559c416fab6dfd7acd1dc83fead8ef22e03cb658",
       "actual_content_hash": "04311c69e44195ab67c298ef559c416fab6dfd7acd1dc83fead8ef22e03cb658",
-      "elapsed_ms": 4463.977,
+      "elapsed_ms": 4643.567,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3730,7 +3730,7 @@
       "ipfs_cid": "QmQr4TaxZm1ymqHrUFsM5bT8VJQXbW9Vipq5xN51s9eryN",
       "expected_content_hash": "04311c69e44195ab67c298ef559c416fab6dfd7acd1dc83fead8ef22e03cb658",
       "actual_content_hash": "04311c69e44195ab67c298ef559c416fab6dfd7acd1dc83fead8ef22e03cb658",
-      "elapsed_ms": 4368.928,
+      "elapsed_ms": 4460.143,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3763,7 +3763,7 @@
       "ipfs_cid": "QmQr4TaxZm1ymqHrUFsM5bT8VJQXbW9Vipq5xN51s9eryN",
       "expected_content_hash": "04311c69e44195ab67c298ef559c416fab6dfd7acd1dc83fead8ef22e03cb658",
       "actual_content_hash": "04311c69e44195ab67c298ef559c416fab6dfd7acd1dc83fead8ef22e03cb658",
-      "elapsed_ms": 4381.589,
+      "elapsed_ms": 4726.14,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3796,7 +3796,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1470.445,
+      "elapsed_ms": 1620.706,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -3829,7 +3829,7 @@
       "ipfs_cid": "bafy-test-new-account",
       "expected_content_hash": "0000000000000000000000000000000000000000000000000000000000000001",
       "actual_content_hash": "",
-      "elapsed_ms": 4817.21,
+      "elapsed_ms": 4720.025,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3862,7 +3862,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1481.382,
+      "elapsed_ms": 1506.741,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -3895,7 +3895,7 @@
       "ipfs_cid": "bafy-test-new-account",
       "expected_content_hash": "0000000000000000000000000000000000000000000000000000000000000001",
       "actual_content_hash": "",
-      "elapsed_ms": 4647.022,
+      "elapsed_ms": 4527.442,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3928,7 +3928,7 @@
       "ipfs_cid": "bafy-test-new-account",
       "expected_content_hash": "0000000000000000000000000000000000000000000000000000000000000001",
       "actual_content_hash": "",
-      "elapsed_ms": 4504.89,
+      "elapsed_ms": 4826.068,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3961,7 +3961,7 @@
       "ipfs_cid": "bafy-test-new-account",
       "expected_content_hash": "0000000000000000000000000000000000000000000000000000000000000001",
       "actual_content_hash": "",
-      "elapsed_ms": 4541.255,
+      "elapsed_ms": 5630.576,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -3994,7 +3994,7 @@
       "ipfs_cid": "bafy-test-new-account",
       "expected_content_hash": "0000000000000000000000000000000000000000000000000000000000000001",
       "actual_content_hash": "",
-      "elapsed_ms": 4926.437,
+      "elapsed_ms": 4636.229,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4027,7 +4027,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1449.993,
+      "elapsed_ms": 1604.915,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -4060,7 +4060,7 @@
       "ipfs_cid": "QmNvaFQcUqcA2oawueo8o9bM11WBAdxChKH5KtQC3ocfRB",
       "expected_content_hash": "22c4f6ec85bd538fdf5d57f3ab3b764d1c6487f503eee342aa0125ce402cf0ac",
       "actual_content_hash": "22c4f6ec85bd538fdf5d57f3ab3b764d1c6487f503eee342aa0125ce402cf0ac",
-      "elapsed_ms": 4581.697,
+      "elapsed_ms": 4817.876,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4093,7 +4093,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1562.072,
+      "elapsed_ms": 1461.292,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -4126,7 +4126,7 @@
       "ipfs_cid": "QmNvaFQcUqcA2oawueo8o9bM11WBAdxChKH5KtQC3ocfRB",
       "expected_content_hash": "22c4f6ec85bd538fdf5d57f3ab3b764d1c6487f503eee342aa0125ce402cf0ac",
       "actual_content_hash": "22c4f6ec85bd538fdf5d57f3ab3b764d1c6487f503eee342aa0125ce402cf0ac",
-      "elapsed_ms": 4603.312,
+      "elapsed_ms": 4686.228,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4159,7 +4159,7 @@
       "ipfs_cid": "QmNvaFQcUqcA2oawueo8o9bM11WBAdxChKH5KtQC3ocfRB",
       "expected_content_hash": "22c4f6ec85bd538fdf5d57f3ab3b764d1c6487f503eee342aa0125ce402cf0ac",
       "actual_content_hash": "22c4f6ec85bd538fdf5d57f3ab3b764d1c6487f503eee342aa0125ce402cf0ac",
-      "elapsed_ms": 4504.053,
+      "elapsed_ms": 4710.073,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4192,7 +4192,7 @@
       "ipfs_cid": "QmNvaFQcUqcA2oawueo8o9bM11WBAdxChKH5KtQC3ocfRB",
       "expected_content_hash": "22c4f6ec85bd538fdf5d57f3ab3b764d1c6487f503eee342aa0125ce402cf0ac",
       "actual_content_hash": "22c4f6ec85bd538fdf5d57f3ab3b764d1c6487f503eee342aa0125ce402cf0ac",
-      "elapsed_ms": 4536.918,
+      "elapsed_ms": 4496.714,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4225,7 +4225,7 @@
       "ipfs_cid": "QmNvaFQcUqcA2oawueo8o9bM11WBAdxChKH5KtQC3ocfRB",
       "expected_content_hash": "22c4f6ec85bd538fdf5d57f3ab3b764d1c6487f503eee342aa0125ce402cf0ac",
       "actual_content_hash": "22c4f6ec85bd538fdf5d57f3ab3b764d1c6487f503eee342aa0125ce402cf0ac",
-      "elapsed_ms": 4948.041,
+      "elapsed_ms": 5031.797,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4258,7 +4258,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 2313.671,
+      "elapsed_ms": 1445.239,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -4291,7 +4291,7 @@
       "ipfs_cid": "QmbmTbGCqFgowRuLeAUerJUEJN6dS4Cpzvyg98gAUU3wfu",
       "expected_content_hash": "017712ab498c8553ac3d5c6ece2113882e109a897295844acfe3007a513c4343",
       "actual_content_hash": "017712ab498c8553ac3d5c6ece2113882e109a897295844acfe3007a513c4343",
-      "elapsed_ms": 4382.105,
+      "elapsed_ms": 4693.28,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4324,7 +4324,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1429.955,
+      "elapsed_ms": 1528.083,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -4357,7 +4357,7 @@
       "ipfs_cid": "QmbmTbGCqFgowRuLeAUerJUEJN6dS4Cpzvyg98gAUU3wfu",
       "expected_content_hash": "017712ab498c8553ac3d5c6ece2113882e109a897295844acfe3007a513c4343",
       "actual_content_hash": "017712ab498c8553ac3d5c6ece2113882e109a897295844acfe3007a513c4343",
-      "elapsed_ms": 4425.078,
+      "elapsed_ms": 4927.584,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4390,7 +4390,7 @@
       "ipfs_cid": "QmbmTbGCqFgowRuLeAUerJUEJN6dS4Cpzvyg98gAUU3wfu",
       "expected_content_hash": "017712ab498c8553ac3d5c6ece2113882e109a897295844acfe3007a513c4343",
       "actual_content_hash": "017712ab498c8553ac3d5c6ece2113882e109a897295844acfe3007a513c4343",
-      "elapsed_ms": 4530.233,
+      "elapsed_ms": 4706.202,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4423,7 +4423,7 @@
       "ipfs_cid": "QmbmTbGCqFgowRuLeAUerJUEJN6dS4Cpzvyg98gAUU3wfu",
       "expected_content_hash": "017712ab498c8553ac3d5c6ece2113882e109a897295844acfe3007a513c4343",
       "actual_content_hash": "017712ab498c8553ac3d5c6ece2113882e109a897295844acfe3007a513c4343",
-      "elapsed_ms": 4603.729,
+      "elapsed_ms": 4609.924,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4456,7 +4456,7 @@
       "ipfs_cid": "QmbmTbGCqFgowRuLeAUerJUEJN6dS4Cpzvyg98gAUU3wfu",
       "expected_content_hash": "017712ab498c8553ac3d5c6ece2113882e109a897295844acfe3007a513c4343",
       "actual_content_hash": "017712ab498c8553ac3d5c6ece2113882e109a897295844acfe3007a513c4343",
-      "elapsed_ms": 4509.563,
+      "elapsed_ms": 5019.075,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4489,7 +4489,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1467.149,
+      "elapsed_ms": 1538.39,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -4522,7 +4522,7 @@
       "ipfs_cid": "QmcXAZAHgVbAqFsGHwfQP1BrGEHybdeZHhT2p5V8YaQzkZ",
       "expected_content_hash": "9c165e72b67e9a67244aa22bb1d97e122b00081b62d61b2ebabf531f3d553390",
       "actual_content_hash": "9c165e72b67e9a67244aa22bb1d97e122b00081b62d61b2ebabf531f3d553390",
-      "elapsed_ms": 4533.932,
+      "elapsed_ms": 4680.531,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4555,7 +4555,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1460.584,
+      "elapsed_ms": 1614.371,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -4588,7 +4588,7 @@
       "ipfs_cid": "QmcXAZAHgVbAqFsGHwfQP1BrGEHybdeZHhT2p5V8YaQzkZ",
       "expected_content_hash": "9c165e72b67e9a67244aa22bb1d97e122b00081b62d61b2ebabf531f3d553390",
       "actual_content_hash": "9c165e72b67e9a67244aa22bb1d97e122b00081b62d61b2ebabf531f3d553390",
-      "elapsed_ms": 4687.428,
+      "elapsed_ms": 4588.557,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4621,7 +4621,7 @@
       "ipfs_cid": "QmcXAZAHgVbAqFsGHwfQP1BrGEHybdeZHhT2p5V8YaQzkZ",
       "expected_content_hash": "9c165e72b67e9a67244aa22bb1d97e122b00081b62d61b2ebabf531f3d553390",
       "actual_content_hash": "9c165e72b67e9a67244aa22bb1d97e122b00081b62d61b2ebabf531f3d553390",
-      "elapsed_ms": 4781.527,
+      "elapsed_ms": 4802.704,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4654,7 +4654,7 @@
       "ipfs_cid": "QmcXAZAHgVbAqFsGHwfQP1BrGEHybdeZHhT2p5V8YaQzkZ",
       "expected_content_hash": "9c165e72b67e9a67244aa22bb1d97e122b00081b62d61b2ebabf531f3d553390",
       "actual_content_hash": "9c165e72b67e9a67244aa22bb1d97e122b00081b62d61b2ebabf531f3d553390",
-      "elapsed_ms": 5629.018,
+      "elapsed_ms": 4584.808,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4687,7 +4687,7 @@
       "ipfs_cid": "QmcXAZAHgVbAqFsGHwfQP1BrGEHybdeZHhT2p5V8YaQzkZ",
       "expected_content_hash": "9c165e72b67e9a67244aa22bb1d97e122b00081b62d61b2ebabf531f3d553390",
       "actual_content_hash": "9c165e72b67e9a67244aa22bb1d97e122b00081b62d61b2ebabf531f3d553390",
-      "elapsed_ms": 4770.69,
+      "elapsed_ms": 5001.863,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4720,7 +4720,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1484.936,
+      "elapsed_ms": 1645.715,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -4753,7 +4753,7 @@
       "ipfs_cid": "QmcDU51LmkSGpZqMJrZ2wM3sD45LFhGW8BpduSfFPUiT83",
       "expected_content_hash": "8b870ba93a073992be25cdd3eb418f8d0de2ae30f808251734502733b13f693b",
       "actual_content_hash": "8b870ba93a073992be25cdd3eb418f8d0de2ae30f808251734502733b13f693b",
-      "elapsed_ms": 4495.549,
+      "elapsed_ms": 4664.239,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4786,7 +4786,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1442.932,
+      "elapsed_ms": 1452.695,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -4819,7 +4819,7 @@
       "ipfs_cid": "QmcDU51LmkSGpZqMJrZ2wM3sD45LFhGW8BpduSfFPUiT83",
       "expected_content_hash": "8b870ba93a073992be25cdd3eb418f8d0de2ae30f808251734502733b13f693b",
       "actual_content_hash": "8b870ba93a073992be25cdd3eb418f8d0de2ae30f808251734502733b13f693b",
-      "elapsed_ms": 4780.923,
+      "elapsed_ms": 4806.135,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4852,7 +4852,7 @@
       "ipfs_cid": "QmcDU51LmkSGpZqMJrZ2wM3sD45LFhGW8BpduSfFPUiT83",
       "expected_content_hash": "8b870ba93a073992be25cdd3eb418f8d0de2ae30f808251734502733b13f693b",
       "actual_content_hash": "8b870ba93a073992be25cdd3eb418f8d0de2ae30f808251734502733b13f693b",
-      "elapsed_ms": 4773.24,
+      "elapsed_ms": 4644.764,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4885,7 +4885,7 @@
       "ipfs_cid": "QmcDU51LmkSGpZqMJrZ2wM3sD45LFhGW8BpduSfFPUiT83",
       "expected_content_hash": "8b870ba93a073992be25cdd3eb418f8d0de2ae30f808251734502733b13f693b",
       "actual_content_hash": "8b870ba93a073992be25cdd3eb418f8d0de2ae30f808251734502733b13f693b",
-      "elapsed_ms": 4431.119,
+      "elapsed_ms": 4907.325,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4918,7 +4918,7 @@
       "ipfs_cid": "QmcDU51LmkSGpZqMJrZ2wM3sD45LFhGW8BpduSfFPUiT83",
       "expected_content_hash": "8b870ba93a073992be25cdd3eb418f8d0de2ae30f808251734502733b13f693b",
       "actual_content_hash": "8b870ba93a073992be25cdd3eb418f8d0de2ae30f808251734502733b13f693b",
-      "elapsed_ms": 4449.671,
+      "elapsed_ms": 4725.575,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -4951,7 +4951,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1453.827,
+      "elapsed_ms": 1477.341,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -4984,7 +4984,7 @@
       "ipfs_cid": "QmTFUbtuPbUpzV5uFGBXob6pz3ng2g4MUzrmVaAJ8wkVyB",
       "expected_content_hash": "33cb07cbfc76f51a110a1850101406cf4c82d40f2d2131ee6e94c61289ab6583",
       "actual_content_hash": "33cb07cbfc76f51a110a1850101406cf4c82d40f2d2131ee6e94c61289ab6583",
-      "elapsed_ms": 4405.352,
+      "elapsed_ms": 4571.371,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -5017,7 +5017,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1454.69,
+      "elapsed_ms": 2030.806,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -5050,7 +5050,7 @@
       "ipfs_cid": "QmTFUbtuPbUpzV5uFGBXob6pz3ng2g4MUzrmVaAJ8wkVyB",
       "expected_content_hash": "33cb07cbfc76f51a110a1850101406cf4c82d40f2d2131ee6e94c61289ab6583",
       "actual_content_hash": "33cb07cbfc76f51a110a1850101406cf4c82d40f2d2131ee6e94c61289ab6583",
-      "elapsed_ms": 4567.276,
+      "elapsed_ms": 4766.582,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -5083,7 +5083,7 @@
       "ipfs_cid": "QmTFUbtuPbUpzV5uFGBXob6pz3ng2g4MUzrmVaAJ8wkVyB",
       "expected_content_hash": "33cb07cbfc76f51a110a1850101406cf4c82d40f2d2131ee6e94c61289ab6583",
       "actual_content_hash": "33cb07cbfc76f51a110a1850101406cf4c82d40f2d2131ee6e94c61289ab6583",
-      "elapsed_ms": 4732.043,
+      "elapsed_ms": 4663.282,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -5116,7 +5116,7 @@
       "ipfs_cid": "QmTFUbtuPbUpzV5uFGBXob6pz3ng2g4MUzrmVaAJ8wkVyB",
       "expected_content_hash": "33cb07cbfc76f51a110a1850101406cf4c82d40f2d2131ee6e94c61289ab6583",
       "actual_content_hash": "33cb07cbfc76f51a110a1850101406cf4c82d40f2d2131ee6e94c61289ab6583",
-      "elapsed_ms": 4513.518,
+      "elapsed_ms": 5476.261,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -5149,7 +5149,7 @@
       "ipfs_cid": "QmTFUbtuPbUpzV5uFGBXob6pz3ng2g4MUzrmVaAJ8wkVyB",
       "expected_content_hash": "33cb07cbfc76f51a110a1850101406cf4c82d40f2d2131ee6e94c61289ab6583",
       "actual_content_hash": "33cb07cbfc76f51a110a1850101406cf4c82d40f2d2131ee6e94c61289ab6583",
-      "elapsed_ms": 4779.794,
+      "elapsed_ms": 4661.257,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -5182,7 +5182,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1457.436,
+      "elapsed_ms": 1455.278,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -5215,7 +5215,7 @@
       "ipfs_cid": "QmPnFYXa5k3z3LXr7weg33TtM5wZ99Exxky8tEcS27cN3S",
       "expected_content_hash": "419669596c1dd14a7dde42c7f9bc7e2a8f83aea3a833cc61229615a8f157a50f",
       "actual_content_hash": "419669596c1dd14a7dde42c7f9bc7e2a8f83aea3a833cc61229615a8f157a50f",
-      "elapsed_ms": 4445.19,
+      "elapsed_ms": 4658.344,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -5248,7 +5248,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1574.468,
+      "elapsed_ms": 1523.187,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
@@ -5281,7 +5281,7 @@
       "ipfs_cid": "QmPnFYXa5k3z3LXr7weg33TtM5wZ99Exxky8tEcS27cN3S",
       "expected_content_hash": "419669596c1dd14a7dde42c7f9bc7e2a8f83aea3a833cc61229615a8f157a50f",
       "actual_content_hash": "419669596c1dd14a7dde42c7f9bc7e2a8f83aea3a833cc61229615a8f157a50f",
-      "elapsed_ms": 4739.786,
+      "elapsed_ms": 4959.119,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -5314,7 +5314,7 @@
       "ipfs_cid": "QmPnFYXa5k3z3LXr7weg33TtM5wZ99Exxky8tEcS27cN3S",
       "expected_content_hash": "419669596c1dd14a7dde42c7f9bc7e2a8f83aea3a833cc61229615a8f157a50f",
       "actual_content_hash": "419669596c1dd14a7dde42c7f9bc7e2a8f83aea3a833cc61229615a8f157a50f",
-      "elapsed_ms": 4466.704,
+      "elapsed_ms": 4587.603,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -5347,7 +5347,7 @@
       "ipfs_cid": "QmPnFYXa5k3z3LXr7weg33TtM5wZ99Exxky8tEcS27cN3S",
       "expected_content_hash": "419669596c1dd14a7dde42c7f9bc7e2a8f83aea3a833cc61229615a8f157a50f",
       "actual_content_hash": "419669596c1dd14a7dde42c7f9bc7e2a8f83aea3a833cc61229615a8f157a50f",
-      "elapsed_ms": 4402.463,
+      "elapsed_ms": 4552.462,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -5380,7 +5380,7 @@
       "ipfs_cid": "QmPnFYXa5k3z3LXr7weg33TtM5wZ99Exxky8tEcS27cN3S",
       "expected_content_hash": "419669596c1dd14a7dde42c7f9bc7e2a8f83aea3a833cc61229615a8f157a50f",
       "actual_content_hash": "419669596c1dd14a7dde42c7f9bc7e2a8f83aea3a833cc61229615a8f157a50f",
-      "elapsed_ms": 4491.706,
+      "elapsed_ms": 5190.526,
       "trace": {
         "rbac_allowed": true,
         "blockchain_resolved": true,
@@ -5413,7 +5413,7 @@
       "ipfs_cid": null,
       "expected_content_hash": "",
       "actual_content_hash": "",
-      "elapsed_ms": 1450.377,
+      "elapsed_ms": 1737.382,
       "trace": {
         "rbac_allowed": false,
         "blockchain_resolved": false,
