@@ -14,8 +14,10 @@ answer_question(question, user_context=authenticated_user), matching app.py.
 Privacy:
 - Passwords and password hashes are never written to the report.
 - Raw answers and decrypted document contents are not written to the report.
-- Reports contain operational flags, latency, answer length/hash, and optional
-  fact-match counts. Store reports in a protected local directory.
+- Optional LLM judging sends answers and verified reference facts only to the
+  configured local Ollama server, in memory; judge explanations are not saved.
+- Reports contain operational flags, latency, answer length/hash, and scores.
+  Store reports in a protected local directory.
 - No ground-truth facts are invented. Supply manually verified facts through
   --cases-json if you want deterministic answer-content scoring.
 """
@@ -60,6 +62,7 @@ if str(REPO_ROOT) not in sys.path:
 try:
     from python_backend import rbac
     from python_backend.ai.agent import answer_question
+    from python_backend.evaluation.llm_judge import LLMJudge, JudgeConfig, LLMJudgeError
 except Exception as exc:  # pragma: no cover - depends on local project environment
     raise RuntimeError(
         "Unable to import the project's RBAC module or LangGraph agent. "
@@ -333,7 +336,11 @@ def _safe_answer_metadata(answer: str) -> Dict[str, Any]:
 # Evaluation execution
 # ---------------------------------------------------------------------------
 
-def run_authorized_cases(cases: List[Dict[str, Any]], user_context: Dict[str, Any]) -> List[Dict[str, Any]]:
+def run_authorized_cases(
+    cases: List[Dict[str, Any]],
+    user_context: Dict[str, Any],
+    judge: Optional[LLMJudge] = None,
+) -> List[Dict[str, Any]]:
     rows: List[Dict[str, Any]] = []
     for index, case in enumerate(cases, start=1):
         print(f"[{index}/{len(cases)}] {case['case_id']} ({case['document_id']}) ...", flush=True)
@@ -370,6 +377,39 @@ def run_authorized_cases(cases: List[Dict[str, Any]], user_context: Dict[str, An
                 row["qa_quality_status"] = "scored_against_supplied_facts"
             else:
                 row["qa_quality_status"] = "not_scored_security_or_retrieval_gate_failed"
+
+            # Judge only eligible answers. The answer and reference facts remain
+            # in memory and are never written to the evaluation report.
+            if judge is not None:
+                if row["qa_eligible"] and case.get("expected_facts") and answer.strip():
+                    try:
+                        judged = judge.evaluate(
+                            question=case["question"],
+                            expected_facts=case["expected_facts"],
+                            generated_answer=answer,
+                        )
+                        row["llm_judge"] = {
+                            "status": "scored",
+                            "correctness": judged["correctness"],
+                            "completeness": judged["completeness"],
+                            "reference_alignment": judged["reference_alignment"],
+                            "hallucination": judged["hallucination"],
+                            "verdict": judged["verdict"],
+                        }
+                        # Deliberately omit judge explanation: it may quote
+                        # confidential student information.
+                    except Exception as judge_exc:
+                        row["llm_judge"] = {
+                            "status": "judge_error",
+                            "error_type": type(judge_exc).__name__,
+                        }
+                elif not row["qa_eligible"]:
+                    row["llm_judge"] = {"status": "not_scored_security_or_retrieval_gate_failed"}
+                elif not case.get("expected_facts"):
+                    row["llm_judge"] = {"status": "not_scored_no_verified_ground_truth"}
+                else:
+                    row["llm_judge"] = {"status": "not_scored_empty_answer"}
+
             rows.append(row)
             print(
                 "    retrieval={retrieval} integrity={integrity} llm={llm} latency={latency:.0f}ms".format(
@@ -452,6 +492,17 @@ def build_summary(qa_rows: List[Dict[str, Any]], security_rows: List[Dict[str, A
     eligible = [row for row in qa_rows if row.get("qa_eligible") is True]
     scored = [row for row in eligible if isinstance(row.get("fact_coverage"), (int, float))]
     verified = [row for row in qa_rows if row.get("integrity_verified") is True and row.get("document_found") is True]
+    judged = [row["llm_judge"] for row in qa_rows if isinstance(row.get("llm_judge"), dict) and row["llm_judge"].get("status") == "scored"]
+    judge_summary = {
+        "enabled": any("llm_judge" in row for row in qa_rows),
+        "scored_cases": len(judged),
+        "judge_errors": sum(1 for row in qa_rows if isinstance(row.get("llm_judge"), dict) and row["llm_judge"].get("status") == "judge_error"),
+        "mean_correctness": round(statistics.mean([item["correctness"] for item in judged]), 3) if judged else None,
+        "mean_completeness": round(statistics.mean([item["completeness"] for item in judged]), 3) if judged else None,
+        "mean_reference_alignment": round(statistics.mean([item["reference_alignment"] for item in judged]), 3) if judged else None,
+        "mean_hallucination": round(statistics.mean([item["hallucination"] for item in judged]), 3) if judged else None,
+        "verdict_counts": {verdict: sum(1 for item in judged if item["verdict"] == verdict) for verdict in ("correct", "partially_correct", "incorrect")},
+    }
     return {
         "qa_cases": len(qa_rows),
         "retrieval_and_integrity_verified": len(verified),
@@ -459,6 +510,7 @@ def build_summary(qa_rows: List[Dict[str, Any]], security_rows: List[Dict[str, A
         "answer_quality_scored_cases": len(scored),
         "mean_latency_ms": _mean(latencies),
         "mean_fact_coverage": round(statistics.mean([row["fact_coverage"] for row in scored]), 4) if scored else None,
+        "llm_judge": judge_summary,
         "unauthenticated_security_cases": len(security_rows),
         "unauthenticated_security_passed": sum(1 for row in security_rows if row.get("security_test_passed") is True),
         "unauthenticated_security_failed_or_unknown": sum(1 for row in security_rows if row.get("security_test_passed") is not True),
@@ -472,6 +524,9 @@ def main() -> int:
     parser.add_argument("--output", default=None, help="Report path (default: evaluation_reports/live_document_qa_<timestamp>.json).")
     parser.add_argument("--skip-security-tests", action="store_true", help="Skip unauthenticated-access negative tests.")
     parser.add_argument("--security-sample", type=int, default=4, help="Number of documents used for unauthenticated tests (default: 4).")
+    parser.add_argument("--llm-judge", action="store_true", help="Enable local Ollama LLM-as-a-Judge for eligible QA answers.")
+    parser.add_argument("--judge-model", default="llama3", help="Local Ollama model used as judge (default: llama3).")
+    parser.add_argument("--ollama-base-url", default="http://localhost:11434", help="Local Ollama base URL.")
     args = parser.parse_args()
 
     cases = load_cases(args.cases_json)
@@ -489,7 +544,15 @@ def main() -> int:
     print(f"QA cases: {len(cases)}")
     print("Note: document contents and generated answers will not be saved to the report.\n")
 
-    qa_rows = run_authorized_cases(cases, user_context)
+    judge: Optional[LLMJudge] = None
+    if args.llm_judge:
+        print(f"Initializing local LLM judge: {args.judge_model} at {args.ollama_base_url}")
+        try:
+            judge = LLMJudge(JudgeConfig(model=args.judge_model, base_url=args.ollama_base_url, temperature=0.0))
+        except LLMJudgeError as exc:
+            raise SystemExit(f"Could not initialize LLM judge: {exc}") from exc
+
+    qa_rows = run_authorized_cases(cases, user_context, judge=judge)
     security_rows: List[Dict[str, Any]] = []
     if not args.skip_security_tests and args.security_sample:
         security_rows = run_unauthenticated_security_cases(cases[: args.security_sample])
@@ -514,6 +577,11 @@ def main() -> int:
             "document_plaintext_persisted": False,
             "ground_truth_source": "manually_verified_expected_facts_only_when_supplied",
             "fact_metric": "normalized lexical fact coverage; not semantic equivalence",
+            "llm_judge_enabled": bool(args.llm_judge),
+            "llm_judge_model": args.judge_model if args.llm_judge else None,
+            "llm_judge_base_url": args.ollama_base_url if args.llm_judge else None,
+            "llm_judge_method": "local reference-based LLM-as-a-Judge; scores correctness, completeness, reference alignment, and hallucination",
+            "llm_judge_persists_answer_or_explanation": False,
         },
         "summary": build_summary(qa_rows, security_rows),
         "qa_results": qa_rows,
@@ -523,6 +591,9 @@ def main() -> int:
             "Answer-quality scoring is performed only after authorization, retrieval, integrity, and LLM-context gates pass.",
             "Cases without manually verified expected_facts are reported as not scored.",
             "Lexical fact coverage is a simple deterministic measure and may miss semantically correct paraphrases.",
+            "LLM-as-a-Judge uses the same local model when enabled; self-evaluation bias is possible and should be checked through manual review.",
+            "The judge compares answers with manually verified expected facts; it does not independently verify the full source document or establish document-level faithfulness.",
+            "Judge explanations and generated answers are not persisted because they may contain confidential student information.",
             "Unauthenticated tests check that access is denied before IPFS retrieval and LLM invocation.",
             "This is a sequential functional evaluation, not a concurrent-load benchmark.",
         ],
@@ -554,6 +625,13 @@ def main() -> int:
     print(f"Cases with answer-quality score:  {summary['answer_quality_scored_cases']}")
     print(f"Mean latency:                     {summary['mean_latency_ms']} ms")
     print(f"Mean lexical fact coverage:       {summary['mean_fact_coverage']}")
+    if args.llm_judge:
+        judge_summary = summary["llm_judge"]
+        print(f"LLM judge scored cases:            {judge_summary['scored_cases']}")
+        print(f"Mean judge correctness:            {judge_summary['mean_correctness']}/5")
+        print(f"Mean judge completeness:           {judge_summary['mean_completeness']}/5")
+        print(f"Mean judge reference alignment:    {judge_summary['mean_reference_alignment']}/5")
+        print(f"Mean judge hallucination:           {judge_summary['mean_hallucination']}/5 (lower is better)")
     print(f"Unauthenticated security passed:  {summary['unauthenticated_security_passed']}/{summary['unauthenticated_security_cases']}")
     print(f"\nPrivacy-safe report saved to: {output_path}")
     if summary["answer_quality_scored_cases"] == 0:

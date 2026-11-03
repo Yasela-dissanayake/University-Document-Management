@@ -1,0 +1,628 @@
+{
+  "dataset_name": "live_university_document_qa_50",
+  "dataset_version": "2.0",
+  "ground_truth_note": "Expected facts are transcribed from four real university documents after authorized application-layer decryption and successful integrity verification. The dataset contains factual evaluation targets only; it does not contain document plaintext or generated model answers.",
+  "scoring_note": "The current evaluator uses lexical substring matching. This can measure the presence of expected terms but cannot reliably verify relationships between fields (for example, whether a grade and credit value belong to the correct course). Multi-fact and list questions should therefore be interpreted with this limitation in mind. Cross-document questions are intentionally excluded because the current single-document evaluation workflow has not yet been confirmed to retrieve multiple documents for one question.",
+  "case_distribution": {
+    "examination_result_sheet_STD001": 12,
+    "registration_certificate_STD001": 8,
+    "transcript_STD001": 15,
+    "transcript_STD002": 15,
+    "total": 50
+  },
+  "cases": [
+    {
+      "case_id": "EX-QA-001",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "What examination year is recorded in EX-STD001-001?",
+      "expected_facts": [
+        "2026"
+      ]
+    },
+    {
+      "case_id": "EX-QA-002",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "What marks and grade did student STD001 receive for Object Oriented Analysis and Design (CSC3093) in EX-STD001-001?",
+      "expected_facts": [
+        "CSC3093",
+        "Object Oriented Analysis and Design",
+        "60",
+        "A+"
+      ]
+    },
+    {
+      "case_id": "EX-QA-003",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "What marks and grade did student STD001 receive for Server Side Web Programming (CSC3103) in EX-STD001-001?",
+      "expected_facts": [
+        "CSC3103",
+        "Server Side Web Programming",
+        "64",
+        "A"
+      ]
+    },
+    {
+      "case_id": "EX-QA-004",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "What marks and grade did student STD001 receive for Software Engineering (CSC3112) in EX-STD001-001?",
+      "expected_facts": [
+        "CSC3112",
+        "Software Engineering",
+        "68",
+        "A"
+      ]
+    },
+    {
+      "case_id": "EX-QA-005",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "What marks and grade did student STD001 receive for Digital Image Processing (CSC3132) in EX-STD001-001?",
+      "expected_facts": [
+        "CSC3132",
+        "Digital Image Processing",
+        "72",
+        "A-"
+      ]
+    },
+    {
+      "case_id": "EX-QA-006",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "What marks and grade did student STD001 receive for Image Processing Laboratory (CSC3141) in EX-STD001-001?",
+      "expected_facts": [
+        "CSC3141",
+        "Image Processing Laboratory",
+        "76",
+        "B+"
+      ]
+    },
+    {
+      "case_id": "EX-QA-007",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "What marks and grade did student STD001 receive for Design and Analysis of Algorithms (CSC3152) in EX-STD001-001?",
+      "expected_facts": [
+        "CSC3152",
+        "Design and Analysis of Algorithms",
+        "80",
+        "A+"
+      ]
+    },
+    {
+      "case_id": "EX-QA-008",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "How many course results are listed in EX-STD001-001?",
+      "expected_facts": [
+        "6"
+      ]
+    },
+    {
+      "case_id": "EX-QA-009",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "Which course obtained the highest marks in EX-STD001-001, and what were the marks?",
+      "expected_facts": [
+        "CSC3152",
+        "Design and Analysis of Algorithms",
+        "80"
+      ]
+    },
+    {
+      "case_id": "EX-QA-010",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "Which course obtained the lowest marks in EX-STD001-001, and what were the marks?",
+      "expected_facts": [
+        "CSC3093",
+        "Object Oriented Analysis and Design",
+        "60"
+      ]
+    },
+    {
+      "case_id": "EX-QA-011",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "Which courses received an A+ grade in EX-STD001-001?",
+      "expected_facts": [
+        "CSC3093",
+        "Object Oriented Analysis and Design",
+        "CSC3152",
+        "Design and Analysis of Algorithms"
+      ]
+    },
+    {
+      "case_id": "EX-QA-012",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "List the course codes and grades recorded in EX-STD001-001.",
+      "expected_facts": [
+        "CSC3093",
+        "A+",
+        "CSC3103",
+        "A",
+        "CSC3112",
+        "A",
+        "CSC3132",
+        "A-",
+        "CSC3141",
+        "B+",
+        "CSC3152",
+        "A+"
+      ]
+    },
+    {
+      "case_id": "REG-QA-001",
+      "document_id": "REG-STD001-001",
+      "student_id": "STD001",
+      "category": "registration_certificate",
+      "question": "What academic year is recorded in registration certificate REG-STD001-001?",
+      "expected_facts": [
+        "2026"
+      ]
+    },
+    {
+      "case_id": "REG-QA-002",
+      "document_id": "REG-STD001-001",
+      "student_id": "STD001",
+      "category": "registration_certificate",
+      "question": "What degree programme is stated in REG-STD001-001?",
+      "expected_facts": [
+        "B.Sc. Honours in Computer Science"
+      ]
+    },
+    {
+      "case_id": "REG-QA-003",
+      "document_id": "REG-STD001-001",
+      "student_id": "STD001",
+      "category": "registration_certificate",
+      "question": "What is the registration status recorded for student STD001 in registration certificate REG-STD001-001?",
+      "expected_facts": [
+        "ACTIVE"
+      ]
+    },
+    {
+      "case_id": "REG-QA-004",
+      "document_id": "REG-STD001-001",
+      "student_id": "STD001",
+      "category": "registration_certificate",
+      "question": "What student ID is recorded in registration certificate REG-STD001-001?",
+      "expected_facts": [
+        "STD001"
+      ]
+    },
+    {
+      "case_id": "REG-QA-005",
+      "document_id": "REG-STD001-001",
+      "student_id": "STD001",
+      "category": "registration_certificate",
+      "question": "What is the document identifier of the registration certificate REG-STD001-001 for student STD001?",
+      "expected_facts": [
+        "REG-STD001-001"
+      ]
+    },
+    {
+      "case_id": "REG-QA-006",
+      "document_id": "REG-STD001-001",
+      "student_id": "STD001",
+      "category": "registration_certificate",
+      "question": "According to REG-STD001-001, provide the academic year and registration status.",
+      "expected_facts": [
+        "2026",
+        "ACTIVE"
+      ]
+    },
+    {
+      "case_id": "REG-QA-007",
+      "document_id": "REG-STD001-001",
+      "student_id": "STD001",
+      "category": "registration_certificate",
+      "question": "Summarize the programme and registration status recorded in REG-STD001-001.",
+      "expected_facts": [
+        "B.Sc. Honours in Computer Science",
+        "ACTIVE"
+      ]
+    },
+    {
+      "case_id": "REG-QA-008",
+      "document_id": "REG-STD001-001",
+      "student_id": "STD001",
+      "category": "registration_certificate",
+      "question": "Provide the student ID, academic year, programme, and registration status from REG-STD001-001.",
+      "expected_facts": [
+        "STD001",
+        "2026",
+        "B.Sc. Honours in Computer Science",
+        "ACTIVE"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-001",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Object Oriented Analysis and Design (CSC3093)?",
+      "expected_facts": [
+        "CSC3093",
+        "Object Oriented Analysis and Design",
+        "3",
+        "A+"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-002",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Server Side Web Programming (CSC3103)?",
+      "expected_facts": [
+        "CSC3103",
+        "Server Side Web Programming",
+        "3",
+        "A"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-003",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Software Engineering (CSC3112)?",
+      "expected_facts": [
+        "CSC3112",
+        "Software Engineering",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-004",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Digital Image Processing (CSC3132)?",
+      "expected_facts": [
+        "CSC3132",
+        "Digital Image Processing",
+        "2",
+        "A-"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-005",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Image Processing Laboratory (CSC3141)?",
+      "expected_facts": [
+        "CSC3141",
+        "Image Processing Laboratory",
+        "1",
+        "B+"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-006",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Design and Analysis of Algorithms (CSC3152)?",
+      "expected_facts": [
+        "CSC3152",
+        "Design and Analysis of Algorithms",
+        "2",
+        "A+"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-007",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Project in Computer Science I (CSC3213)?",
+      "expected_facts": [
+        "CSC3213",
+        "Project in Computer Science I",
+        "3",
+        "A"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-008",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Operating Systems Concepts (CSC3033)?",
+      "expected_facts": [
+        "CSC3033",
+        "Operating Systems Concepts",
+        "3",
+        "A"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-009",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Computer Graphics (CSC3073)?",
+      "expected_facts": [
+        "CSC3073",
+        "Computer Graphics",
+        "3",
+        "A-"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-010",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Computer Graphics Programming (CSC3081)?",
+      "expected_facts": [
+        "CSC3081",
+        "Computer Graphics Programming",
+        "1",
+        "B+"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-011",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Artificial Intelligence (CSC3173)?",
+      "expected_facts": [
+        "CSC3173",
+        "Artificial Intelligence",
+        "3",
+        "A+"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-012",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Advanced Computer Networks (CSC3182)?",
+      "expected_facts": [
+        "CSC3182",
+        "Advanced Computer Networks",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-013",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "How many course records are listed in transcript TX-STD001-001?",
+      "expected_facts": [
+        "12"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-014",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "What degree programme is recorded in transcript TX-STD001-001?",
+      "expected_facts": [
+        "B.Sc. Honours in Computer Science"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-015",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "What academic year level is recorded in transcript TX-STD001-001?",
+      "expected_facts": [
+        "4"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-001",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "In transcript TX-STD002-001, what grade and credit value are recorded for Object Oriented Analysis and Design (CSC3093)?",
+      "expected_facts": [
+        "CSC3093",
+        "Object Oriented Analysis and Design",
+        "3",
+        "A"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-002",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "In transcript TX-STD002-001, what grade and credit value are recorded for Server Side Web Programming (CSC3103)?",
+      "expected_facts": [
+        "CSC3103",
+        "Server Side Web Programming",
+        "3",
+        "A-"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-003",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "In transcript TX-STD002-001, what grade and credit value are recorded for Software Engineering (CSC3112)?",
+      "expected_facts": [
+        "CSC3112",
+        "Software Engineering",
+        "2",
+        "B+"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-004",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "In transcript TX-STD002-001, what grade and credit value are recorded for Digital Image Processing (CSC3132)?",
+      "expected_facts": [
+        "CSC3132",
+        "Digital Image Processing",
+        "2",
+        "B"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-005",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "In transcript TX-STD002-001, what grade and credit value are recorded for Image Processing Laboratory (CSC3141)?",
+      "expected_facts": [
+        "CSC3141",
+        "Image Processing Laboratory",
+        "1",
+        "A"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-006",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "In transcript TX-STD002-001, what grade and credit value are recorded for Design and Analysis of Algorithms (CSC3152)?",
+      "expected_facts": [
+        "CSC3152",
+        "Design and Analysis of Algorithms",
+        "2",
+        "A"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-007",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "In transcript TX-STD002-001, what grade and credit value are recorded for Project in Computer Science I (CSC3213)?",
+      "expected_facts": [
+        "CSC3213",
+        "Project in Computer Science I",
+        "3",
+        "A-"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-008",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "In transcript TX-STD002-001, what grade and credit value are recorded for Operating Systems Concepts (CSC3033)?",
+      "expected_facts": [
+        "CSC3033",
+        "Operating Systems Concepts",
+        "3",
+        "B+"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-009",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "In transcript TX-STD002-001, what grade and credit value are recorded for Computer Graphics (CSC3073)?",
+      "expected_facts": [
+        "CSC3073",
+        "Computer Graphics",
+        "3",
+        "B"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-010",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "In transcript TX-STD002-001, what grade and credit value are recorded for Computer Graphics Programming (CSC3081)?",
+      "expected_facts": [
+        "CSC3081",
+        "Computer Graphics Programming",
+        "1",
+        "A"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-011",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "In transcript TX-STD002-001, what grade and credit value are recorded for Artificial Intelligence (CSC3173)?",
+      "expected_facts": [
+        "CSC3173",
+        "Artificial Intelligence",
+        "3",
+        "A"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-012",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "In transcript TX-STD002-001, what grade and credit value are recorded for Advanced Computer Networks (CSC3182)?",
+      "expected_facts": [
+        "CSC3182",
+        "Advanced Computer Networks",
+        "2",
+        "A-"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-013",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "How many course records are listed in transcript TX-STD002-001?",
+      "expected_facts": [
+        "12"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-014",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "What degree programme is recorded in transcript TX-STD002-001?",
+      "expected_facts": [
+        "B.Sc. Honours in Computer Science"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-015",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "What academic year level is recorded in transcript TX-STD002-001?",
+      "expected_facts": [
+        "4"
+      ]
+    }
+  ]
+}
