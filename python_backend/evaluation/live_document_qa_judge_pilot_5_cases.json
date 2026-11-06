@@ -1,0 +1,74 @@
+{
+  "dataset_name": "Live confidential document QA — LLM judge pilot",
+  "dataset_version": "pilot-1",
+  "ground_truth_note": "Expected facts are transcribed from four real university documents after authorized application-layer decryption and successful integrity verification. The dataset contains factual evaluation targets only; it does not contain document plaintext or generated model answers.",
+  "scoring_note": "The current evaluator uses lexical substring matching. This can measure the presence of expected terms but cannot reliably verify relationships between fields (for example, whether a grade and credit value belong to the correct course). Multi-fact and list questions should therefore be interpreted with this limitation in mind. Cross-document questions are intentionally excluded because the current single-document evaluation workflow has not yet been confirmed to retrieve multiple documents for one question.",
+  "case_distribution": {
+    "selected_cases": 5,
+    "case_ids": [
+      "EX-QA-001",
+      "EX-QA-002",
+      "REG-QA-001",
+      "TX1-QA-001",
+      "TX2-QA-014"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "EX-QA-001",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "What examination year is recorded in EX-STD001-001?",
+      "expected_facts": [
+        "2026"
+      ]
+    },
+    {
+      "case_id": "EX-QA-002",
+      "document_id": "EX-STD001-001",
+      "student_id": "STD001",
+      "category": "examination_result_sheet",
+      "question": "What marks and grade did student STD001 receive for Object Oriented Analysis and Design (CSC3093) in EX-STD001-001?",
+      "expected_facts": [
+        "CSC3093",
+        "Object Oriented Analysis and Design",
+        "60",
+        "A+"
+      ]
+    },
+    {
+      "case_id": "REG-QA-001",
+      "document_id": "REG-STD001-001",
+      "student_id": "STD001",
+      "category": "registration_certificate",
+      "question": "What academic year is recorded in registration certificate REG-STD001-001?",
+      "expected_facts": [
+        "2026"
+      ]
+    },
+    {
+      "case_id": "TX1-QA-001",
+      "document_id": "TX-STD001-001",
+      "student_id": "STD001",
+      "category": "transcript",
+      "question": "In transcript TX-STD001-001, what grade and credit value are recorded for Object Oriented Analysis and Design (CSC3093)?",
+      "expected_facts": [
+        "CSC3093",
+        "Object Oriented Analysis and Design",
+        "3",
+        "A+"
+      ]
+    },
+    {
+      "case_id": "TX2-QA-014",
+      "document_id": "TX-STD002-001",
+      "student_id": "STD002",
+      "category": "transcript",
+      "question": "What degree programme is recorded in transcript TX-STD002-001?",
+      "expected_facts": [
+        "B.Sc. Honours in Computer Science"
+      ]
+    }
+  ]
+}

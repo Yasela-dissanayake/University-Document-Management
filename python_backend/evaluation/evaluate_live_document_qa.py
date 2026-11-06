@@ -395,6 +395,12 @@ def run_authorized_cases(
                             "reference_alignment": judged["reference_alignment"],
                             "hallucination": judged["hallucination"],
                             "verdict": judged["verdict"],
+                            "fact_coverage": judged["fact_coverage"],
+                            "expected_fact_count": judged["expected_fact_count"],
+                            "covered_fact_count": judged["covered_fact_count"],
+                            "missing_fact_count": judged["missing_fact_count"],
+                            "contradicted_fact_count": judged["contradicted_fact_count"],
+                            "unsupported_claim_count": judged["unsupported_claim_count"],
                         }
                         # Deliberately omit judge explanation: it may quote
                         # confidential student information.
@@ -501,6 +507,9 @@ def build_summary(qa_rows: List[Dict[str, Any]], security_rows: List[Dict[str, A
         "mean_completeness": round(statistics.mean([item["completeness"] for item in judged]), 3) if judged else None,
         "mean_reference_alignment": round(statistics.mean([item["reference_alignment"] for item in judged]), 3) if judged else None,
         "mean_hallucination": round(statistics.mean([item["hallucination"] for item in judged]), 3) if judged else None,
+        "mean_semantic_fact_coverage": round(statistics.mean([item["fact_coverage"] for item in judged]), 4) if judged else None,
+        "total_contradicted_facts": sum(item["contradicted_fact_count"] for item in judged),
+        "total_unsupported_claims": sum(item["unsupported_claim_count"] for item in judged),
         "verdict_counts": {verdict: sum(1 for item in judged if item["verdict"] == verdict) for verdict in ("correct", "partially_correct", "incorrect")},
     }
     return {
@@ -580,7 +589,7 @@ def main() -> int:
             "llm_judge_enabled": bool(args.llm_judge),
             "llm_judge_model": args.judge_model if args.llm_judge else None,
             "llm_judge_base_url": args.ollama_base_url if args.llm_judge else None,
-            "llm_judge_method": "local reference-based LLM-as-a-Judge; scores correctness, completeness, reference alignment, and hallucination",
+            "llm_judge_method": "local reference-based semantic assessment of each expected fact; numeric scores and verdict are derived deterministically from fact coverage, contradictions, and unsupported-claim count",
             "llm_judge_persists_answer_or_explanation": False,
         },
         "summary": build_summary(qa_rows, security_rows),
@@ -591,7 +600,9 @@ def main() -> int:
             "Answer-quality scoring is performed only after authorization, retrieval, integrity, and LLM-context gates pass.",
             "Cases without manually verified expected_facts are reported as not scored.",
             "Lexical fact coverage is a simple deterministic measure and may miss semantically correct paraphrases.",
-            "LLM-as-a-Judge uses the same local model when enabled; self-evaluation bias is possible and should be checked through manual review.",
+            "The same local model is used for answer generation and judging; self-evaluation bias is possible, so judge scores require manual validation.",
+            "The judge assesses each manually verified expected fact individually; numeric scores and verdict are derived deterministically, not selected by the judge model.",
+            "A verdict cannot be correct when semantic reference-fact coverage is below 90 percent, when a reference fact is contradicted, or when unsupported factual claims are identified.",
             "The judge compares answers with manually verified expected facts; it does not independently verify the full source document or establish document-level faithfulness.",
             "Judge explanations and generated answers are not persisted because they may contain confidential student information.",
             "Unauthenticated tests check that access is denied before IPFS retrieval and LLM invocation.",
