@@ -89,11 +89,37 @@ from python_backend import (
 
 
 # ---------------------------------------------------------------------------
-# Shared clients
+# Lazy project clients
 # ---------------------------------------------------------------------------
+#
+# Do not connect to Tenderly/IPFS while importing this module. Import-time
+# network calls can fail (for example, Tenderly HTTP 429) and prevent even
+# local query-classification and authorization checks from running.
+#
+# Clients are initialized only when a function actually needs them.
 
-_bc = UniversityBlockchainClient()
-_ipfs = UniversityIPFSClient()
+_bc: Optional[UniversityBlockchainClient] = None
+_ipfs: Optional[UniversityIPFSClient] = None
+
+
+def _get_blockchain_client() -> UniversityBlockchainClient:
+    """Create the blockchain client on first use."""
+    global _bc
+
+    if _bc is None:
+        _bc = UniversityBlockchainClient()
+
+    return _bc
+
+
+def _get_ipfs_client() -> UniversityIPFSClient:
+    """Create the IPFS client on first use."""
+    global _ipfs
+
+    if _ipfs is None:
+        _ipfs = UniversityIPFSClient()
+
+    return _ipfs
 
 
 # ===========================================================================
@@ -167,7 +193,7 @@ def get_onchain_student(
         return None
 
     try:
-        return _bc.get_student_details(
+        return _get_blockchain_client().get_student_details(
             sid
         )
 
@@ -195,7 +221,7 @@ def list_semester_cids(
 
     try:
         cids = (
-            _bc.get_all_semester_hashes(
+            _get_blockchain_client().get_all_semester_hashes(
                 sid
             )
             or []
@@ -231,7 +257,7 @@ def _fetch_and_decrypt(
 
     try:
         payload = (
-            _ipfs.retrieve_academic_document(
+            _get_ipfs_client().retrieve_academic_document(
                 cid
             )
         )
@@ -585,7 +611,7 @@ def resolve_document_from_blockchain(
 
     try:
         resolved = (
-            _bc.resolve_authoritative_document(
+            _get_blockchain_client().resolve_authoritative_document(
                 normalized_document_id,
                 expected_student_id=(
                     expected_student_id
@@ -777,7 +803,7 @@ def get_authorized_document(
 
     try:
         document_details = (
-            _bc.get_document_details(
+            _get_blockchain_client().get_document_details(
                 normalized_document_id
             )
         )
@@ -1020,7 +1046,7 @@ def get_authorized_document(
         # The blockchain content hash is a hash of the plaintext, therefore
         # verification must happen after ACL decryption.
         ipfs_response = (
-            _ipfs.retrieve_resolved_document(
+            _get_ipfs_client().retrieve_resolved_document(
                 authoritative_cid,
                 expected_content_hash=None,
                 verify_integrity=False,
