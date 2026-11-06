@@ -521,6 +521,16 @@ def analyze_query(state: AgentState) -> Dict[str, Any]:
         lowered, intent, student_id
     )
 
+    # An explicit university document ID identifies a specific record.
+    # Questions about attributes contained in that record (even when they
+    # do not use verbs such as "retrieve" or "open") must pass the
+    # confidential-access gate before metadata lookup or document retrieval.
+    # This closes the bypass where a question such as
+    # "What examination year is recorded in EX-STD001-001?" was classified
+    # as a non-confidential repository query.
+    if document_id:
+        requires_confidential = True
+
     trace = _add_trace_node(
         _initial_trace(question),
         "analyze_query",
